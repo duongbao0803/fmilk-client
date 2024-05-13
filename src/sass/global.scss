@@ -26,3 +26,161 @@
 .slick-list {
   border-radius: 10px;
 }
+
+* {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.main-or {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.or {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+  color: #656f79;
+  padding: 0px 16px;
+  z-index: 1;
+  background-color: #fafdff;
+}
+
+:where(.css-dev-only-do-not-override-mzwlov).ant-form-item {
+  margin-bottom: 21px !important;
+}
+
+.formItem .ant-form-item-explain {
+  font-size: 13px;
+}
+
+.slick-list {
+  border-radius: 10px;
+}
+
+.formItem {
+  margin-bottom: 22px !important;
+}
+
+.formItem .ant-form-item-label label {
+  font-size: 12px;
+}
+
+.formItem
+  .ant-col.ant-col-24.ant-form-item-label.css-dev-only-do-not-override-mzwlov {
+  padding: 0;
+}
+
+.progress-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: #198ab6;
+  transform-origin: 0%;
+}
+
+.ant-dropdown-trigger:hover {
+  background-color: orange;
+}
+
+.background {
+  background-image: url("https://stemplus.vn/wp-content/uploads/2022/04/Banner-web-scaled.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 101vh;
+  width: 100%;
+}
+
+.background2 {
+  background-image: url("https://tra.extension.colostate.edu/wp-content/uploads/sites/9/2022/08/STEM-Kit-Loan-Out-Website-Banner-Landscape-scaled.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 101vh;
+  width: 100%;
+}
+
+.background3 {
+  background-image: url("https://stemplus.vn/wp-content/uploads/2019/08/N%E1%BB%81n-ph%E1%BA%A7n-ch%C6%B0%C6%A1ng-tr%C3%ACnh-01.png");
+  background-repeat: repeat-x;
+  background-size: contain;
+  min-height: 835px;
+  width: 100%;
+}
+
+.background4 {
+  background-image: url("https://stemplus.vn/wp-content/uploads/2019/08/N%E1%BB%81n-footer.png");
+  background-repeat: repeat-x;
+  background-size: cover;
+  min-height: 400px;
+  width: 100%;
+}
+
+.cssbuttons-io-button {
+  background: #198ab6;
+  color: white;
+  font-family: inherit;
+  padding: 0.35em;
+  padding-left: 1em;
+  font-size: 17px;
+  font-weight: 500;
+  border-radius: 25px;
+  border: none;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  /* box-shadow: inset 0 0 1.6em -0.6em #198ab6; */
+  overflow: hidden;
+  position: relative;
+  height: 2.8em;
+  padding-right: 3.3em;
+  cursor: pointer;
+}
+
+.cssbuttons-io-button .icon {
+  background: white;
+  margin-left: 1em;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.2em;
+  width: 2.2em;
+  border-radius: 25px;
+  box-shadow: 0.1em 0.1em 0.6em 0.2em #76a7bb;
+  right: 0.3em;
+  transition: all 0.3s;
+}
+
+.cssbuttons-io-button:hover .icon {
+  width: calc(100% - 0.6em);
+}
+
+.cssbuttons-io-button .icon svg {
+  width: 1.1em;
+  transition: transform 0.3s;
+  color: #7b52b9;
+}
+
+.cssbuttons-io-button:hover .icon svg {
+  transform: translateX(0.1em);
+}
+
+.cssbuttons-io-button:active .icon {
+  transform: scale(0.95);
+}
+
+@media (min-width: 3000) {
+  .navbar {
+    width: 65%;
+  }
+}

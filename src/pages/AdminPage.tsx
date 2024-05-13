@@ -1,6 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import { AdminView } from "@/sections/admin/view";
+import { AdminView } from "@/sections/dashboard/admin/view";
 
 const AdminPage: React.FC = () => {
   return (

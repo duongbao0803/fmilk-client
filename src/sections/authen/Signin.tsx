@@ -40,7 +40,7 @@ const Signin: React.FC = () => {
         <>
           <div className="">
             <div data-aos="fade-down">
-              <h1 className=" text-4xl font-bold mb-5 text-[#1677ff]">
+              <h1 className=" mb-5 text-4xl font-bold text-[#1677ff]">
                 Welcome Back
               </h1>
             </div>
@@ -111,7 +111,7 @@ const Signin: React.FC = () => {
                   <Checkbox>Remember me</Checkbox>
                   <a
                     href="#"
-                    className="login-form-forgot float-right text-[#3094ff] hover:underline font-semibold"
+                    className="login-form-forgot float-right font-semibold text-[#3094ff] hover:underline"
                     onClick={() => setIsShowForgotPassword(true)}
                   >
                     Forgot password?
@@ -123,7 +123,7 @@ const Signin: React.FC = () => {
                   <Button
                     type="primary"
                     htmlType="submit"
-                    className="login-form-button block mx-auto w-full h-11 text-lg tracking-wider mt-5"
+                    className="login-form-button mx-auto mt-5 block h-11 w-full text-lg tracking-wider"
                   >
                     Sign In
                   </Button>
@@ -132,19 +132,19 @@ const Signin: React.FC = () => {
             </Form>
 
             <div data-aos="flip-up">
-              <div className="text-center mt-4 flex items-center justify-center">
-                <div className="w-full bg-[#e6e8eb] h-[1px] mr-2"></div>
+              <div className="mt-4 flex items-center justify-center text-center">
+                <div className="mr-2 h-[1px] w-full bg-[#e6e8eb]"></div>
                 <span className="text-[#999999]">OR</span>
-                <div className="w-full bg-[#e6e8eb] h-[1px] ml-2"></div>
+                <div className="ml-2 h-[1px] w-full bg-[#e6e8eb]"></div>
               </div>
             </div>
             <div data-aos="fade-left">
               <div>
                 <Button
-                  className="block bg-[#fff] text-[grey] border border-gray-300 shadow-none mx-auto w-full h-11 mt-5 rounded-[5px]"
+                  className="mx-auto mt-5 block h-11 w-full rounded-[5px] border border-gray-300 bg-[#fff] text-[grey] shadow-none"
                   onClick={handleClick}
                 >
-                  <div className="flex justify-center items-center tracking-wider">
+                  <div className="flex items-center justify-center tracking-wider">
                     <img
                       src="https://freesvg.org/img/1534129544.png"
                       width={23}
@@ -157,11 +157,11 @@ const Signin: React.FC = () => {
               </div>
             </div>
             <div data-aos="fade-up">
-              <div className="text-center mt-2 text-sm">
+              <div className="mt-2 text-center text-sm">
                 <span>You don't have account? </span>
                 <a
                   href="#"
-                  className="text-[#3094ff] hover:underline font-semibold"
+                  className="font-semibold text-[#3094ff] hover:underline"
                   onClick={() => setIsShowRegister(true)}
                 >
                   Sign Up

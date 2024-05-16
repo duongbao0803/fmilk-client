@@ -6,7 +6,7 @@ const Avatar: React.FC = () => {
   const items: MenuProps["items"] = [
     {
       label: (
-        <div className="hover:bg-transparent pointer-events-none">
+        <div className="pointer-events-none hover:bg-transparent">
           <p>Duong Bao</p>
           <p>duongbao2k3@gmail.com</p>
         </div>
@@ -46,7 +46,7 @@ const Avatar: React.FC = () => {
           <img
             src="https://insacmau.com/wp-content/uploads/2023/02/logo-FPT-Polytechnic-.png"
             alt=""
-            className="w-10 h-10 rounded-full cursor-pointer object-cover ring-2 ring-gray-300 hover:ring-[orange]"
+            className="h-10 w-10 cursor-pointer rounded-full object-cover ring-2 ring-gray-300 hover:ring-[orange]"
           />
         </Dropdown>
       </div>

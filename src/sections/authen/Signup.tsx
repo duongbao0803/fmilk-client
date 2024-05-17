@@ -8,13 +8,12 @@ import {
 import { Button, Form, Input } from "antd";
 import "aos/dist/aos.css";
 import Signin from "./Signin";
+import { SignupProps } from "@/interfaces/interface";
 
-interface IProps {
-  isShowRegister: boolean;
-  setIsShowRegister: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const Signup: React.FC<IProps> = ({ isShowRegister, setIsShowRegister }) => {
+const Signup: React.FC<SignupProps> = ({
+  isShowRegister,
+  setIsShowRegister,
+}) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] =
     useState<boolean>(false);

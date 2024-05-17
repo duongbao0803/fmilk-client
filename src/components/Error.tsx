@@ -1,11 +1,7 @@
 import React from "react";
 import { Button, Result } from "antd";
 import { Link } from "react-router-dom";
-
-interface ErrorProps {
-  text: string;
-  href: string;
-}
+import { ErrorProps } from "@/interfaces/interface";
 
 const Error: React.FC<ErrorProps> = ({ text, href }) => {
   return (

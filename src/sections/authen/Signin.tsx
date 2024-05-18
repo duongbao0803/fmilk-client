@@ -9,8 +9,8 @@ import {
 } from "@ant-design/icons";
 import Cookies from "js-cookie";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { auth } from "@/config/firebase";
 import Signup from "./Signup";
+import { auth } from "@/config/firebase";
 import ForgotPasswordForm from "./ForgotPassword";
 import useAuth from "@/hooks/useAuth";
 import { login } from "@/api/authenApi";
@@ -58,7 +58,6 @@ const Signin: React.FC = () => {
       setIsLoggingIn(true);
       const { username, password } = formValues;
       const res = await login(formValues);
-      console.log("check login", res);
       if (res && res.status === 200) {
         notification.success({
           message: "Login Successful",
@@ -116,8 +115,12 @@ const Signin: React.FC = () => {
                       message: "Please input your Username!",
                     },
                     {
-                      min: 5,
+                      min: 8,
                       message: "Username must be at least 8 characters",
+                    },
+                    {
+                      max: 30,
+                      message: "Must not exceed 30 characters",
                     },
                   ]}
                   colon={true}
@@ -144,7 +147,7 @@ const Signin: React.FC = () => {
                       message: "Please input your Password!",
                     },
                     {
-                      min: 5,
+                      min: 8,
                       message: "Password must be at least 8 characters",
                     },
                   ]}
@@ -196,7 +199,6 @@ const Signin: React.FC = () => {
                 </div>
               </Form.Item>
             </Form>
-
             <div data-aos="flip-up">
               <div className="mt-4 flex items-center justify-center text-center">
                 <div className="mr-2 h-[1px] w-full bg-[#e6e8eb]"></div>

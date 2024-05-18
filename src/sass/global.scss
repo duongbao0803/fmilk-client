@@ -179,6 +179,18 @@
   transform: scale(0.95);
 }
 
+:where(.css-dev-only-do-not-override-1okl62o).ant-col-24.ant-form-item-label {
+  padding: 0;
+}
+
+:where(.css-dev-only-do-not-override-1okl62o).ant-form-item {
+  margin-bottom: 21px !important;
+}
+
+.ant-form-item-explain-error {
+  font-size: 12px;
+}
+
 @media (min-width: 3000) {
   .navbar {
     width: 65%;

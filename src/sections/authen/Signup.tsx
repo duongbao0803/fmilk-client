@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import {
   UserOutlined,
@@ -5,10 +6,11 @@ import {
   EyeInvisibleOutlined,
   EyeOutlined,
 } from "@ant-design/icons";
-import { Button, Form, Input } from "antd";
+import { Button, Col, Form, Input, Row, notification } from "antd";
 import "aos/dist/aos.css";
 import Signin from "./Signin";
-import { SignupProps } from "@/interfaces/interface";
+import { SignupProps, SignupValues } from "@/interfaces/interface";
+import { signUp } from "@/api/authenApi";
 
 const Signup: React.FC<SignupProps> = ({
   isShowRegister,
@@ -17,6 +19,12 @@ const Signup: React.FC<SignupProps> = ({
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] =
     useState<boolean>(false);
+  const [, setValues] = useState<SignupValues>({
+    username: "",
+    name: "",
+    email: "",
+    password: "",
+  });
 
   const [form] = Form.useForm();
 
@@ -36,35 +44,45 @@ const Signup: React.FC<SignupProps> = ({
     setShowConfirmPassword(!showConfirmPassword);
   };
 
-  // const handleSignUp = async () => {
-  //   try {
-  //     const res = await axios.post("")
-  //   } catch (err) {
-  //     console.error("err", err);
-  //   }
-  // };
+  const onFinish = (values: SignupValues) => {
+    setValues(values);
+    if (values?.username && values?.name && values?.email && values?.password) {
+      handleSignup(values);
+    }
+  };
+
+  const handleSignup = async (formValues: SignupValues) => {
+    try {
+      const res = await signUp(formValues);
+      if (res && res.status === 200) {
+        notification.success({
+          message: "Signup Successful",
+          description: "You have successfully signed up.",
+          duration: 2,
+        });
+        setIsShowRegister(false);
+      }
+    } catch (err: any) {
+      notification.error({
+        message: "Signup Failed",
+        description: `${err.response.data.message}`,
+        duration: 2,
+      });
+      console.error("Error signing up user", err);
+    }
+  };
 
   return (
     <>
       {isShowRegister ? (
         <>
-          <div
-            data-aos="fade-down"
-            data-aos-offset="200"
-            data-aos-easing="ease-in-sine"
-            data-aos-duration="600"
-          >
+          <div data-aos="fade-down">
             <h1 className=" mb-5 text-center text-4xl font-bold text-[#1677ff]">
               SIGN UP
             </h1>
           </div>
-          <Form name="normal_login" form={form}>
-            <div
-              data-aos="fade-right"
-              data-aos-offset="200"
-              data-aos-easing="ease-in-sine"
-              data-aos-duration="600"
-            >
+          <Form name="normal_login" form={form} onFinish={onFinish}>
+            <div data-aos="fade-right">
               <Form.Item
                 name="username"
                 rules={[
@@ -75,6 +93,18 @@ const Signup: React.FC<SignupProps> = ({
                   {
                     min: 8,
                     message: "Must be at least 8 characters",
+                  },
+                  {
+                    max: 30,
+                    message: "Must not exceed 30 characters",
+                  },
+                  {
+                    pattern: /^[^\s]+$/,
+                    message: "Username cannot contain spaces",
+                  },
+                  {
+                    pattern: /^[a-z0-9]+$/,
+                    message: "Username cannot contain special characters",
                   },
                 ]}
                 colon={true}
@@ -90,38 +120,63 @@ const Signup: React.FC<SignupProps> = ({
                 />
               </Form.Item>
             </div>
-            <div
-              data-aos="fade-right"
-              data-aos-offset="200"
-              data-aos-easing="ease-in-sine"
-              data-aos-duration="600"
-            >
-              <Form.Item
-                name="name"
-                id="formItem"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your Name!",
-                  },
-                ]}
-                label="Name"
-                labelCol={{ span: 24 }}
-                className="formItem"
-              >
-                <Input
-                  prefix={<LockOutlined className="site-form-item-icon" />}
-                  placeholder="Name"
-                  className="p-2"
-                />
-              </Form.Item>
-            </div>
-            <div
-              data-aos="fade-right"
-              data-aos-offset="200"
-              data-aos-easing="ease-in-sine"
-              data-aos-duration="600"
-            >
+            <Row gutter={16} className="relative">
+              <Col span={12}>
+                <div data-aos="fade-right">
+                  <Form.Item
+                    name="name"
+                    id="formItem"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your Name!",
+                      },
+                      {
+                        min: 8,
+                        message: "Must be at least 8 characters",
+                      },
+                    ]}
+                    label="Name"
+                    labelCol={{ span: 24 }}
+                    className="formItem"
+                  >
+                    <Input
+                      prefix={<LockOutlined className="site-form-item-icon" />}
+                      placeholder="Name"
+                      className="p-2"
+                    />
+                  </Form.Item>
+                </div>
+              </Col>
+              <Col span={12}>
+                <div data-aos="fade-right">
+                  <Form.Item
+                    name="email"
+                    id="formItem"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input email",
+                      },
+                      {
+                        type: "email",
+                        message: "Please enter a valid email address",
+                      },
+                    ]}
+                    label="Email"
+                    labelCol={{ span: 24 }}
+                    className="formItem"
+                  >
+                    <Input
+                      prefix={<LockOutlined className="site-form-item-icon" />}
+                      placeholder="Email"
+                      className="p-2"
+                    />
+                  </Form.Item>
+                </div>
+              </Col>
+            </Row>
+            <div data-aos="fade-right">
               <Form.Item
                 name="password"
                 id="formItem"
@@ -157,12 +212,7 @@ const Signup: React.FC<SignupProps> = ({
                 />
               </Form.Item>
             </div>
-            <div
-              data-aos="fade-right"
-              data-aos-offset="200"
-              data-aos-easing="ease-in-sine"
-              data-aos-duration="600"
-            >
+            <div data-aos="fade-right">
               <Form.Item
                 name="confirmPassword"
                 id="formItem"
@@ -177,7 +227,7 @@ const Signup: React.FC<SignupProps> = ({
                 ]}
                 className="formItem"
                 colon={true}
-                label="Password"
+                label="Confirm password"
                 labelCol={{ span: 24 }}
               >
                 <Input
@@ -197,11 +247,7 @@ const Signup: React.FC<SignupProps> = ({
                 />
               </Form.Item>
             </div>
-            <div
-              data-aos="fade-left"
-              data-aos-easing="ease-in-sine"
-              data-aos-duration="600"
-            >
+            <div data-aos="fade-left">
               <Form.Item>
                 <Button
                   type="primary"
@@ -213,11 +259,7 @@ const Signup: React.FC<SignupProps> = ({
               </Form.Item>
             </div>
           </Form>
-          <div
-            data-aos="fade-up"
-            data-aos-easing="ease-in-sine"
-            data-aos-duration="600"
-          >
+          <div data-aos="fade-up">
             <div className="text-center text-sm">
               You already have an account? {""}
               <a

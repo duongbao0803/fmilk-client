@@ -22,6 +22,7 @@ const useAuth = create<AuthState>((set) => ({
   },
   logout: () => {
     Cookies.remove("token");
+    sessionStorage.removeItem("keys");
     set({ isAuthenticated: false });
   },
 }));

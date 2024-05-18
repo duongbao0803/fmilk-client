@@ -42,7 +42,7 @@ const Header: React.FC = React.memo(() => {
           />
           <div className="flex items-center gap-3 p-4 text-[18px] font-medium text-[#1385b7]">
             <Link
-              to="/home"
+              to="#"
               onClick={handleLinkClick}
               className={`flex items-center rounded-2xl px-4 py-[10px] text-[15px] transition-all duration-500 hover:bg-[orange] hover:text-[#fff] ${
                 isSelectedLink ? "bg-[orange] text-[#fff]" : ""

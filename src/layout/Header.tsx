@@ -59,7 +59,11 @@ const Header: React.FC = React.memo(() => {
                         key={item?.key}
                         onClick={() => handleItemClick(item?.key)}
                       >
-                        <a href={item?.path} rel="noopener noreferrer">
+                        <a
+                          href={item?.path}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           {item?.label}
                         </a>
                       </Menu.Item>
@@ -90,7 +94,11 @@ const Header: React.FC = React.memo(() => {
                         key={item?.key}
                         onClick={() => handleItemClick(item.key)}
                       >
-                        <a href={item?.path} rel="noopener noreferrer">
+                        <a
+                          href={item?.path}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           {item.label}
                         </a>
                       </Menu.Item>
@@ -121,7 +129,11 @@ const Header: React.FC = React.memo(() => {
                         key={item?.key}
                         onClick={() => handleItemClick(item.key)}
                       >
-                        <a href={item?.path} rel="noopener noreferrer">
+                        <a
+                          href={item?.path}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           {item.label}
                         </a>
                       </Menu.Item>

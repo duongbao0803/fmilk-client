@@ -1,21 +1,35 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
-import { Button, Form, Input, Checkbox } from "antd";
+import { Button, Form, Input, Checkbox, notification } from "antd";
 import {
   UserOutlined,
   LockOutlined,
   EyeInvisibleOutlined,
   EyeOutlined,
 } from "@ant-design/icons";
+import Cookies from "js-cookie";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { auth } from "@/config/firebase";
 import Signup from "./Signup";
+import { auth } from "@/config/firebase";
 import ForgotPasswordForm from "./ForgotPassword";
+import useAuth from "@/hooks/useAuth";
+import { login } from "@/api/authenApi";
+import { SigninValues } from "@/interfaces/interface";
+import { encryptData } from "@/util/cryptoUtils";
+import { useDecryptCredentials } from "@/hooks/useDecryptCredentials";
 
 const Signin: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isShowRegister, setIsShowRegister] = useState<boolean>(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [rememberMe, setRememberMe] = useState<boolean>(false);
   const [isShowForgotPassword, setIsShowForgotPassword] =
     useState<boolean>(false);
+  const [, setValues] = useState<SigninValues>({
+    username: "",
+    password: "",
+  });
+  const { username, password, secretKey } = useDecryptCredentials();
 
   const handleClick = (): void => {
     const googleProvider = new GoogleAuthProvider();
@@ -27,6 +41,49 @@ const Signin: React.FC = () => {
 
   const togglePassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  const onFinish = (values: SigninValues) => {
+    setValues(values);
+    if (values?.username && values?.password) {
+      handleSignin(values);
+    }
+  };
+
+  const handleSignin = async (formValues: SigninValues) => {
+    if (isLoggingIn) {
+      return;
+    }
+    try {
+      setIsLoggingIn(true);
+      const { username, password } = formValues;
+      const res = await login(formValues);
+      if (res && res.status === 200) {
+        notification.success({
+          message: "Login Successful",
+          description: "You have successfully logged in.",
+          duration: 2,
+        });
+        const jwtToken = res.data.accessToken;
+        Cookies.set("token", jwtToken, { expires: 1 });
+        if (rememberMe) {
+          const encryptedUsername = encryptData(username, secretKey);
+          const encryptedPassword = encryptData(password, secretKey);
+          Cookies.set("username", encryptedUsername);
+          Cookies.set("password", encryptedPassword);
+        }
+        const authStore = useAuth.getState();
+        authStore.login();
+      }
+    } catch (err: any) {
+      notification.error({
+        message: "Login Failed",
+        description: `${err.response.data.message}`,
+        duration: 2,
+      });
+      console.error(">>> Error signing server", err);
+      setIsLoggingIn(false);
+    }
   };
 
   return (
@@ -44,10 +101,14 @@ const Signin: React.FC = () => {
                 Welcome Back
               </h1>
             </div>
-            <Form name="normal_login" className="login-form">
+            <Form
+              name="normal_login"
+              className="login-form"
+              onFinish={onFinish}
+            >
               <div data-aos="fade-right">
                 <Form.Item
-                  name=""
+                  name="username"
                   rules={[
                     {
                       required: true,
@@ -57,11 +118,16 @@ const Signin: React.FC = () => {
                       min: 8,
                       message: "Username must be at least 8 characters",
                     },
+                    {
+                      max: 30,
+                      message: "Must not exceed 30 characters",
+                    },
                   ]}
                   colon={true}
                   label="Username"
                   labelCol={{ span: 24 }}
                   className="formItem"
+                  initialValue={username}
                 >
                   <Input
                     prefix={<UserOutlined className="site-form-item-icon" />}
@@ -73,7 +139,7 @@ const Signin: React.FC = () => {
               </div>
               <div data-aos="fade-right">
                 <Form.Item
-                  name=""
+                  name="password"
                   id="formItem"
                   rules={[
                     {
@@ -88,6 +154,7 @@ const Signin: React.FC = () => {
                   label="Password"
                   labelCol={{ span: 24 }}
                   className="formItem"
+                  initialValue={password}
                 >
                   <Input
                     prefix={<LockOutlined className="site-form-item-icon" />}
@@ -108,7 +175,9 @@ const Signin: React.FC = () => {
               </div>
               <div data-aos="fade-left">
                 <Form.Item name="remember" valuePropName="checked" noStyle>
-                  <Checkbox>Remember me</Checkbox>
+                  <Checkbox onChange={(e) => setRememberMe(e.target.checked)}>
+                    Remember me
+                  </Checkbox>
                   <a
                     href="#"
                     className="login-form-forgot float-right font-semibold text-[#3094ff] hover:underline"
@@ -130,7 +199,6 @@ const Signin: React.FC = () => {
                 </div>
               </Form.Item>
             </Form>
-
             <div data-aos="flip-up">
               <div className="mt-4 flex items-center justify-center text-center">
                 <div className="mr-2 h-[1px] w-full bg-[#e6e8eb]"></div>

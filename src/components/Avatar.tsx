@@ -1,35 +1,43 @@
 import React from "react";
 import { Dropdown, MenuProps } from "antd";
 import { Link } from "react-router-dom";
+import { UserInfo } from "@/interfaces/interface";
+import { Role } from "@/enums/enum";
+import useAuth from "@/hooks/useAuth";
+import avatarAdmin from "@/assets/images/logo/avatar_admin.jpg";
+import avatarStaff from "@/assets/images/logo/avatar_staff.jpg";
+import avatarUser from "@/assets/images/logo/avatar_user.jpg";
 
 const Avatar: React.FC = () => {
+  const { infoUser, isAuthenticated } = useAuth();
+
+  const { username, email, role } = infoUser as UserInfo;
+  const { logout } = useAuth();
+
   const items: MenuProps["items"] = [
     {
       label: (
         <div className="pointer-events-none hover:bg-transparent">
-          <p>Duong Bao</p>
-          <p>duongbao2k3@gmail.com</p>
+          <p>{username || "username"}</p>
+          <p>{email || "email"}</p>
         </div>
       ),
       key: "0",
       disabled: true,
     },
     {
-      label: (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.aliyun.com"
-        >
-          View profile
-        </a>
-      ),
+      label:
+        role === Role.ADMIN || role === Role.STAFF ? (
+          <Link to="/chart">Dashboard</Link>
+        ) : (
+          <Link to="/profile">View profile</Link>
+        ),
       key: "1",
     },
     {
       label: (
-        <Link to="/" rel="noopener noreferrer">
-          Sign Out
+        <Link to="/authen" rel="noopener noreferrer" onClick={logout}>
+          Sign out
         </Link>
       ),
       key: "2",
@@ -37,19 +45,40 @@ const Avatar: React.FC = () => {
   ];
   return (
     <>
-      <div className="">
+      {isAuthenticated ? (
         <Dropdown
           menu={{ items }}
           placement="bottomRight"
           className="hover:bg-transparent"
         >
-          <img
-            src="https://insacmau.com/wp-content/uploads/2023/02/logo-FPT-Polytechnic-.png"
-            alt=""
-            className="h-10 w-10 cursor-pointer rounded-full object-cover ring-2 ring-gray-300 hover:ring-[orange]"
-          />
+          {role === Role.ADMIN ? (
+            <img
+              src={avatarAdmin}
+              alt="avatar"
+              className="h-10 w-10 cursor-pointer rounded-full object-cover ring-2 ring-gray-300 hover:ring-[orange]"
+            />
+          ) : role === Role.STAFF ? (
+            <img
+              src={avatarStaff}
+              alt="avatar"
+              className="h-10 w-10 cursor-pointer rounded-full object-cover ring-2 ring-gray-300 hover:ring-[orange]"
+            />
+          ) : (
+            <img
+              src={avatarUser}
+              alt="avatar"
+              className="h-10 w-10 cursor-pointer rounded-full object-cover ring-2 ring-gray-300 hover:ring-[orange]"
+            />
+          )}
         </Dropdown>
-      </div>
+      ) : (
+        <Link
+          to="/authen"
+          className="${flex items-center rounded-2xl px-3 py-1 text-[18px] transition-all duration-500 hover:bg-[orange] hover:text-[#fff]"
+        >
+          ĐĂNG NHẬP
+        </Link>
+      )}
     </>
   );
 };

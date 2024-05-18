@@ -2,13 +2,9 @@ import React from "react";
 import { Button, Form, Input } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import Signin from "./Signin";
+import { ForgotPasswordProps } from "@/interfaces/interface";
 
-interface IProps {
-  isShowRegister: boolean;
-  setIsShowRegister: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const ForgotPasswordForm: React.FC<IProps> = ({
+const ForgotPasswordForm: React.FC<ForgotPasswordProps> = ({
   isShowRegister,
   setIsShowRegister,
 }) => {

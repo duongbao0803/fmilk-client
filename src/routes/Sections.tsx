@@ -72,6 +72,10 @@ const Router: React.FC = () => {
         { element: <Error text="Back to home" href="/chart" />, path: "*" },
       ],
     },
+    {
+      element: <ErrorUser />,
+      path: "*",
+    },
   ]);
 
   return routes;

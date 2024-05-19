@@ -8,6 +8,7 @@
 
 - Updating...
 
+
 #### Members:
 
 - [Dương Tôn Bảo](https://github.com/duongbao0803) (Front-end Dev)
@@ -16,7 +17,7 @@
 #### Deployment:
 
 - Front-end: https://fmilk.vercel.app/
-- Updating...
+
 
 #### References:
 

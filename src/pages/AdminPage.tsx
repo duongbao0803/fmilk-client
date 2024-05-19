@@ -6,7 +6,7 @@ const AdminPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title> FTravel | Admin </title>
+        <title> FMilk | Admin </title>
       </Helmet>
       <AdminView />
     </>

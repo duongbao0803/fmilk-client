@@ -6,7 +6,8 @@
 
 #### Introduction
 
-Updating
+- Updating...
+
 
 #### Members:
 
@@ -15,8 +16,8 @@ Updating
 
 #### Deployment:
 
-- Front-end: https://ftravel.vercel.app/
-- Updating...
+- Front-end: https://fmilk.vercel.app/
+
 
 #### References:
 

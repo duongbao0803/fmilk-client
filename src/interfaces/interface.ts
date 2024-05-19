@@ -55,3 +55,7 @@ export interface SignupProps {
   isShowRegister: boolean;
   setIsShowRegister: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+export interface responseTokenProps {
+  accessToken: string;
+}

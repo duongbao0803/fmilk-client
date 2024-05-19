@@ -23,10 +23,6 @@
   width: -webkit-fill-available !important;
 }
 
-.slick-list {
-  border-radius: 10px;
-}
-
 * {
   font-family: "Plus Jakarta Sans", sans-serif;
   margin: 0;
@@ -52,31 +48,6 @@
   padding: 0px 16px;
   z-index: 1;
   background-color: #fafdff;
-}
-
-:where(.css-dev-only-do-not-override-mzwlov).ant-form-item {
-  margin-bottom: 21px !important;
-}
-
-.formItem .ant-form-item-explain {
-  font-size: 13px;
-}
-
-.slick-list {
-  border-radius: 10px;
-}
-
-.formItem {
-  margin-bottom: 22px !important;
-}
-
-.formItem .ant-form-item-label label {
-  font-size: 12px;
-}
-
-.formItem
-  .ant-col.ant-col-24.ant-form-item-label.css-dev-only-do-not-override-mzwlov {
-  padding: 0;
 }
 
 .progress-bar {
@@ -179,8 +150,9 @@
   transform: scale(0.95);
 }
 
+//antd
 :where(.css-dev-only-do-not-override-1okl62o).ant-col-24.ant-form-item-label {
-  padding: 0;
+  padding: 0 !important;
 }
 
 :where(.css-dev-only-do-not-override-1okl62o).ant-form-item {
@@ -188,9 +160,35 @@
 }
 
 .ant-form-item-explain-error {
-  font-size: 12px;
+  font-size: 12px !important;
 }
 
+:where(.css-dev-only-do-not-override-mzwlov).ant-form-item {
+  margin-bottom: 21px !important;
+}
+
+.formItem .ant-form-item-explain {
+  font-size: 13px !important;
+}
+
+.slick-list {
+  border-radius: 10px !important;
+}
+
+.formItem {
+  margin-bottom: 22px !important;
+}
+
+.formItem .ant-form-item-label label {
+  font-size: 12px !important;
+}
+
+.formItem
+  .ant-col.ant-col-24.ant-form-item-label.css-dev-only-do-not-override-mzwlov {
+  padding: 0 !important;
+}
+
+//responsive
 @media (min-width: 3000) {
   .navbar {
     width: 65%;

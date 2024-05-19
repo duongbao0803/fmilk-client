@@ -1,7 +1,7 @@
-import { getInfoUser } from "@/api/authenApi";
-import { AuthState } from "@/interfaces/interface";
 import Cookies from "js-cookie";
 import { create } from "zustand";
+import { getInfoUser } from "@/api/authenApi";
+import { AuthState } from "@/interfaces/interface";
 
 const useAuth = create<AuthState>((set) => ({
   infoUser: {},
@@ -16,12 +16,13 @@ const useAuth = create<AuthState>((set) => ({
     }
   },
 
-  isAuthenticated: !!Cookies.get("token"),
+  isAuthenticated: !!Cookies.get("accessToken"),
   login: () => {
     set({ isAuthenticated: true });
   },
   logout: () => {
-    Cookies.remove("token");
+    Cookies.remove("accessToken");
+    Cookies.remove("refreshToken");
     sessionStorage.removeItem("keys");
     set({ isAuthenticated: false });
   },

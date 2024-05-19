@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import { Carousel } from "antd";
-import slide_1 from "@/assets/images/slides/FTravel_1.png";
-import slide_2 from "@/assets/images/slides/FTravel_2.jpg";
-import slide_3 from "@/assets/images/slides/FTravel_3.png";
+import slide_1 from "@/assets/images/slides/FMilk_1.jpg";
+import slide_2 from "@/assets/images/slides/FMilk_2.jpg";
+import slide_3 from "@/assets/images/slides/FMilk_3.jpg";
 
 const CarouselDemo: React.FC = () => (
   <Carousel autoplay className="m-5 box-border rounded-xl">

@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 
 const App: React.FC = () => {
   const { fetchUserInfo, isAuthenticated } = useAuth();
-  const token = Cookies.get("token");
+  const token = Cookies.get("accessToken");
 
   useEffect(() => {
     if (isAuthenticated) {

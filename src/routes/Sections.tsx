@@ -11,7 +11,6 @@ import AuthenPage from "@/pages/AuthenPage";
 import StaffList from "@/sections/user/StaffList";
 import LandingPage from "@/pages/LandingPage";
 import { UserInfo } from "@/interfaces/interface";
-import ErrorUser from "@/components/ErrorUser";
 
 export const AdminPage = lazy(() => import("@/pages/AdminPage"));
 export const ChartPage = lazy(() => import("@/pages/ChartPage"));
@@ -20,7 +19,7 @@ const UserRoute: React.FC = () => {
   return (
     <Routes>
       <Route path="/contact" element={<Form />} />;
-      <Route path="*" element={<ErrorUser />} />;
+      <Route path="*" element={<Error />} />;
     </Routes>
   );
 };
@@ -29,6 +28,7 @@ const Router: React.FC = () => {
   const { infoUser, isAuthenticated } = useAuth();
   const { role } = infoUser as UserInfo;
   useAnimation();
+  const isAuthority = role === Role.ADMIN || role === Role.STAFF;
 
   const routes = useRoutes([
     {
@@ -40,18 +40,21 @@ const Router: React.FC = () => {
       element: isAuthenticated ? <Navigate to="/" /> : <AuthenPage />,
     },
     {
-      element:
-        role === Role.ADMIN || role === Role.STAFF ? (
-          <DashboardLayout>
-            <ScrollToTop>
-              <Suspense fallback={<Loading />}>
-                <Outlet />
-              </Suspense>
-            </ScrollToTop>
-          </DashboardLayout>
-        ) : (
-          <UserRoute />
-        ),
+      element: <Error />,
+      path: "*",
+    },
+    {
+      element: isAuthority ? (
+        <DashboardLayout>
+          <ScrollToTop>
+            <Suspense fallback={<Loading />}>
+              <Outlet />
+            </Suspense>
+          </ScrollToTop>
+        </DashboardLayout>
+      ) : (
+        <UserRoute />
+      ),
       children: [
         {
           element: <ChartPage />,
@@ -69,12 +72,7 @@ const Router: React.FC = () => {
           element: <StaffList />,
           path: "/staff",
         },
-        { element: <Error text="Back to home" href="/chart" />, path: "*" },
       ],
-    },
-    {
-      element: <ErrorUser />,
-      path: "*",
     },
   ]);
 

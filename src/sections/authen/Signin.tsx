@@ -64,8 +64,11 @@ const Signin: React.FC = () => {
           description: "You have successfully logged in.",
           duration: 2,
         });
-        const jwtToken = res.data.accessToken;
-        Cookies.set("token", jwtToken, { expires: 1 });
+        const jwtAccessToken = res.data.accessToken;
+        const jwtRefreshToken = res.data.refreshToken;
+        Cookies.set("accessToken", jwtAccessToken, { expires: 1 });
+        Cookies.set("refreshToken", jwtRefreshToken, { expires: 1 });
+
         if (rememberMe) {
           const encryptedUsername = encryptData(username, secretKey);
           const encryptedPassword = encryptData(password, secretKey);

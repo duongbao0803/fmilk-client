@@ -1,82 +1,53 @@
-import { MenuProps } from "antd";
-
-export const introItems: MenuProps["items"] = [
+export const introItems = [
   {
     key: "1",
-    label: (
-      <a target="_blank" rel="noopener noreferrer">
-        StemPlus
-      </a>
-    ),
+    label: "StemPlus",
+    path: "/stem",
   },
   {
     key: "2",
-    label: (
-      <a target="_blank" rel="noopener noreferrer">
-        Đối tác
-      </a>
-    ),
+    label: "Đối tác",
+    path: "#",
   },
   {
     key: "3",
-    label: (
-      <a target="_blank" rel="noopener noreferrer">
-        Tuyển dụng
-      </a>
-    ),
+    label: "Tuyển dụng",
+    path: "#",
   },
 ];
 
-export const programItems: MenuProps["items"] = [
+export const programItems = [
   {
     key: "4",
-    label: (
-      <a target="_blank" rel="noopener noreferrer">
-        StemPlus
-      </a>
-    ),
+    label: "StemPlus",
+    path: "#",
   },
   {
     key: "5",
-    label: (
-      <a target="_blank" rel="noopener noreferrer">
-        Đối tác
-      </a>
-    ),
+    label: "StemPlus",
+    path: "#",
   },
   {
     key: "6",
-    label: (
-      <a target="_blank" rel="noopener noreferrer">
-        Tuyển dụng
-      </a>
-    ),
+    label: "StemPlus",
+    path: "#",
   },
 ];
 
-export const sourceItems: MenuProps["items"] = [
+export const sourceItems = [
   {
     key: "7",
-    label: (
-      <a target="_blank" rel="noopener noreferrer">
-        StemPlus
-      </a>
-    ),
+    label: "StemPlus",
+    path: "#",
   },
   {
     key: "8",
-    label: (
-      <a target="_blank" rel="noopener noreferrer">
-        Đối tác dasd
-      </a>
-    ),
+    label: "StemPlus",
+    path: "#",
   },
   {
     key: "9",
-    label: (
-      <a target="_blank" rel="noopener noreferrer">
-        Tuyển dụng
-      </a>
-    ),
+    label: "StemPlus",
+    path: "#",
   },
 ];

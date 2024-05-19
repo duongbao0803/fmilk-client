@@ -37,14 +37,14 @@ const HomePage: React.FC = () => {
 
       {/* Intro */}
 
-      <div className="grid grid-cols-3 my-10 px-52">
+      <div className="my-10 grid grid-cols-3 px-52">
         <div className="text-justify">
           <div className="relative mb-8" data-aos="fade-down">
             <h2 className="text-[25px] font-medium text-[#1385b7]">
               THÁNG TỚI CÓ GÌ MỚI?
             </h2>
-            <div className="absolute bottom-[-10px] bg-[#1385b7] h-[1px] w-12 mb-1"></div>
-            <div className="absolute bottom-[-13px] left-6 bg-[#1385b7] h-[1px] w-12"></div>
+            <div className="absolute bottom-[-10px] mb-1 h-[1px] w-12 bg-[#1385b7]"></div>
+            <div className="absolute bottom-[-13px] left-6 h-[1px] w-12 bg-[#1385b7]"></div>
           </div>
           <div className="flex flex-col gap-y-5" data-aos="fade-right">
             <div>
@@ -104,7 +104,7 @@ const HomePage: React.FC = () => {
             className="object-cover"
           />
         </div>
-        <div className="text-justify flex items-center">
+        <div className="flex items-center text-justify">
           <div>
             <div className="relative mb-8" data-aos="fade-down">
               <h2 className="text-[25px] font-medium text-[#1385b7]">
@@ -112,11 +112,11 @@ const HomePage: React.FC = () => {
                 <img
                   src="https://insacmau.com/wp-content/uploads/2023/02/logo-FPT-Polytechnic-.png"
                   alt=""
-                  className="h-[40px] object-cover inline"
+                  className="inline h-[40px] object-cover"
                 />
               </h2>
-              <div className="absolute bottom-[-10px] bg-[#1385b7] h-[1px] w-12 mb-1"></div>
-              <div className="absolute bottom-[-13px] left-6 bg-[#1385b7] h-[1px] w-12"></div>
+              <div className="absolute bottom-[-10px] mb-1 h-[1px] w-12 bg-[#1385b7]"></div>
+              <div className="absolute bottom-[-13px] left-6 h-[1px] w-12 bg-[#1385b7]"></div>
             </div>
             <div className="flex flex-col gap-y-5" data-aos="fade-left">
               <div>
@@ -168,8 +168,8 @@ const HomePage: React.FC = () => {
 
       {/* Partner */}
       <section className="my-32 px-52">
-        <div className="flex justify-center mb-10" data-aos="fade-down">
-          <span className="text-[25px] text-[#1385b7] text-center border-b-2 border-orange-500 font-medium">
+        <div className="mb-10 flex justify-center" data-aos="fade-down">
+          <span className="border-b-2 border-orange-500 text-center text-[25px] font-medium text-[#1385b7]">
             ĐỐI TÁC
           </span>
         </div>
@@ -178,7 +178,7 @@ const HomePage: React.FC = () => {
             <img
               src="https://reviewedu.net/wp-content/uploads/2021/08/dai-hoc-fpt-lo-go4444.png"
               alt=""
-              className="object-cover w-[400px] h-[200px]"
+              className="h-[200px] w-[400px] object-cover"
             />
           </div>
 
@@ -186,18 +186,19 @@ const HomePage: React.FC = () => {
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDkaQZF8f7hA4HeNwe-7dT9_SM5eriS61h7Z8GcIFzRg&s"
               alt=""
-              className="object-cover w-[400px] h-[200px]"
+              className="h-[200px] w-[400px] object-cover"
             />
           </div>
           <div data-aos="fade-left">
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRefb7yqbmnt8f2KMWUn2f4xv5vzkdl2A-UOVlpO7J4cB20PRNlFywLDsYgBGQ7NzYwIR4&usqp=CAU"
               alt=""
-              className="object-cover w-[400px] h-[200px]"
+              className="h-[200px] w-[400px] object-cover"
             />
           </div>
         </div>
       </section>
+      {/* <ChatBoxFacebook /> */}
       <Footer />
     </>
   );

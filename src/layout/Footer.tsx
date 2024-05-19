@@ -7,33 +7,33 @@ const Footer: React.FC = React.memo(() => {
       <div className="max-h-[400px]">
         <div className="background4 relative">
           <div className="absolute top-[100px]">
-            <div className="grid grid-cols-3 px-48 justify-center text-white">
+            <div className="grid grid-cols-3 justify-center px-48 text-white">
               <div>
-                <p className="text-xl mb-4 font-bold">
+                <p className="mb-4 text-xl font-bold">
                   Trường Đại học FPT Thành Phố Hồ Chí Minh
                 </p>
-                <p className="text-lg mb-4">
+                <p className="mb-4 text-lg">
                   Lô E2a-7, Đường D1, Đ. D1, Long Thạnh Mỹ, Thành Phố Thủ Đức,
                   Thành phố Hồ Chí Minh
                 </p>
-                <p className="text-lg mb-4">
+                <p className="mb-4 text-lg">
                   <MailOutlined /> {""} tonbao0803@gmail.com
                 </p>
-                <p className="text-lg mb-4"> (024) 777.999.66</p>
-                <p className="text-lg mb-4">www.fu-stem.vercel.app</p>
+                <p className="mb-4 text-lg"> (024) 777.999.66</p>
+                <p className="mb-4 text-lg">www.fu-stem.vercel.app</p>
               </div>
-              <div className="flex items-center flex-col">
+              <div className="flex flex-col items-center">
                 <img
                   src="https://insacmau.com/wp-content/uploads/2023/02/logo-FPT-Polytechnic-.png"
                   alt=""
-                  className="object-cover w-[200px] h-[100px]"
+                  className="h-[100px] w-[200px] object-cover"
                 />
-                <div className="flex gap-12 mt-4 items-center">
+                <div className="mt-4 flex items-center gap-12">
                   <a href="https://www.facebook.com/FEExpSpace" target="_blank">
                     <img
                       src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
                       alt=""
-                      className="w-[50px] h-[50px]"
+                      className="h-[50px] w-[50px]"
                     />
                   </a>
                   <a
@@ -43,7 +43,7 @@ const Footer: React.FC = React.memo(() => {
                     <img
                       src="https://thuviendohoa.vn/upload/images/items/logo-youtube-nut-phat-youtube-png-385.webp"
                       alt=""
-                      className="w-[50px] h-[50px] rounded-full"
+                      className="h-[50px] w-[50px] rounded-full"
                     />
                   </a>
                 </div>

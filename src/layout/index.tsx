@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FloatButton, Layout, Menu, notification } from "antd";
 import {
   PieChartOutlined,
@@ -7,17 +7,11 @@ import {
   TeamOutlined,
   FileOutlined,
 } from "@ant-design/icons";
-
-interface LayoutProps {
-  children: React.ReactNode;
-}
-interface MenuItem {
-  key: string;
-  icon?: React.ReactNode;
-  label?: string;
-  path?: string;
-  children?: MenuItem[];
-}
+import { LayoutProps, MenuItem, UserInfo } from "@/interfaces/interface";
+import useAuth from "@/hooks/useAuth";
+import { Role } from "@/enums/enum";
+import avatarAdmin from "@/assets/images/logo/avatar_admin.jpg";
+import avatarStaff from "@/assets/images/logo/avatar_staff.jpg";
 
 const { Content, Sider, Footer } = Layout;
 
@@ -26,7 +20,7 @@ function getItem(
   key: React.ReactNode,
   icon?: React.ReactNode,
   children?: MenuItem[],
-  path?: string
+  path?: string,
 ): MenuItem {
   return {
     key,
@@ -48,7 +42,7 @@ const items: MenuItem[] = [
       getItem("Staff", "4", undefined, undefined, "/staff"),
       getItem("Customer", "5", undefined, undefined, "/customer"),
     ],
-    "/user"
+    "/user",
   ),
   getItem(
     "Team",
@@ -58,12 +52,15 @@ const items: MenuItem[] = [
       getItem("Team 1", "6", undefined, undefined, "/option2"),
       getItem("Team 2", "7", undefined, undefined, "/option2"),
     ],
-    "/team"
+    "/team",
   ),
   getItem("Files", "8", <FileOutlined />, undefined, "/option2"),
 ];
 
 const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
+  const { infoUser, logout } = useAuth();
+  const navigate = useNavigate();
+  const { username, role } = infoUser as UserInfo;
   const [collapsed, setCollapsed] = useState<boolean>(true);
 
   const storeDefaultSelectedKeys = (key: string) => {
@@ -110,6 +107,8 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
       description: "You have successfully logged out",
       duration: 2,
     });
+    logout();
+    navigate("/");
   };
 
   return (
@@ -120,14 +119,14 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
         collapsedWidth="55"
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
-        className="scrollbar sider overflow-auto min-h-screen left-0 top-0 bottom-0 box-border z-50 flex-none w-56 overflow-y-auto"
+        className="scrollbar sider bottom-0 left-0 top-0 z-50 box-border min-h-screen w-56 flex-none overflow-auto overflow-y-auto"
         theme="light"
         collapsible
       >
         <div className="demo-logo-vertical" />
-        <div className="flex justify-center my-4">
+        <div className="my-4 flex justify-center">
           <img
-            className="w-5/12 object-cover select-none"
+            className="w-5/12 select-none object-cover"
             src="https://insacmau.com/wp-content/uploads/2023/02/logo-FPT-Polytechnic-.png"
             alt=""
           />
@@ -142,26 +141,32 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
         </Menu>
       </Sider>
       <Layout className="right-bar overflow-y-auto transition-all duration-[600ms] ease-in-out">
-        <div className="header pr-4 flex justify-end gap-2 items-center fixed z-[1000] h-16 shadow-none bg-[#f8f8f8] bg-opacity-80 backdrop-blur-[6px]">
+        <div className="header fixed z-[1000] flex h-16 items-center justify-end gap-2 bg-[#f8f8f8] bg-opacity-80 pr-4 shadow-none backdrop-blur-[6px]">
           <>
-            <img
-              className="w-[42px] h-[42px] rounded-full border object-cover ring-2 ring-gray-300 hover:ring-[#0077ff]"
-              src="https://maimoikethon.com/sieu-nhan-gao-do-chibi/imager_5946.jpg"
-            />
+            {role === Role.ADMIN ? (
+              <img
+                className="h-[42px] w-[42px] rounded-full border object-cover ring-2 ring-gray-300 hover:ring-[#0077ff]"
+                src={avatarAdmin}
+              />
+            ) : (
+              <img
+                className="h-[42px] w-[42px] rounded-full border object-cover ring-2 ring-gray-300 hover:ring-[#0077ff]"
+                src={avatarStaff}
+              />
+            )}
           </>
-
           <div className="flex flex-col">
-            <strong>Dương Bảo</strong>
+            <strong>{username || "name"}</strong>
             <div
-              className="text-[#5099ff] font-semibold hover:underline cursor-pointer"
+              className="cursor-pointer font-semibold text-[#5099ff] hover:underline"
               onClick={handleLogout}
             >
               Logout
             </div>
           </div>
         </div>
-        <Content className="mt-[80px] mx-4 ">
-          <div className="rounded-xl overflow-x-auto min-w-[250px] bg-[#fff]">
+        <Content className="mx-4 mt-[80px] ">
+          <div className="min-w-[250px] overflow-x-auto rounded-xl bg-[#fff]">
             {children}
           </div>
         </Content>

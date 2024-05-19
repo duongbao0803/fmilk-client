@@ -2,13 +2,9 @@ import React from "react";
 import { Button, Form, Input } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import Signin from "./Signin";
+import { ForgotPasswordProps } from "@/interfaces/interface";
 
-interface IProps {
-  isShowRegister: boolean;
-  setIsShowRegister: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const ForgotPasswordForm: React.FC<IProps> = ({
+const ForgotPasswordForm: React.FC<ForgotPasswordProps> = ({
   isShowRegister,
   setIsShowRegister,
 }) => {
@@ -17,7 +13,7 @@ const ForgotPasswordForm: React.FC<IProps> = ({
       {!isShowRegister ? (
         <>
           <div data-aos="fade-down">
-            <h1 className=" text-4xl font-bold text-center mb-5 text-[#1677ff]">
+            <h1 className="mb-5 text-center text-4xl font-bold text-[#1677ff]">
               Forgot Password
             </h1>
           </div>
@@ -53,7 +49,7 @@ const ForgotPasswordForm: React.FC<IProps> = ({
                 <Button
                   type="primary"
                   htmlType="submit"
-                  className="login-form-button block mx-auto w-full h-11 text-lg tracking-wider"
+                  className="login-form-button mx-auto block h-11 w-full text-lg tracking-wider"
                   disabled
                 >
                   Send
@@ -62,11 +58,11 @@ const ForgotPasswordForm: React.FC<IProps> = ({
             </div>
           </Form>
           <div data-aos="fade-up">
-            <div className="text-center mt-5 text-sm">
+            <div className="mt-5 text-center text-sm">
               You already have an account? {""}
               <a
                 href="#"
-                className="text-[#3094ff] hover:underline font-semibold"
+                className="font-semibold text-[#3094ff] hover:underline"
                 onClick={() => setIsShowRegister(true)}
               >
                 Sign In

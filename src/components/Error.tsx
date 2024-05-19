@@ -1,25 +1,12 @@
 import React from "react";
-import { Button, Result } from "antd";
-import { Link } from "react-router-dom";
+import errorImg from "@/assets/images/error.jpg";
 
-interface ErrorProps {
-  text: string;
-  href: string;
-}
-
-const Error: React.FC<ErrorProps> = ({ text, href }) => {
+const ErrorUser: React.FC = () => {
   return (
-    <Result
-      status="404"
-      title="404"
-      subTitle="Sorry, the page you visited does not exist."
-      extra={
-        <Button type="primary" className="bg-[#1677ff]">
-          <Link to={href}>{text}</Link>
-        </Button>
-      }
-    />
+    <div>
+      <img src={errorImg} alt="" />
+    </div>
   );
 };
 
-export default Error;
+export default ErrorUser;

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Dropdown, Menu, Space } from "antd";
 import { HomeFilled, DownOutlined } from "@ant-design/icons";
-import { introItems, programItems, sourceItems } from "../constant/constant";
 import { Avatar } from "@/components";
+import { introItems, programItems, sourceItems } from "@/constant/constant";
 
 const Header: React.FC = React.memo(() => {
   const [isSelectedLink, setIsSelectedLink] = useState<boolean>(true);
@@ -30,21 +30,21 @@ const Header: React.FC = React.memo(() => {
 
   return (
     <>
-      <div className="flex justify-center text-[#000000] z-[999] h-[60px] mx-5">
+      <div className="z-[999] mx-5 flex h-[60px] justify-center text-[#000000]">
         <div
-          className="navbar flex flex-row flex-nowrap justify-between w-[1100px] max-w-[1220px] bg-[#f8f8f8] bg-opacity-75 rounded-[40px]"
+          className="navbar flex w-[1100px] max-w-[1220px] flex-row flex-nowrap justify-between rounded-[40px] bg-[#f8f8f8] bg-opacity-75"
           data-aos="fade-down"
         >
           <img
             src="https://insacmau.com/wp-content/uploads/2023/02/logo-FPT-Polytechnic-.png"
             alt=""
-            className="w-[100px] h-fit object-cover my-auto ml-4"
+            className="my-auto ml-4 h-fit w-[100px] object-cover"
           />
-          <div className="flex items-center gap-3 p-4 text-[#1385b7] text-[18px] font-medium">
+          <div className="flex items-center gap-3 p-4 text-[18px] font-medium text-[#1385b7]">
             <Link
-              to="/home"
+              to="#"
               onClick={handleLinkClick}
-              className={`px-4 py-[10px] flex items-center rounded-2xl transition-all duration-500 text-[15px] hover:text-[#fff] hover:bg-[orange] ${
+              className={`flex items-center rounded-2xl px-4 py-[10px] text-[15px] transition-all duration-500 hover:bg-[orange] hover:text-[#fff] ${
                 isSelectedLink ? "bg-[orange] text-[#fff]" : ""
               }`}
             >
@@ -60,7 +60,7 @@ const Header: React.FC = React.memo(() => {
                         onClick={() => handleItemClick(item?.key)}
                       >
                         <a
-                          href={item?.url}
+                          href={item?.path}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
@@ -70,7 +70,7 @@ const Header: React.FC = React.memo(() => {
                     ))}
                 </Menu>
               }
-              className={`px-3 py-1 rounded-3xl cursor-pointer transition-all duration-500 hover:text-[#fff] ${
+              className={`cursor-pointer rounded-3xl px-3 py-1 transition-all duration-500 hover:text-[#fff] ${
                 selectedDropdown === "1" ||
                 selectedDropdown === "2" ||
                 selectedDropdown === "3"
@@ -95,7 +95,7 @@ const Header: React.FC = React.memo(() => {
                         onClick={() => handleItemClick(item.key)}
                       >
                         <a
-                          href={item?.url}
+                          href={item?.path}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
@@ -105,7 +105,7 @@ const Header: React.FC = React.memo(() => {
                     ))}
                 </Menu>
               }
-              className={`px-3 py-1 rounded-3xl cursor-pointer transition-all duration-500 hover:text-[#fff] ${
+              className={`cursor-pointer rounded-3xl px-3 py-1 transition-all duration-500 hover:text-[#fff] ${
                 selectedDropdown === "4" ||
                 selectedDropdown === "5" ||
                 selectedDropdown === "6"
@@ -130,7 +130,7 @@ const Header: React.FC = React.memo(() => {
                         onClick={() => handleItemClick(item.key)}
                       >
                         <a
-                          href={item?.url}
+                          href={item?.path}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
@@ -140,7 +140,7 @@ const Header: React.FC = React.memo(() => {
                     ))}
                 </Menu>
               }
-              className={`px-3 py-1 rounded-3xl cursor-pointer transition-all duration-500 hover:text-[#fff] ${
+              className={`cursor-pointer rounded-3xl px-3 py-1 transition-all duration-500 hover:text-[#fff] ${
                 selectedDropdown === "7" ||
                 selectedDropdown === "8" ||
                 selectedDropdown === "9"
@@ -158,7 +158,7 @@ const Header: React.FC = React.memo(() => {
             <Link
               to="/home"
               onClick={handleSelectedContact}
-              className={`px-3 py-1 rounded-3xl cursor-pointer transition-all duration-500 hover:text-[#fff] hover:bg-[orange] ${
+              className={`cursor-pointer rounded-3xl px-3 py-1 transition-all duration-500 hover:bg-[orange] hover:text-[#fff] ${
                 isSelectedContact ? "bg-[orange] text-[#fff]" : ""
               }`}
             >

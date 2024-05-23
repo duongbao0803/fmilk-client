@@ -11,6 +11,7 @@ import { UserInfo } from "@/interfaces/interface";
 import { formatDate } from "@/util/validate";
 import EditModal from "./EditModal";
 import AddModal from "./AddModal";
+import ExportButton from "./ExportButton";
 
 export interface DataType {
   _id: string;
@@ -150,7 +151,9 @@ const UserList: React.FC = () => {
           </Button>
         </div>
         <div className="flex gap-x-2">
-          <div>{/* <ExportButton /> */}</div>
+          <div>
+            <ExportButton />
+          </div>
           <div>
             <Button type="primary" onClick={() => setIsShow(true)}>
               <div className="flex justify-center">

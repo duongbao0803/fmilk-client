@@ -1,8 +1,14 @@
+import { Dayjs } from "dayjs";
+
 export interface UserInfo {
-  username: string;
-  email: string;
-  name: string;
-  role: string;
+  username?: string | undefined;
+  email?: string | undefined;
+  name?: string | undefined;
+  role?: string | undefined;
+  dob?: string | number | Date | Dayjs | null | undefined;
+  phone?: string | undefined;
+  address?: string | undefined;
+  _id?: string | undefined;
 }
 
 export interface AuthState {
@@ -58,4 +64,34 @@ export interface SignupProps {
 
 export interface responseTokenProps {
   accessToken: string;
+}
+
+export interface CustomError extends Error {
+  response?: {
+    data?: {
+      message?: string;
+    };
+  };
+}
+
+export interface EditModalProps {
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isOpen: boolean;
+  userInfo?: UserInfo;
+}
+
+export interface AddModalProps {
+  setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
+  isShow: boolean;
+  userInfo?: UserInfo;
+}
+
+export interface AddNewUserProps {
+  username: string;
+  password: string;
+  address: string;
+  email: string;
+  role: string;
+  phone: string;
+  name: string;
 }

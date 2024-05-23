@@ -6,20 +6,20 @@ import DashboardLayout from "@/layout";
 import { useAnimation } from "@/hooks/useAnimation";
 import useAuth from "@/hooks/useAuth";
 import Form from "@/sections/contact/Form";
-import CustomerList from "@/sections/customer/CustomerList";
 import AuthenPage from "@/pages/AuthenPage";
-import StaffList from "@/sections/user/StaffList";
 import LandingPage from "@/pages/LandingPage";
 import { UserInfo } from "@/interfaces/interface";
 
 export const AdminPage = lazy(() => import("@/pages/AdminPage"));
+export const UserManagementPage = lazy(
+  () => import("@/pages/UserManagementPage"),
+);
 export const ChartPage = lazy(() => import("@/pages/ChartPage"));
 
 const UserRoute: React.FC = () => {
   return (
     <Routes>
       <Route path="/contact" element={<Form />} />;
-      <Route path="*" element={<Error />} />;
     </Routes>
   );
 };
@@ -39,40 +39,41 @@ const Router: React.FC = () => {
       path: "/authen",
       element: isAuthenticated ? <Navigate to="/" /> : <AuthenPage />,
     },
+
     {
-      element: <Error />,
-      path: "*",
-    },
-    {
-      element: isAuthority ? (
-        <DashboardLayout>
-          <ScrollToTop>
-            <Suspense fallback={<Loading />}>
-              <Outlet />
-            </Suspense>
-          </ScrollToTop>
-        </DashboardLayout>
+      element: isAuthenticated ? (
+        isAuthority ? (
+          <DashboardLayout>
+            <ScrollToTop>
+              <Suspense fallback={<Loading />}>
+                <Outlet />
+              </Suspense>
+            </ScrollToTop>
+          </DashboardLayout>
+        ) : (
+          <UserRoute />
+        )
       ) : (
-        <UserRoute />
+        <Navigate to="/" />
       ),
       children: [
         {
-          element: <ChartPage />,
-          path: "/chart",
+          element: <UserManagementPage />,
+          path: "/user",
         },
         {
           element: <AdminPage />,
           path: "/admin",
         },
         {
-          element: <CustomerList />,
-          path: "/customer",
-        },
-        {
-          element: <StaffList />,
-          path: "/staff",
+          element: <ChartPage />,
+          path: "/chart",
         },
       ],
+    },
+    {
+      element: <Error />,
+      path: "*",
     },
   ]);
 

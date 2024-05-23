@@ -10,7 +10,7 @@ export const useAnimation = () => {
       } else {
         AOS.init({
           once: true,
-          duration: 600,
+          duration: 400,
           easing: "ease-in-sine",
         });
       }

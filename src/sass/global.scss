@@ -19,6 +19,15 @@
   }
 }
 
+#myTable {
+  overflow-x: auto;
+}
+
+.pagination {
+  position: sticky !important;
+  bottom: 0;
+}
+
 .header {
   width: -webkit-fill-available !important;
 }
@@ -186,6 +195,13 @@
 .formItem
   .ant-col.ant-col-24.ant-form-item-label.css-dev-only-do-not-override-mzwlov {
   padding: 0 !important;
+}
+
+.ant-table-cell.column {
+  position: sticky !important;
+  left: 0 !important;
+  z-index: 999 !important;
+  background-color: #fff !important;
 }
 
 //responsive

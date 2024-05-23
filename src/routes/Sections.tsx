@@ -14,7 +14,6 @@ export const AdminPage = lazy(() => import("@/pages/AdminPage"));
 export const UserManagementPage = lazy(
   () => import("@/pages/UserManagementPage"),
 );
-
 export const ChartPage = lazy(() => import("@/pages/ChartPage"));
 
 const UserRoute: React.FC = () => {
@@ -42,16 +41,20 @@ const Router: React.FC = () => {
     },
 
     {
-      element: isAuthority ? (
-        <DashboardLayout>
-          <ScrollToTop>
-            <Suspense fallback={<Loading />}>
-              <Outlet />
-            </Suspense>
-          </ScrollToTop>
-        </DashboardLayout>
+      element: isAuthenticated ? (
+        isAuthority ? (
+          <DashboardLayout>
+            <ScrollToTop>
+              <Suspense fallback={<Loading />}>
+                <Outlet />
+              </Suspense>
+            </ScrollToTop>
+          </DashboardLayout>
+        ) : (
+          <UserRoute />
+        )
       ) : (
-        <UserRoute />
+        <Navigate to="/" />
       ),
       children: [
         {

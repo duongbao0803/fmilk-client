@@ -51,3 +51,9 @@ export const sourceItems = [
     path: "#",
   },
 ];
+
+export const roles = [
+  { value: "ADMIN", label: "ADMIN" },
+  { value: "STAFF", label: "STAFF" },
+  { value: "MEMBER", label: "MEMBER" },
+];

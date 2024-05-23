@@ -5,6 +5,8 @@ import {
   LockOutlined,
   EyeInvisibleOutlined,
   EyeOutlined,
+  MailOutlined,
+  AuditOutlined,
 } from "@ant-design/icons";
 import { Button, Col, Form, Input, Row, notification } from "antd";
 import "aos/dist/aos.css";
@@ -91,7 +93,7 @@ const Signup: React.FC<SignupProps> = ({
                     rules={[
                       {
                         required: true,
-                        message: "Please input your username!",
+                        message: "Please input your username",
                       },
                       {
                         min: 8,
@@ -131,7 +133,7 @@ const Signup: React.FC<SignupProps> = ({
                     rules={[
                       {
                         required: true,
-                        message: "Please input your name!",
+                        message: "Please input your name",
                       },
                       {
                         min: 8,
@@ -144,7 +146,7 @@ const Signup: React.FC<SignupProps> = ({
                     className="formItem"
                   >
                     <Input
-                      prefix={<UserOutlined className="site-form-item-icon" />}
+                      prefix={<AuditOutlined className="site-form-item-icon" />}
                       placeholder="Name"
                       className="p-2"
                       autoFocus
@@ -162,7 +164,7 @@ const Signup: React.FC<SignupProps> = ({
                     rules={[
                       {
                         required: true,
-                        message: "Please input email!",
+                        message: "Please input email",
                       },
                       {
                         type: "email",
@@ -174,7 +176,7 @@ const Signup: React.FC<SignupProps> = ({
                     className="formItem"
                   >
                     <Input
-                      prefix={<LockOutlined className="site-form-item-icon" />}
+                      prefix={<MailOutlined className="site-form-item-icon" />}
                       placeholder="Email"
                       className="p-2"
                     />
@@ -189,7 +191,7 @@ const Signup: React.FC<SignupProps> = ({
                     rules={[
                       {
                         required: true,
-                        message: "Please input your phone!",
+                        message: "Please input your phone",
                       },
                       { validator: validatePhoneNumber },
                     ]}
@@ -213,7 +215,7 @@ const Signup: React.FC<SignupProps> = ({
                 rules={[
                   {
                     required: true,
-                    message: "Please input your address!",
+                    message: "Please input your address",
                   },
                 ]}
                 label="Address"
@@ -234,7 +236,7 @@ const Signup: React.FC<SignupProps> = ({
                 rules={[
                   {
                     required: true,
-                    message: "Please input your password!",
+                    message: "Please input your password",
                   },
                   {
                     min: 8,
@@ -270,7 +272,7 @@ const Signup: React.FC<SignupProps> = ({
                 rules={[
                   {
                     required: true,
-                    message: "Please input your confirm password!",
+                    message: "Please input your confirm password",
                   },
                   {
                     validator: validatePassword,

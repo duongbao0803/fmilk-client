@@ -1,7 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { notification } from "antd";
-import { CustomError, UserInfo } from "@/interfaces/interface";
+import { AddNewUserProps, CustomError, UserInfo } from "@/interfaces/interface";
 import {
+  addUser,
   editStatusUser,
   editUserInfo,
   getAllUser,
@@ -25,6 +26,10 @@ const useUserService = () => {
   const deleteUser = async (userId: string) => {
     await removeUser(userId);
     return userId;
+  };
+
+  const addNewUser = async (formValues: AddNewUserProps) => {
+    await addUser(formValues);
   };
 
   const updateUserStatus = async ({
@@ -77,8 +82,8 @@ const useUserService = () => {
   const updateStatusMutation = useMutation(updateUserStatus, {
     onSuccess: () => {
       notification.success({
-        message: "Update Status Successful",
-        description: "Update Status successful",
+        message: "Update Successful",
+        description: "Update status successful",
         duration: 2,
       });
       queryClient.invalidateQueries("users");
@@ -86,7 +91,7 @@ const useUserService = () => {
     onError: (err: CustomError) => {
       console.error("Error update", err);
       notification.error({
-        message: "Update Status Failed",
+        message: "Update Failed",
         description: `${err?.response?.data?.message}`,
         duration: 2,
       });
@@ -96,8 +101,8 @@ const useUserService = () => {
   const updateUserInfoMutation = useMutation(updateUserInfo, {
     onSuccess: () => {
       notification.success({
-        message: "Update Status Successful",
-        description: "Update Status successful",
+        message: "Update Successful",
+        description: "Update infomation successful",
         duration: 2,
       });
       queryClient.invalidateQueries("users");
@@ -105,7 +110,26 @@ const useUserService = () => {
     onError: (err: CustomError) => {
       console.error("Error update", err);
       notification.error({
-        message: "Update Status Failed",
+        message: "Update Failed",
+        description: `${err?.response?.data?.message}`,
+        duration: 2,
+      });
+    },
+  });
+
+  const addNewUserMutation = useMutation(addNewUser, {
+    onSuccess: () => {
+      notification.success({
+        message: "Add Successful",
+        description: "Add user successful",
+        duration: 2,
+      });
+      queryClient.invalidateQueries("users");
+    },
+    onError: (err: CustomError) => {
+      console.error("Error add", err);
+      notification.error({
+        message: "Add Failed",
         description: `${err?.response?.data?.message}`,
         duration: 2,
       });
@@ -124,6 +148,10 @@ const useUserService = () => {
     await updateUserInfoMutation.mutateAsync({ userId, userInfo });
   };
 
+  const addNewUserItem = async (formValues: AddNewUserProps) => {
+    await addNewUserMutation.mutateAsync(formValues);
+  };
+
   return {
     users,
     fetchUsers,
@@ -131,6 +159,7 @@ const useUserService = () => {
     updateStatus,
     updateUserItem,
     getInfoUserDetail,
+    addNewUserItem,
     isFetching,
   };
 };

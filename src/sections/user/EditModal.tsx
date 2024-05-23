@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Modal, Form, Input, Row, Col, DatePicker } from "antd";
 import { UserOutlined, PhoneOutlined, BankOutlined } from "@ant-design/icons";
-import moment from "moment/moment";
 import { formatDate } from "@/util/validate";
 import useUserService from "@/services/userService";
 import { UserInfo } from "@/interfaces/interface";
-// import dayjs from "dayjs";
+import moment from "moment/moment";
+import dayjs from "dayjs";
 
 interface EditModalProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -21,7 +21,11 @@ const EditModal: React.FC<EditModalProps> = (props) => {
 
   useEffect(() => {
     if (isOpen) {
-      form.setFieldsValue(userInfo);
+      const updatedUserInfo = { ...userInfo };
+      if (updatedUserInfo.dob) {
+        updatedUserInfo.dob = dayjs(updatedUserInfo.dob);
+      }
+      form.setFieldsValue(updatedUserInfo);
     }
   }, [isOpen]);
 
@@ -52,9 +56,6 @@ const EditModal: React.FC<EditModalProps> = (props) => {
 
   const handleCancel = () => {
     setIsOpen(false);
-    // setTimeout(async () => {
-    //   form.resetFields();
-    // }, 1000);
   };
 
   const disabledDate = (current: object) => {
@@ -124,12 +125,6 @@ const EditModal: React.FC<EditModalProps> = (props) => {
           <Col span={12}>
             <Form.Item
               name="dob"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input dob",
-                },
-              ]}
               colon={true}
               label="Date of birth"
               labelCol={{ span: 24 }}

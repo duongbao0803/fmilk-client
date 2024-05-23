@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import { Button, Input, Switch, Table, Tag } from "antd";
 import type { TableProps } from "antd";
-import { EditOutlined, FilterOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  FilterOutlined,
+  UserAddOutlined,
+} from "@ant-design/icons";
 import useUserService from "@/services/userService";
 import EditModal from "./EditModal";
 import { UserInfo } from "@/interfaces/interface";
+import { formatDate } from "@/util/validate";
+import AddModal from "./AddModal";
 
 export interface DataType {
   _id: string;
@@ -20,9 +26,9 @@ export interface DataType {
 const UserList: React.FC = () => {
   const { users, isFetching, updateStatus } = useUserService();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [userInfo, setUserInfo] = useState<UserInfo>();
+  const [isShow, setIsShow] = useState<boolean>(false);
 
-  console.log("check users", users);
+  const [userInfo, setUserInfo] = useState<UserInfo>();
 
   const openEditModal = (userData: UserInfo) => {
     setIsOpen(true);
@@ -45,12 +51,17 @@ const UserList: React.FC = () => {
     {
       title: "Email",
       dataIndex: "email",
-      width: "25%",
+      width: "20%",
+    },
+    {
+      title: "Date of birth",
+      dataIndex: "dob",
+      width: "15%",
     },
     {
       title: "Phone",
       dataIndex: "phone",
-      width: "15%",
+      width: "10%",
     },
     {
       title: "Address",
@@ -60,7 +71,7 @@ const UserList: React.FC = () => {
     {
       title: "Role",
       dataIndex: "role",
-      width: "12%",
+      width: "10%",
       filters: [
         { text: "ADMIN", value: "ADMIN" },
         { text: "STAFF", value: "STAFF" },
@@ -94,7 +105,7 @@ const UserList: React.FC = () => {
     {
       title: "Status",
       dataIndex: "status",
-      width: "15%",
+      width: "10%",
       render: (_, record) => (
         <Switch
           checkedChildren="Active"
@@ -132,17 +143,29 @@ const UserList: React.FC = () => {
         <div className="flex gap-x-2">
           <div>{/* <ExportButton /> */}</div>
           <div>
-            <Button type="primary">+ Add User</Button>
+            <Button type="primary" onClick={() => setIsShow(true)}>
+              <div className="flex justify-center">
+                <UserAddOutlined className="mr-1 text-lg" /> Add User
+              </div>
+            </Button>
           </div>
         </div>
       </div>
       <Table
+        className="pagination"
+        id="myTable"
         columns={columns}
-        dataSource={users}
+        dataSource={users.map(
+          (record: { id: unknown; dob: string | number | Date }) => ({
+            ...record,
+            key: record.id,
+            dob: formatDate(record.dob),
+          }),
+        )}
         loading={isFetching}
         rowKey={(record) => record._id}
       />
-
+      <AddModal setIsShow={setIsShow} isShow={isShow} />
       <EditModal isOpen={isOpen} setIsOpen={setIsOpen} userInfo={userInfo} />
     </>
   );

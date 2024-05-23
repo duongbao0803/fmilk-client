@@ -1,5 +1,5 @@
 import axiosClient from "@/config/axiosClient";
-import { UserInfo } from "@/interfaces/interface";
+import { AddNewUserProps, UserInfo } from "@/interfaces/interface";
 
 const getAllUser = () => {
   return axiosClient.get("/v1/user");
@@ -7,6 +7,10 @@ const getAllUser = () => {
 
 const getDetailUser = (userId: string) => {
   return axiosClient.get(`/v1/user/${userId}`);
+};
+
+const addUser = (formValues: AddNewUserProps) => {
+  return axiosClient.post("/v1/auth/register", formValues);
 };
 
 const editStatusUser = (userId: string, status: boolean) => {
@@ -21,4 +25,11 @@ const removeUser = (userId: string) => {
   return axiosClient.delete(`/v1/user/${userId}`);
 };
 
-export { getAllUser, removeUser, editStatusUser, editUserInfo, getDetailUser };
+export {
+  getAllUser,
+  removeUser,
+  editStatusUser,
+  editUserInfo,
+  getDetailUser,
+  addUser,
+};

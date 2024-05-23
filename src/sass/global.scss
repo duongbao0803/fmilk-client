@@ -19,6 +19,15 @@
   }
 }
 
+#myTable {
+  overflow-x: auto;
+}
+
+.pagination {
+  position: sticky !important;
+  bottom: 0;
+}
+
 .header {
   width: -webkit-fill-available !important;
 }
@@ -60,8 +69,8 @@
   transform-origin: 0%;
 }
 
-.ant-dropdown-trigger:hover {
-  background-color: orange;
+.dropdownHeader:hover {
+  background-color: orange !important;
 }
 
 .background {
@@ -156,7 +165,7 @@
 }
 
 :where(.css-dev-only-do-not-override-1okl62o).ant-form-item {
-  margin-bottom: 21px !important;
+  margin-bottom: 10px !important;
 }
 
 .ant-form-item-explain-error {
@@ -186,6 +195,13 @@
 .formItem
   .ant-col.ant-col-24.ant-form-item-label.css-dev-only-do-not-override-mzwlov {
   padding: 0 !important;
+}
+
+.ant-table-cell.column {
+  position: sticky !important;
+  left: 0 !important;
+  z-index: 999 !important;
+  background-color: #fff !important;
 }
 
 //responsive

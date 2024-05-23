@@ -5,12 +5,15 @@ import {
   LockOutlined,
   EyeInvisibleOutlined,
   EyeOutlined,
+  MailOutlined,
+  AuditOutlined,
 } from "@ant-design/icons";
 import { Button, Col, Form, Input, Row, notification } from "antd";
 import "aos/dist/aos.css";
 import Signin from "./Signin";
 import { SignupProps, SignupValues } from "@/interfaces/interface";
 import { signUp } from "@/api/authenApi";
+import { validatePhoneNumber } from "@/util/validate";
 
 const Signup: React.FC<SignupProps> = ({
   isShowRegister,
@@ -82,72 +85,77 @@ const Signup: React.FC<SignupProps> = ({
             </h1>
           </div>
           <Form name="normal_login" form={form} onFinish={onFinish}>
-            <div data-aos="fade-right">
-              <Form.Item
-                name="username"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your Username!",
-                  },
-                  {
-                    min: 8,
-                    message: "Must be at least 8 characters",
-                  },
-                  {
-                    max: 30,
-                    message: "Must not exceed 30 characters",
-                  },
-                  {
-                    pattern: /^[^\s]+$/,
-                    message: "Username cannot contain spaces",
-                  },
-                  {
-                    pattern: /^[a-z0-9]+$/,
-                    message: "Username cannot contain special characters",
-                  },
-                ]}
-                colon={true}
-                label="Username"
-                labelCol={{ span: 24 }}
-                className="formItem"
-              >
-                <Input
-                  prefix={<UserOutlined className="site-form-item-icon" />}
-                  placeholder="Username"
-                  className="p-2"
-                  autoFocus
-                />
-              </Form.Item>
-            </div>
             <Row gutter={16} className="relative">
               <Col span={12}>
                 <div data-aos="fade-right">
                   <Form.Item
-                    name="name"
-                    id="formItem"
+                    name="username"
                     rules={[
                       {
                         required: true,
-                        message: "Please input your Name!",
+                        message: "Please input your username",
+                      },
+                      {
+                        min: 8,
+                        message: "Must be at least 8 characters",
+                      },
+                      {
+                        max: 30,
+                        message: "Must not exceed 30 characters",
+                      },
+                      {
+                        pattern: /^[^\s]+$/,
+                        message: "Username cannot contain spaces",
+                      },
+                      {
+                        pattern: /^[a-z0-9]+$/,
+                        message: "Username cannot contain special characters",
+                      },
+                    ]}
+                    colon={true}
+                    label="Username"
+                    labelCol={{ span: 24 }}
+                    className="formItem"
+                  >
+                    <Input
+                      prefix={<UserOutlined className="site-form-item-icon" />}
+                      placeholder="Username"
+                      className="p-2"
+                      autoFocus
+                    />
+                  </Form.Item>
+                </div>
+              </Col>
+              <Col span={12}>
+                <div data-aos="fade-right">
+                  <Form.Item
+                    name="name"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your name",
                       },
                       {
                         min: 8,
                         message: "Must be at least 8 characters",
                       },
                     ]}
+                    colon={true}
                     label="Name"
                     labelCol={{ span: 24 }}
                     className="formItem"
                   >
                     <Input
-                      prefix={<LockOutlined className="site-form-item-icon" />}
+                      prefix={<AuditOutlined className="site-form-item-icon" />}
                       placeholder="Name"
                       className="p-2"
+                      autoFocus
                     />
                   </Form.Item>
                 </div>
               </Col>
+            </Row>
+            <Row gutter={16} className="relative">
               <Col span={12}>
                 <div data-aos="fade-right">
                   <Form.Item
@@ -168,8 +176,32 @@ const Signup: React.FC<SignupProps> = ({
                     className="formItem"
                   >
                     <Input
-                      prefix={<LockOutlined className="site-form-item-icon" />}
+                      prefix={<MailOutlined className="site-form-item-icon" />}
                       placeholder="Email"
+                      className="p-2"
+                    />
+                  </Form.Item>
+                </div>
+              </Col>
+              <Col span={12}>
+                <div data-aos="fade-right">
+                  <Form.Item
+                    name="phone"
+                    id="formItem"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your phone",
+                      },
+                      { validator: validatePhoneNumber },
+                    ]}
+                    label="Phone"
+                    labelCol={{ span: 24 }}
+                    className="formItem"
+                  >
+                    <Input
+                      prefix={<LockOutlined className="site-form-item-icon" />}
+                      placeholder="Phone number"
                       className="p-2"
                     />
                   </Form.Item>
@@ -178,12 +210,33 @@ const Signup: React.FC<SignupProps> = ({
             </Row>
             <div data-aos="fade-right">
               <Form.Item
+                name="address"
+                id="formItem"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your address",
+                  },
+                ]}
+                label="Address"
+                labelCol={{ span: 24 }}
+                className="formItem"
+              >
+                <Input
+                  prefix={<LockOutlined className="site-form-item-icon" />}
+                  placeholder="Address"
+                  className="p-2"
+                />
+              </Form.Item>
+            </div>
+            <div data-aos="fade-right">
+              <Form.Item
                 name="password"
                 id="formItem"
                 rules={[
                   {
                     required: true,
-                    message: "Please input your Password!",
+                    message: "Please input your password",
                   },
                   {
                     min: 8,
@@ -219,7 +272,7 @@ const Signup: React.FC<SignupProps> = ({
                 rules={[
                   {
                     required: true,
-                    message: "Please input your Confirm Password!",
+                    message: "Please input your confirm password",
                   },
                   {
                     validator: validatePassword,
@@ -248,7 +301,7 @@ const Signup: React.FC<SignupProps> = ({
               </Form.Item>
             </div>
             <div data-aos="fade-left">
-              <Form.Item>
+              <Form.Item id="form-button">
                 <Button
                   type="primary"
                   htmlType="submit"
@@ -259,17 +312,15 @@ const Signup: React.FC<SignupProps> = ({
               </Form.Item>
             </div>
           </Form>
-          <div data-aos="fade-up">
-            <div className="text-center text-sm">
-              You already have an account? {""}
-              <a
-                href="#"
-                className="font-semibold text-[#3094ff] hover:underline"
-                onClick={() => setIsShowRegister(false)}
-              >
-                Sign In
-              </a>
-            </div>
+          <div className="text-center text-sm">
+            You already have an account? {""}
+            <a
+              href="#"
+              className="font-semibold text-[#3094ff] hover:underline"
+              onClick={() => setIsShowRegister(false)}
+            >
+              Sign In
+            </a>
           </div>
         </>
       ) : (

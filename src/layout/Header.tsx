@@ -70,7 +70,7 @@ const Header: React.FC = React.memo(() => {
                     ))}
                 </Menu>
               }
-              className={`cursor-pointer rounded-3xl px-3 py-1 transition-all duration-500 hover:text-[#fff] ${
+              className={`dropdownHeader cursor-pointer rounded-3xl px-3 py-1 transition-all duration-500 hover:text-[#fff] ${
                 selectedDropdown === "1" ||
                 selectedDropdown === "2" ||
                 selectedDropdown === "3"
@@ -105,7 +105,7 @@ const Header: React.FC = React.memo(() => {
                     ))}
                 </Menu>
               }
-              className={`cursor-pointer rounded-3xl px-3 py-1 transition-all duration-500 hover:text-[#fff] ${
+              className={`dropdownHeader cursor-pointer rounded-3xl px-3 py-1 transition-all duration-500 hover:text-[#fff] ${
                 selectedDropdown === "4" ||
                 selectedDropdown === "5" ||
                 selectedDropdown === "6"
@@ -140,7 +140,7 @@ const Header: React.FC = React.memo(() => {
                     ))}
                 </Menu>
               }
-              className={`cursor-pointer rounded-3xl px-3 py-1 transition-all duration-500 hover:text-[#fff] ${
+              className={`dropdownHeader cursor-pointer rounded-3xl px-3 py-1 transition-all duration-500 hover:text-[#fff] ${
                 selectedDropdown === "7" ||
                 selectedDropdown === "8" ||
                 selectedDropdown === "9"
@@ -158,7 +158,7 @@ const Header: React.FC = React.memo(() => {
             <Link
               to="/home"
               onClick={handleSelectedContact}
-              className={`cursor-pointer rounded-3xl px-3 py-1 transition-all duration-500 hover:bg-[orange] hover:text-[#fff] ${
+              className={`dropdownHeader cursor-pointer rounded-3xl px-3 py-1 transition-all duration-500 hover:bg-[orange] hover:text-[#fff] ${
                 isSelectedContact ? "bg-[orange] text-[#fff]" : ""
               }`}
             >

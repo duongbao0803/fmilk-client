@@ -67,7 +67,7 @@ const Signin: React.FC = () => {
         const jwtAccessToken = res.data.accessToken;
         const jwtRefreshToken = res.data.refreshToken;
         Cookies.set("accessToken", jwtAccessToken, { expires: 1 });
-        Cookies.set("refreshToken", jwtRefreshToken, { expires: 1 });
+        Cookies.set("refreshToken", jwtRefreshToken, { expires: 10 });
 
         if (rememberMe) {
           const encryptedUsername = encryptData(username, secretKey);

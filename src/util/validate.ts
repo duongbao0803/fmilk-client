@@ -1,4 +1,4 @@
-export const validatePhoneNumber = (_, value) => {
+export const validatePhoneNumber = (_: unknown, value: string) => {
   const phoneNumberPattern = /^[0-9]{10}$/;
   if (value && !phoneNumberPattern.test(value)) {
     return Promise.reject(new Error("Phone number must be exactly 10 digits"));
@@ -6,7 +6,7 @@ export const validatePhoneNumber = (_, value) => {
   return Promise.resolve();
 };
 
-export function formatDate(dateString) {
+export function formatDate(dateString: string | number | Date) {
   const date = new Date(dateString);
   if (isNaN(date.getTime())) {
     return "Invalid date";

@@ -95,3 +95,20 @@ export interface AddNewUserProps {
   phone: string;
   name: string;
 }
+
+export interface TablePaginationConfig {
+  current?: number;
+  defaultCurrent?: number;
+  total?: number;
+  defaultTotal?: number;
+  pageSize?: number;
+  defaultPageSize?: number;
+  pageSizeOptions?: string[];
+  showSizeChanger?: boolean;
+  showQuickJumper?: boolean | { goButton: ReactNode };
+  showTotal?: (total: number, range: [number, number]) => ReactNode;
+  hideOnSinglePage?: boolean;
+  simple?: boolean;
+  onChange?: (page: number, pageSize: number | undefined) => void;
+  onShowSizeChange?: (current: number, size: number) => void;
+}

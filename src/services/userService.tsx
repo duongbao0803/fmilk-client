@@ -13,8 +13,8 @@ import {
 const useUserService = () => {
   const queryClient = useQueryClient();
 
-  const fetchUsers = async () => {
-    const res = await getAllUser();
+  const fetchUsers = async (page: number) => {
+    const res = await getAllUser(page);
     return res.data.users;
   };
 
@@ -54,7 +54,7 @@ const useUserService = () => {
 
   const { data: users = [], isLoading: isFetching } = useQuery(
     "users",
-    fetchUsers,
+    () => fetchUsers(1),
     {
       retry: 3,
       retryDelay: 5000,

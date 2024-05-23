@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Input, Switch, Table, Tag } from "antd";
-import type { TableProps } from "antd";
+import type { TablePaginationConfig, TableProps } from "antd";
 import {
   EditOutlined,
   FilterOutlined,
   UserAddOutlined,
 } from "@ant-design/icons";
 import useUserService from "@/services/userService";
-import EditModal from "./EditModal";
 import { UserInfo } from "@/interfaces/interface";
 import { formatDate } from "@/util/validate";
+import EditModal from "./EditModal";
 import AddModal from "./AddModal";
 
 export interface DataType {
@@ -24,11 +24,16 @@ export interface DataType {
 }
 
 const UserList: React.FC = () => {
-  const { users, isFetching, updateStatus } = useUserService();
+  const { users, isFetching, updateStatus, fetchUsers } = useUserService();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isShow, setIsShow] = useState<boolean>(false);
 
   const [userInfo, setUserInfo] = useState<UserInfo>();
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  useEffect(() => {
+    fetchUsers(currentPage);
+  }, [currentPage, fetchUsers]);
 
   const openEditModal = (userData: UserInfo) => {
     setIsOpen(true);
@@ -39,6 +44,10 @@ const UserList: React.FC = () => {
     if (userId) {
       updateStatus(userId, newStatus);
     }
+  };
+
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    setCurrentPage(pagination.current || 1);
   };
 
   const columns: TableProps<DataType>["columns"] = [
@@ -155,13 +164,19 @@ const UserList: React.FC = () => {
         className="pagination"
         id="myTable"
         columns={columns}
-        dataSource={users.map(
+        dataSource={users?.map(
           (record: { id: unknown; dob: string | number | Date }) => ({
             ...record,
             key: record.id,
             dob: formatDate(record.dob),
           }),
         )}
+        pagination={{
+          current: currentPage,
+          total: users.totalUsers || 0,
+          pageSize: 5,
+        }}
+        onChange={handleTableChange}
         loading={isFetching}
         rowKey={(record) => record._id}
       />

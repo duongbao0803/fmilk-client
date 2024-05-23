@@ -1,8 +1,13 @@
 import axiosClient from "@/config/axiosClient";
 import { AddNewUserProps, UserInfo } from "@/interfaces/interface";
 
-const getAllUser = () => {
-  return axiosClient.get("/v1/user");
+const getAllUser = (page: number) => {
+  return axiosClient.get(`/v1/user`, {
+    params: {
+      page: page,
+      pageSize: 20,
+    },
+  });
 };
 
 const getDetailUser = (userId: string) => {

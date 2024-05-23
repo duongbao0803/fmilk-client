@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const axiosClient = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: "https://fmilk-server.onrender.com",
   headers: {
     "Content-Type": "application/json",
   },
@@ -28,21 +28,29 @@ axiosClient.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
-    if (error.response.status === 403 && !originalRequest._retry) {
+
+    if (
+      error.response?.status === 403 &&
+      error.response?.data?.errorType === "invalid_token" &&
+      !originalRequest._retry
+    ) {
       originalRequest._retry = true;
       const refreshToken = Cookies.get("refreshToken");
+
       try {
         if (refreshToken) {
-          const response = await requestRefreshToken(refreshToken);
-          const data = response.data;
-          Cookies.set("accessToken", data.accessToken);
-          axiosClient.defaults.headers.common["Authorization"] =
-            `Bearer ${data.accessToken}`;
+          const res = await requestRefreshToken(refreshToken);
+          if (res && res.status === 200) {
+            const data = res.data;
+            Cookies.set("accessToken", data.accessToken);
+            axiosClient.defaults.headers.common["Authorization"] =
+              `Bearer ${data.accessToken}`;
+          }
           return axiosClient(originalRequest);
         }
       } catch (refreshError) {
         console.error("check refresh error", refreshError);
-        return Promise.reject(refreshError);
+        // return Promise.reject(refreshError);
       }
     }
     return Promise.reject(error);

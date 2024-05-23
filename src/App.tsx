@@ -2,6 +2,9 @@ import React, { useEffect } from "react";
 import Router from "./routes/Sections";
 import useAuth from "./hooks/useAuth";
 import Cookies from "js-cookie";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 const App: React.FC = () => {
   const { fetchUserInfo, isAuthenticated } = useAuth();
@@ -15,7 +18,9 @@ const App: React.FC = () => {
 
   return (
     <>
-      <Router />
+      <QueryClientProvider client={queryClient}>
+        <Router />
+      </QueryClientProvider>
     </>
   );
 };

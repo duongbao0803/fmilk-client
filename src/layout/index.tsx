@@ -37,11 +37,8 @@ const items: MenuItem[] = [
     "User",
     "sub1",
     <UserOutlined />,
-    [
-      getItem("Admin", "3", undefined, undefined, "/admin"),
-      getItem("Staff", "4", undefined, undefined, "/staff"),
-      getItem("Customer", "5", undefined, undefined, "/customer"),
-    ],
+    undefined,
+
     "/user",
   ),
   getItem(
@@ -122,6 +119,7 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
         className="scrollbar sider bottom-0 left-0 top-0 z-50 box-border min-h-screen w-56 flex-none overflow-auto overflow-y-auto"
         theme="light"
         collapsible
+        defaultCollapsed={false}
       >
         <div className="demo-logo-vertical" />
         <div className="my-4 flex justify-center">

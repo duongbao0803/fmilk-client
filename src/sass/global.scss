@@ -60,8 +60,8 @@
   transform-origin: 0%;
 }
 
-.ant-dropdown-trigger:hover {
-  background-color: orange;
+.dropdownHeader:hover {
+  background-color: orange !important;
 }
 
 .background {
@@ -156,7 +156,7 @@
 }
 
 :where(.css-dev-only-do-not-override-1okl62o).ant-form-item {
-  margin-bottom: 21px !important;
+  margin-bottom: 10px !important;
 }
 
 .ant-form-item-explain-error {

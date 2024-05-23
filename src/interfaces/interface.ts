@@ -1,8 +1,12 @@
 export interface UserInfo {
-  username: string;
-  email: string;
-  name: string;
-  role: string;
+  username?: string;
+  email?: string;
+  name?: string;
+  role?: string;
+  dob?: string;
+  phone?: string;
+  address?: string;
+  _id?: string;
 }
 
 export interface AuthState {
@@ -58,4 +62,12 @@ export interface SignupProps {
 
 export interface responseTokenProps {
   accessToken: string;
+}
+
+export interface CustomError extends Error {
+  response?: {
+    data?: {
+      message?: string;
+    };
+  };
 }

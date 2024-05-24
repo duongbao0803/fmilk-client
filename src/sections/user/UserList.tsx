@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Input, Switch, Table, Tag } from "antd";
 import type { TablePaginationConfig, TableProps } from "antd";
 import {
@@ -25,16 +25,12 @@ export interface DataType {
 }
 
 const UserList: React.FC = () => {
-  const { users, isFetching, updateStatus, fetchUsers } = useUserService();
+  const { users, isFetching, updateStatus } = useUserService();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isShow, setIsShow] = useState<boolean>(false);
 
   const [userInfo, setUserInfo] = useState<UserInfo>();
   const [currentPage, setCurrentPage] = useState<number>(1);
-
-  useEffect(() => {
-    fetchUsers(currentPage);
-  }, [currentPage, fetchUsers]);
 
   const openEditModal = (userData: UserInfo) => {
     setIsOpen(true);

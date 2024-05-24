@@ -4,8 +4,8 @@ import { FloatButton, Layout, Menu, notification } from "antd";
 import {
   PieChartOutlined,
   UserOutlined,
-  TeamOutlined,
   FileOutlined,
+  ProductOutlined,
 } from "@ant-design/icons";
 import { LayoutProps, MenuItem, UserInfo } from "@/interfaces/interface";
 import useAuth from "@/hooks/useAuth";
@@ -35,22 +35,13 @@ const items: MenuItem[] = [
   getItem("Chart", "1", <PieChartOutlined />, undefined, "/chart"),
   getItem(
     "User",
-    "sub1",
+    "2",
     <UserOutlined />,
     undefined,
 
     "/user",
   ),
-  getItem(
-    "Team",
-    "sub2",
-    <TeamOutlined />,
-    [
-      getItem("Team 1", "6", undefined, undefined, "/option2"),
-      getItem("Team 2", "7", undefined, undefined, "/option2"),
-    ],
-    "/team",
-  ),
+  getItem("Product", "3", <ProductOutlined />, undefined, "/product"),
   getItem("Files", "8", <FileOutlined />, undefined, "/option2"),
 ];
 
@@ -66,7 +57,7 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
 
   const resetDefaultSelectedKeys = () => {
     const selectedKeys = sessionStorage.getItem("keys");
-    return selectedKeys ? selectedKeys.split(",") : ["1"];
+    return selectedKeys ? selectedKeys.split(",") : ["2"];
   };
 
   const defaultSelectedKeys = useMemo(() => resetDefaultSelectedKeys(), []);

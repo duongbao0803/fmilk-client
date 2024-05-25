@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
+  addProduct,
   editProductInfo,
   getAllProduct,
   getDetailProduct,
@@ -26,19 +27,9 @@ const useProductService = () => {
     return productId;
   };
 
-  // const addNewUser = async (formValues: AddNewUserProps) => {
-  //   await addUser(formValues);
-  // };
-
-  // const updateUserStatus = async ({
-  //   userId,
-  //   userStatus,
-  // }: {
-  //   userId: string;
-  //   userStatus: boolean;
-  // }) => {
-  //   await editStatusUser(userId, userStatus);
-  // };
+  const addNewProduct = async (formValues: ProductInfo) => {
+    await addProduct(formValues);
+  };
 
   const updateProductInfo = async ({
     productId,
@@ -96,32 +87,27 @@ const useProductService = () => {
     },
   });
 
-  // const addNewUserMutation = useMutation(addNewUser, {
-  //   onSuccess: () => {
-  //     notification.success({
-  //       message: "Add Successful",
-  //       description: "Add user successful",
-  //       duration: 2,
-  //     });
-  //     queryClient.invalidateQueries("users");
-  //   },
-  //   onError: (err: CustomError) => {
-  //     console.error("Error add", err);
-  //     notification.error({
-  //       message: "Add Failed",
-  //       description: `${err?.response?.data?.message}`,
-  //       duration: 2,
-  //     });
-  //   },
-  // });
+  const addNewProductMutation = useMutation(addNewProduct, {
+    onSuccess: () => {
+      notification.success({
+        message: "Add Successful",
+        description: "Add product successful",
+        duration: 2,
+      });
+      queryClient.invalidateQueries("products");
+    },
+    onError: (err: CustomError) => {
+      notification.error({
+        message: "Add Failed",
+        description: `${err?.response?.data?.message}`,
+        duration: 2,
+      });
+    },
+  });
 
   const deleteProductItem = async (userId: string) => {
     await deleteProductMutation.mutateAsync(userId);
   };
-
-  // const updateStatus = async (userId: string, userStatus: boolean) => {
-  //   await updateStatusMutation.mutateAsync({ userId, userStatus });
-  // };
 
   const updateProductItem = async (
     productId: string,
@@ -130,9 +116,9 @@ const useProductService = () => {
     await updateProductInfoMutation.mutateAsync({ productId, productInfo });
   };
 
-  // const addNewUserItem = async (formValues: AddNewUserProps) => {
-  //   await addNewUserMutation.mutateAsync(formValues);
-  // };
+  const addNewProductItem = async (formValues: ProductInfo) => {
+    await addNewProductMutation.mutateAsync(formValues);
+  };
 
   return {
     products,
@@ -141,6 +127,7 @@ const useProductService = () => {
     getInfoProductDetail,
     deleteProductItem,
     updateProductItem,
+    addNewProductItem,
   };
 };
 

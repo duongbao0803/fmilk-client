@@ -1,44 +1,25 @@
-import { useState } from "react";
-import { Modal, Form, Input, Row, Col, Select } from "antd";
-import {
-  UserOutlined,
-  PhoneOutlined,
-  LockOutlined,
-  MailOutlined,
-  BankOutlined,
-  AuditOutlined,
-  EyeInvisibleOutlined,
-  EyeOutlined,
-} from "@ant-design/icons";
-import { validatePhoneNumber } from "@/util/validate";
-import useUserService from "@/services/userService";
-import { AddModalProps } from "@/interfaces/interface";
-import { roles } from "@/constant/constant";
+import { useEffect, useState } from "react";
+import { Modal, Form, Input, Row, Col } from "antd";
+import { UserOutlined, PhoneOutlined, BankOutlined } from "@ant-design/icons";
+import useProductService from "@/services/productService";
+import UploadImageProduct from "./UploadImageProduct";
+
+export interface AddModalProps {
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isOpen: boolean;
+}
 
 const AddProductModal: React.FC<AddModalProps> = (props) => {
-  const { setIsShow, isShow } = props;
+  const [fileChange, setFileChange] = useState<string>("");
+
+  const { setIsOpen, isOpen } = props;
   const [isConfirmLoading, setIsConfirmLoading] = useState<boolean>(false);
-  const { addNewUserItem } = useUserService();
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [showConfirmPassword, setShowConfirmPassword] =
-    useState<boolean>(false);
+  const { addNewProductItem } = useProductService();
   const [form] = Form.useForm();
 
-  const validatePassword = (_: unknown, value: string) => {
-    const password = form.getFieldValue("password");
-    if (value && password && value !== password) {
-      return Promise.reject("Passwords do not match");
-    }
-    return Promise.resolve();
-  };
-
-  const togglePassword = (): void => {
-    setShowPassword(!showPassword);
-  };
-
-  const toggleConfirmPassword = (): void => {
-    setShowConfirmPassword(!showConfirmPassword);
-  };
+  useEffect(() => {
+    form.setFieldsValue({ image: fileChange });
+  }, [fileChange, form]);
 
   const handleOk = async () => {
     try {
@@ -46,71 +27,39 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
       setIsConfirmLoading(true);
       setTimeout(async () => {
         try {
-          await addNewUserItem(values);
+          await addNewProductItem(values);
+          form.resetFields();
           setIsConfirmLoading(false);
-          setIsShow(false);
+          setIsOpen(false);
         } catch (error) {
           setIsConfirmLoading(false);
-          setIsShow(true);
+          setIsOpen(true);
         }
-      }, 1000);
+      }, 1500);
     } catch (errorInfo) {
-      console.log("Validation failed:", errorInfo);
+      console.error("Validation failed:", errorInfo);
     }
   };
 
   const handleCancel = () => {
-    setIsShow(false);
+    setIsOpen(false);
     form.resetFields();
+  };
+
+  const handleFileChange = (newFileChange: string) => {
+    setFileChange(newFileChange);
   };
 
   return (
     <Modal
-      title={<p className="text-lg text-[red]">Add new user</p>}
-      open={isShow}
+      title={<p className="text-lg text-[red]">Add new product</p>}
+      open={isOpen}
       onOk={handleOk}
       confirmLoading={isConfirmLoading}
       onCancel={handleCancel}
     >
       <Form name="normal_login" className="login-form" form={form}>
-        <Row gutter={16} className="relative">
-          <Col span={12}>
-            <Form.Item
-              name="username"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input username",
-                },
-                {
-                  min: 8,
-                  message: "Must be at least 8 characters",
-                },
-                {
-                  max: 30,
-                  message: "Must not exceed 30 characters",
-                },
-                {
-                  pattern: /^[^\s]+$/,
-                  message: "Username cannot contain spaces",
-                },
-                {
-                  pattern: /^[a-z0-9]+$/,
-                  message: "Username cannot contain special characters",
-                },
-              ]}
-              colon={true}
-              label="Username"
-              labelCol={{ span: 24 }}
-              className="formItem"
-            >
-              <Input
-                prefix={<UserOutlined className="site-form-item-icon mr-1" />}
-                placeholder="Username"
-                autoFocus
-              />
-            </Form.Item>
-          </Col>
+        <Row gutter={16} className="relative mt-1">
           <Col span={12}>
             <Form.Item
               name="name"
@@ -120,8 +69,8 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
                   message: "Please input name",
                 },
                 {
-                  min: 8,
-                  message: "Must be at least 8 characters",
+                  min: 5,
+                  message: "Name must be at least 5 characters",
                 },
               ]}
               colon={true}
@@ -130,26 +79,23 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
               className="formItem"
             >
               <Input
-                prefix={<AuditOutlined className="site-form-item-icon mr-1" />}
+                prefix={<UserOutlined className="site-form-item-icon mr-1" />}
                 placeholder="Name"
                 autoFocus
               />
             </Form.Item>
           </Col>
-        </Row>
-        <Row gutter={16} className="relative mt-1">
           <Col span={12}>
             <Form.Item
-              name="phone"
+              name="typeOfProduct"
               rules={[
                 {
                   required: true,
-                  message: "Please input phone",
+                  message: "Please input typeOfProduct",
                 },
-                { validator: validatePhoneNumber },
               ]}
               colon={true}
-              label="Phone"
+              label="Type Of Product"
               labelCol={{ span: 24 }}
               className="formItem"
             >
@@ -162,134 +108,105 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
               />
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item
-              name="role"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input role",
-                },
-              ]}
-              colon={true}
-              label="Role"
-              labelCol={{ span: 24 }}
-              className="formItem w-full"
-            >
-              <Select options={roles} />
-            </Form.Item>
-          </Col>
         </Row>
         <Row gutter={16} className="relative mt-1">
           <Col span={12}>
             <Form.Item
-              name="email"
+              name="rating"
               rules={[
                 {
                   required: true,
-                  message: "Please input email",
-                },
-                {
-                  type: "email",
-                  message: "Please enter a valid email address",
+                  message: "Please input rating",
                 },
               ]}
               colon={true}
-              label="Email"
+              label="Rating"
               labelCol={{ span: 24 }}
               className="formItem"
             >
               <Input
-                prefix={<MailOutlined className="site-form-item-icon mr-1" />}
-                placeholder="url"
+                prefix={<UserOutlined className="site-form-item-icon mr-1" />}
+                placeholder="Rating"
                 autoFocus
               />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
-              name="address"
+              name="quantity"
               rules={[
                 {
                   required: true,
-                  message: "Please input address",
+                  message: "Please input typeOfProduct",
                 },
               ]}
               colon={true}
-              label="Address"
+              label="Quantity"
               labelCol={{ span: 24 }}
               className="formItem"
             >
               <Input
-                prefix={<BankOutlined className="site-form-item-icon mr-1" />}
-                placeholder="url"
-                autoFocus
+                prefix={
+                  <PhoneOutlined className="site-form-item-icon mr-1 rotate-90" />
+                }
+                placeholder="Quantity"
+                maxLength={10}
               />
             </Form.Item>
           </Col>
         </Row>
         <Form.Item
-          name="password"
+          name="description"
           rules={[
             {
               required: true,
-              message: "Please input your password",
-            },
-            {
-              min: 8,
-              message: "Password must be at least 8 characters",
+              message: "Please input description",
             },
           ]}
-          colon={true}
-          label="Password"
+          label="Description"
           labelCol={{ span: 24 }}
           className="formItem"
         >
           <Input
-            prefix={<LockOutlined className="site-form-item-icon mr-1" />}
-            autoFocus
-            type={showPassword ? "text" : "password"}
-            placeholder="Password"
-            suffix={
-              <>
-                {showPassword ? (
-                  <EyeInvisibleOutlined onClick={togglePassword} />
-                ) : (
-                  <EyeOutlined onClick={togglePassword} />
-                )}
-              </>
-            }
+            prefix={<BankOutlined className="site-form-item-icon mr-1" />}
+            placeholder="Description"
           />
         </Form.Item>
         <Form.Item
-          name="confirmPassword"
+          name="price"
           rules={[
             {
               required: true,
-              message: "Please input your confirm password",
-            },
-            {
-              validator: validatePassword,
+              message: "Please select location",
             },
           ]}
           colon={true}
-          label="Confirm password"
+          label="Price"
           labelCol={{ span: 24 }}
           className="formItem"
         >
           <Input
-            prefix={<LockOutlined className="site-form-item-icon mr-1" />}
-            placeholder="Confirm password"
-            type={showConfirmPassword ? "text" : "password"}
-            suffix={
-              <>
-                {showConfirmPassword ? (
-                  <EyeInvisibleOutlined onClick={toggleConfirmPassword} />
-                ) : (
-                  <EyeOutlined onClick={toggleConfirmPassword} />
-                )}
-              </>
-            }
+            prefix={<BankOutlined className="site-form-item-icon mr-1" />}
+            placeholder="Price"
+            maxLength={10}
+          />
+        </Form.Item>
+        <Form.Item
+          name="image"
+          rules={[
+            {
+              required: true,
+              message: "Please select image",
+            },
+          ]}
+          colon={true}
+          label="Image"
+          labelCol={{ span: 24 }}
+          className="formItem"
+        >
+          <UploadImageProduct
+            onFileChange={handleFileChange}
+            initialImage={""}
           />
         </Form.Item>
       </Form>

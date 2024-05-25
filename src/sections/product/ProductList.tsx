@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Button, Input, Table } from "antd";
 import type { TablePaginationConfig, TableProps } from "antd";
-import { FilterOutlined, UserAddOutlined } from "@ant-design/icons";
+import { AppstoreAddOutlined, FilterOutlined } from "@ant-design/icons";
 import { formatDate } from "@/util/validate";
-import AddModal from "../user/AddModal";
 import useProductService from "@/services/productService";
 import ExportButton from "./ExportButton";
 import DropdownFunction from "./DropdownFunction";
+import AddProductModal from "./AddProductModal";
 
 export interface DataType {
   _id: string;
@@ -23,7 +23,7 @@ export interface DataType {
 const ProductList: React.FC = () => {
   const { products, isFetching } = useProductService();
 
-  const [isShow, setIsShow] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -105,9 +105,9 @@ const ProductList: React.FC = () => {
             <ExportButton />
           </div>
           <div>
-            <Button type="primary" onClick={() => setIsShow(true)}>
+            <Button type="primary" onClick={() => setIsOpen(true)}>
               <div className="flex justify-center">
-                <UserAddOutlined className="mr-1 text-lg" /> Add User
+                <AppstoreAddOutlined className="mr-1 text-lg" /> Add Product
               </div>
             </Button>
           </div>
@@ -133,7 +133,7 @@ const ProductList: React.FC = () => {
         loading={isFetching}
         rowKey={(record) => record._id}
       />
-      <AddModal setIsShow={setIsShow} isShow={isShow} />
+      <AddProductModal setIsOpen={setIsOpen} isOpen={isOpen} />
     </>
   );
 };

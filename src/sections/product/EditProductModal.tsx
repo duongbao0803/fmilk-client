@@ -14,6 +14,7 @@ export interface EditModalProps {
 
 const EditProductModal: React.FC<EditModalProps> = (props) => {
   const { setIsOpen, isOpen, productInfo } = props;
+  const [fileChange, setFileChange] = useState<string>("");
   const [isConfirmLoading, setIsConfirmLoading] = useState<boolean>(false);
   const { updateProductItem } = useProductService();
   const [form] = Form.useForm();
@@ -23,6 +24,10 @@ const EditProductModal: React.FC<EditModalProps> = (props) => {
       form.setFieldsValue(productInfo);
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    form.setFieldsValue({ image: fileChange });
+  }, [fileChange, form]);
 
   const handleOk = async () => {
     try {
@@ -44,12 +49,16 @@ const EditProductModal: React.FC<EditModalProps> = (props) => {
         }
       }, 1500);
     } catch (errorInfo) {
-      console.log("Validation failed:", errorInfo);
+      console.error("Validation failed:", errorInfo);
     }
   };
 
   const handleCancel = () => {
     setIsOpen(false);
+  };
+
+  const handleFileChange = (newFileChange: string) => {
+    setFileChange(newFileChange);
   };
 
   return (
@@ -206,7 +215,10 @@ const EditProductModal: React.FC<EditModalProps> = (props) => {
           labelCol={{ span: 24 }}
           className="formItem"
         >
-          <UploadImageProduct />
+          <UploadImageProduct
+            onFileChange={handleFileChange}
+            initialImage={productInfo?.image}
+          />
         </Form.Item>
       </Form>
     </Modal>

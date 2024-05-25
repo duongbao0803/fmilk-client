@@ -11,6 +11,16 @@ export interface UserInfo {
   _id?: string | undefined;
 }
 
+export interface ProductInfo {
+  name?: string;
+  image?: string;
+  description?: string;
+  quantity?: number;
+  typeOfProduct?: string;
+  price?: number;
+  rating?: number;
+}
+
 export interface AuthState {
   isAuthenticated: boolean;
   login: () => void;

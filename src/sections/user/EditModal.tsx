@@ -50,7 +50,7 @@ const EditModal: React.FC<EditModalProps> = (props) => {
         }
       }, 1500);
     } catch (errorInfo) {
-      console.log("Validation failed:", errorInfo);
+      console.error("Validation failed:", errorInfo);
     }
   };
 

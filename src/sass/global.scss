@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .scrollbar,
 #myTable {
   &::-webkit-scrollbar {
@@ -23,6 +30,10 @@
   overflow-x: auto;
 }
 
+.sider {
+  position: fixed !important;
+}
+
 .pagination {
   position: sticky !important;
   bottom: 0;
@@ -30,13 +41,6 @@
 
 .header {
   width: -webkit-fill-available !important;
-}
-
-* {
-  font-family: "Plus Jakarta Sans", sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
 }
 
 .main-or {
@@ -68,6 +72,10 @@
   background: #198ab6;
   transform-origin: 0%;
 }
+
+// .right-bar {
+//   margin-left: 230px !important;
+// }
 
 .dropdownHeader:hover {
   background-color: orange !important;
@@ -208,5 +216,11 @@
 @media (min-width: 3000) {
   .navbar {
     width: 65%;
+  }
+}
+
+@media (max-width: 991px) {
+  .right-bar {
+    margin-left: 55px !important;
   }
 }

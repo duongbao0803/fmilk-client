@@ -55,7 +55,7 @@ const AddModal: React.FC<AddModalProps> = (props) => {
         }
       }, 1000);
     } catch (errorInfo) {
-      console.log("Validation failed:", errorInfo);
+      console.error("Validation failed:", errorInfo);
     }
   };
 

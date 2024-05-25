@@ -107,7 +107,7 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
         collapsedWidth="55"
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
-        className="scrollbar sider bottom-0 left-0 top-0 z-50 box-border min-h-screen w-56 flex-none overflow-auto overflow-y-auto"
+        className={`scrollbar sider bottom-0 left-0 top-0 z-[1000] box-border min-h-screen flex-none overflow-auto overflow-y-auto ${collapsed ? "collapsed" : ""}`}
         theme="light"
         collapsible
         defaultCollapsed={false}
@@ -129,8 +129,11 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
           {renderMenuItems(items)}
         </Menu>
       </Sider>
-      <Layout className="right-bar overflow-y-auto transition-all duration-[600ms] ease-in-out">
-        <div className="header fixed z-[1000] flex h-16 items-center justify-end gap-2 bg-[#f8f8f8] bg-opacity-80 pr-4 shadow-none backdrop-blur-[6px]">
+      <Layout
+        className="right-bar ease overflow-y-auto transition-all duration-[150ms] ease-in-out"
+        style={{ marginLeft: collapsed ? 55 : 230 }}
+      >
+        <div className="header fixed z-[999] flex h-16 items-center justify-end gap-2 bg-[#f8f8f8] bg-opacity-80 pr-4 shadow-none backdrop-blur-[6px]">
           <>
             {role === Role.ADMIN ? (
               <img

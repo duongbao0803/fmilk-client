@@ -1,17 +1,12 @@
 import React, { useState } from "react";
 import { Button, Input, Switch, Table, Tag } from "antd";
 import type { TablePaginationConfig, TableProps } from "antd";
-import {
-  EditOutlined,
-  FilterOutlined,
-  UserAddOutlined,
-} from "@ant-design/icons";
+import { FilterOutlined, UserAddOutlined } from "@ant-design/icons";
 import useUserService from "@/services/userService";
-import { UserInfo } from "@/interfaces/interface";
 import { formatDate } from "@/util/validate";
-import EditModal from "./EditModal";
-import AddModal from "./AddModal";
-import ExportButton from "./ExportButton";
+import AddModal from "./AddUserModal";
+import ExportButton from "./ExportUser";
+import DropdownFunctionUser from "./DropdownFunctionUser";
 
 export interface DataType {
   _id: string;
@@ -26,16 +21,9 @@ export interface DataType {
 
 const UserList: React.FC = () => {
   const { users, isFetching, updateStatus } = useUserService();
-  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isShow, setIsShow] = useState<boolean>(false);
 
-  const [userInfo, setUserInfo] = useState<UserInfo>();
   const [currentPage, setCurrentPage] = useState<number>(1);
-
-  const openEditModal = (userData: UserInfo) => {
-    setIsOpen(true);
-    setUserInfo(userData);
-  };
 
   const handleStatusChange = async (userId: string, newStatus: boolean) => {
     if (userId) {
@@ -127,7 +115,9 @@ const UserList: React.FC = () => {
       dataIndex: "",
       render: (_, record) => (
         <>
-          <EditOutlined onClick={() => openEditModal(record)} />
+          <div className="flex gap-3">
+            <DropdownFunctionUser userInfo={record} />
+          </div>
         </>
       ),
     },
@@ -180,7 +170,6 @@ const UserList: React.FC = () => {
         rowKey={(record) => record._id}
       />
       <AddModal setIsShow={setIsShow} isShow={isShow} />
-      <EditModal isOpen={isOpen} setIsOpen={setIsOpen} userInfo={userInfo} />
     </>
   );
 };

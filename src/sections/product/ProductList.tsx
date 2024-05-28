@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { Button, Input, Table } from "antd";
 import type { TablePaginationConfig, TableProps } from "antd";
 import { AppstoreAddOutlined, FilterOutlined } from "@ant-design/icons";
-import { formatDate } from "@/util/validate";
 import useProductService from "@/services/productService";
-import ExportButton from "./ExportButton";
+import ExportButton from "./ExportProduct";
 import DropdownFunction from "./DropdownFunction";
 import AddProductModal from "./AddProductModal";
 
@@ -117,13 +116,10 @@ const ProductList: React.FC = () => {
         className="pagination"
         id="myTable"
         columns={columns}
-        dataSource={products?.map(
-          (record: { id: unknown; dob: string | number | Date }) => ({
-            ...record,
-            key: record.id,
-            dob: formatDate(record.dob),
-          }),
-        )}
+        dataSource={products?.map((record: { id: unknown }) => ({
+          ...record,
+          key: record.id,
+        }))}
         pagination={{
           current: currentPage,
           total: products.totalProducts || 0,

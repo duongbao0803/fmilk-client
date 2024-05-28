@@ -212,6 +212,10 @@
   background-color: #fff !important;
 }
 
+.ant-tooltip :where(.css-dev-only-do-not-override-1okl62o).ant-tooltip {
+  display: none !important;
+}
+
 //responsive
 @media (min-width: 3000) {
   .navbar {

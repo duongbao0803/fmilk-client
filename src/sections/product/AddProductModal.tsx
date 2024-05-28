@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
-import { Modal, Form, Input, Row, Col } from "antd";
-import { UserOutlined, PhoneOutlined, BankOutlined } from "@ant-design/icons";
+import { Modal, Form, Input, Row, Col, InputNumber } from "antd";
+import {
+  UserOutlined,
+  PhoneOutlined,
+  StarOutlined,
+  PoundCircleOutlined,
+  BarsOutlined,
+  AppstoreAddOutlined,
+} from "@ant-design/icons";
 import useProductService from "@/services/productService";
 import UploadImageProduct from "./UploadImageProduct";
 
@@ -118,16 +125,22 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
                   required: true,
                   message: "Please input rating",
                 },
+                {
+                  type: "number",
+                  min: 1,
+                  max: 5,
+                  message: "Rating must be at least 1 and most 5",
+                },
               ]}
               colon={true}
               label="Rating"
               labelCol={{ span: 24 }}
               className="formItem"
             >
-              <Input
-                prefix={<UserOutlined className="site-form-item-icon mr-1" />}
+              <InputNumber
+                className="w-full"
+                prefix={<StarOutlined className="site-form-item-icon mr-1" />}
                 placeholder="Rating"
-                autoFocus
               />
             </Form.Item>
           </Col>
@@ -137,7 +150,12 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
               rules={[
                 {
                   required: true,
-                  message: "Please input typeOfProduct",
+                  message: "Please input quantity",
+                },
+                {
+                  type: "number",
+                  min: 1,
+                  message: "Quantity must be at least 1",
                 },
               ]}
               colon={true}
@@ -145,12 +163,12 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
               labelCol={{ span: 24 }}
               className="formItem"
             >
-              <Input
+              <InputNumber
+                className="w-full"
                 prefix={
-                  <PhoneOutlined className="site-form-item-icon mr-1 rotate-90" />
+                  <AppstoreAddOutlined className="site-form-item-icon mr-1" />
                 }
                 placeholder="Quantity"
-                maxLength={10}
               />
             </Form.Item>
           </Col>
@@ -168,7 +186,7 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
           className="formItem"
         >
           <Input
-            prefix={<BankOutlined className="site-form-item-icon mr-1" />}
+            prefix={<BarsOutlined className="site-form-item-icon mr-1" />}
             placeholder="Description"
           />
         </Form.Item>
@@ -177,7 +195,7 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
           rules={[
             {
               required: true,
-              message: "Please select location",
+              message: "Please input price",
             },
           ]}
           colon={true}
@@ -185,10 +203,12 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
           labelCol={{ span: 24 }}
           className="formItem"
         >
-          <Input
-            prefix={<BankOutlined className="site-form-item-icon mr-1" />}
+          <InputNumber
+            className="w-full"
+            prefix={
+              <PoundCircleOutlined className="site-form-item-icon mr-1" />
+            }
             placeholder="Price"
-            maxLength={10}
           />
         </Form.Item>
         <Form.Item

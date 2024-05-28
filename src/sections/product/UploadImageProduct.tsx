@@ -87,9 +87,11 @@ const UploadImageProduct: React.FC<UploadImageProductProps> = (props) => {
     <>
       <Upload
         listType="picture-card"
+        action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
         fileList={file ? [file] : []}
         onPreview={handlePreview}
         onChange={handleChange}
+        accept="image/*"
       >
         {file ? null : uploadButton}
       </Upload>

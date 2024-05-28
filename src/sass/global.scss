@@ -168,6 +168,10 @@
 }
 
 //antd
+:where(.css-1okl62o).ant-col-24.ant-form-item-label {
+  padding: 0 !important;
+}
+
 :where(.css-dev-only-do-not-override-1okl62o).ant-col-24.ant-form-item-label {
   padding: 0 !important;
 }

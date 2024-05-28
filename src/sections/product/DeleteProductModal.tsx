@@ -1,11 +1,9 @@
-/* eslint-disable no-unused-vars */
 import React from "react";
 import { Modal } from "antd";
 
 const DeleteProductModal: React.FC<{
   deleteProductItem: (id: string) => void;
   productId: string;
-  // productInfo: DataType;
 }> = ({ deleteProductItem, productId }) => {
   const confirm = Modal.confirm;
   confirm({

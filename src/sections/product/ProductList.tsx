@@ -3,7 +3,7 @@ import { Button, Input, Table } from "antd";
 import type { TablePaginationConfig, TableProps } from "antd";
 import { AppstoreAddOutlined, FilterOutlined } from "@ant-design/icons";
 import useProductService from "@/services/productService";
-import ExportButton from "./ExportButton";
+import ExportButton from "./ExportProduct";
 import DropdownFunction from "./DropdownFunction";
 import AddProductModal from "./AddProductModal";
 

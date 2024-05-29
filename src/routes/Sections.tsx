@@ -17,6 +17,9 @@ export const UserManagementPage = lazy(
 export const ProductManagementPage = lazy(
   () => import("@/pages/ProductManagementPage"),
 );
+export const PostMangementPage = lazy(
+  () => import("@/pages/PostMangementPage"),
+);
 export const ChartPage = lazy(() => import("@/pages/ChartPage"));
 
 const UserRoute: React.FC = () => {
@@ -69,8 +72,8 @@ const Router: React.FC = () => {
           path: "/product",
         },
         {
-          element: <AdminPage />,
-          path: "/admin",
+          element: <PostMangementPage />,
+          path: "/post",
         },
         {
           element: <ChartPage />,

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Dropdown } from "antd";
 import { DeleteOutlined, EditOutlined, MoreOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import { DataType } from "./PostList";
 import usePostService from "@/services/postService";
+import { DataType } from "./PostList";
 import DeletePostModal from "./DeletePostModal";
 import EditPostModal from "./EditPostModal";
 

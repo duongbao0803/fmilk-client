@@ -31,7 +31,9 @@ const UserRoute: React.FC = () => {
 };
 
 const Router: React.FC = () => {
-  const { infoUser, isAuthenticated } = useAuth();
+  const infoUser = useAuth((state) => state.infoUser);
+  const isAuthenticated = useAuth((state) => state.isAuthenticated);
+
   const { role } = infoUser as UserInfo;
   useAnimation();
   const isAuthority = role === Role.ADMIN || role === Role.STAFF;

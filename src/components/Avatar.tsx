@@ -9,10 +9,11 @@ import avatarStaff from "@/assets/images/logo/avatar_staff.jpg";
 import avatarUser from "@/assets/images/logo/avatar_user.jpg";
 
 const Avatar: React.FC = () => {
-  const { infoUser, isAuthenticated } = useAuth();
+  const isAuthenticated = useAuth((state) => state.isAuthenticated);
+  const infoUser = useAuth((state) => state.infoUser);
+  const logout = useAuth((state) => state.logout);
 
   const { username, email, role } = infoUser as UserInfo;
-  const { logout } = useAuth();
 
   const items: MenuProps["items"] = [
     {

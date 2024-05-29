@@ -39,6 +39,13 @@
   bottom: 0;
 }
 
+.ant-table-cell .first-column {
+  position: sticky !important;
+  left: 0;
+  z-index: 999;
+  background-color: #fff;
+}
+
 .header {
   width: -webkit-fill-available !important;
 }

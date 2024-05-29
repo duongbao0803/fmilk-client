@@ -42,7 +42,7 @@ const items: MenuItem[] = [
     "/user",
   ),
   getItem("Product", "3", <ProductOutlined />, undefined, "/product"),
-  getItem("Files", "8", <FileOutlined />, undefined, "/option2"),
+  getItem("Post", "8", <FileOutlined />, undefined, "/post"),
 ];
 
 const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
@@ -158,9 +158,7 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
           </div>
         </div>
         <Content className="mx-4 mt-[80px] ">
-          <div className="min-w-[250px] overflow-x-auto rounded-xl bg-[#fff]">
-            {children}
-          </div>
+          <div className="min-w-[250px] rounded-xl bg-[#fff]">{children}</div>
         </Content>
         <Footer className="text-center">
           Copyright @2024 Baobatluc. All right reserved

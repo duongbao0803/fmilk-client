@@ -20,7 +20,9 @@ dayjs.extend(weekOfYear);
 dayjs.extend(weekYear);
 
 const App: React.FC = () => {
-  const { fetchUserInfo, isAuthenticated } = useAuth();
+  const fetchUserInfo = useAuth((state) => state.fetchUserInfo);
+  const isAuthenticated = useAuth((state) => state.isAuthenticated);
+
   const token = Cookies.get("accessToken");
 
   useEffect(() => {

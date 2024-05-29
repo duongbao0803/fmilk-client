@@ -17,12 +17,8 @@ export interface DataType {
 
 const PostList: React.FC = () => {
   const { posts, isFetching } = usePostService();
-  console.log("check post", posts);
-
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [searchTerm, setSearchTerm] = useState<string>("");
 
   const handleTableChange = (pagination: TablePaginationConfig) => {
     setCurrentPage(pagination.current || 1);
@@ -70,8 +66,6 @@ const PostList: React.FC = () => {
           <Input
             placeholder="Search by..."
             className="h-8 max-w-lg rounded-lg sm:mb-5 sm:w-[300px]"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
           />
           <Button className="flex items-center" type="primary">
             <FilterOutlined className="align-middle" />
@@ -95,13 +89,13 @@ const PostList: React.FC = () => {
         className="pagination"
         id="myTable"
         columns={columns}
-        dataSource={posts?.map((record: { id: unknown }) => ({
+        dataSource={posts?.map((record: { id: string }) => ({
           ...record,
           key: record.id,
         }))}
         pagination={{
           current: currentPage,
-          total: posts.totalProducts || 0,
+          total: posts.totalPosts || 0,
           pageSize: 5,
         }}
         onChange={handleTableChange}

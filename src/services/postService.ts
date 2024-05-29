@@ -75,7 +75,7 @@ const usePostService = () => {
         description: "Update infomation successful",
         duration: 2,
       });
-      queryClient.invalidateQueries("products");
+      queryClient.invalidateQueries("posts");
     },
     onError: (err: CustomError) => {
       console.error("Error update", err);
@@ -94,7 +94,7 @@ const usePostService = () => {
         description: "Add product successful",
         duration: 2,
       });
-      queryClient.invalidateQueries("products");
+      queryClient.invalidateQueries("posts");
     },
     onError: (err: CustomError) => {
       notification.error({

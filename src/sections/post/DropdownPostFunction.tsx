@@ -2,20 +2,20 @@ import React, { useState } from "react";
 import { Dropdown } from "antd";
 import { DeleteOutlined, EditOutlined, MoreOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import { DataType } from "./UserList";
-import DeleteModal from "./DeleteUserModal";
-import EditModal from "./EditUserModal";
-import useUserService from "@/services/userService";
+import { DataType } from "./PostList";
+import usePostService from "@/services/postService";
+import DeletePostModal from "./DeletePostModal";
+import EditPostModal from "./EditPostModal";
 
-export interface DropdownFunctionProps {
-  userInfo: DataType;
+export interface DropdownPostProps {
+  postInfo: DataType;
 }
 
-const DropdownFunctionUser: React.FC<DropdownFunctionProps> = (props) => {
+const DropdownPostFunction: React.FC<DropdownPostProps> = (props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { deleteUserItem } = useUserService();
-  const { userInfo } = props;
-  const userId = userInfo?._id;
+  const { deletePostItem } = usePostService();
+  const { postInfo } = props;
+  const postId = postInfo?._id;
 
   const openEditModal = () => {
     setIsOpen(true);
@@ -31,7 +31,7 @@ const DropdownFunctionUser: React.FC<DropdownFunctionProps> = (props) => {
               label: (
                 <Link rel="noopener noreferrer" to="#" onClick={openEditModal}>
                   <EditOutlined className="pr-2" />
-                  Edit User
+                  Edit Post
                 </Link>
               ),
             },
@@ -42,14 +42,14 @@ const DropdownFunctionUser: React.FC<DropdownFunctionProps> = (props) => {
                   rel="noopener noreferrer"
                   to="#"
                   onClick={() =>
-                    DeleteModal({
-                      userId,
-                      deleteUserItem,
+                    DeletePostModal({
+                      postId,
+                      deletePostItem,
                     })
                   }
                 >
                   <DeleteOutlined className="pr-2" />
-                  Delete User
+                  Delete Post
                 </Link>
               ),
             },
@@ -60,9 +60,13 @@ const DropdownFunctionUser: React.FC<DropdownFunctionProps> = (props) => {
         <MoreOutlined className="rotate-90" />
       </Dropdown>
 
-      <EditModal isOpen={isOpen} setIsOpen={setIsOpen} userInfo={userInfo} />
+      <EditPostModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        postInfo={postInfo}
+      />
     </>
   );
 };
 
-export default DropdownFunctionUser;
+export default DropdownPostFunction;

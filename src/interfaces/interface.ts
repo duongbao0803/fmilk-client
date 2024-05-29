@@ -105,3 +105,9 @@ export interface AddNewUserProps {
   phone: string;
   name: string;
 }
+
+export interface PostInfo {
+  title?: string;
+  description?: string;
+  image?: string;
+}

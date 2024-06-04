@@ -9,6 +9,8 @@ import Form from "@/sections/contact/Form";
 import AuthenPage from "@/pages/AuthenPage";
 import LandingPage from "@/pages/LandingPage";
 import { UserInfo } from "@/interfaces/interface";
+import CartPage from "@/sections/cart/CartPage";
+import Checkout from "@/sections/cart/Checkout";
 
 export const AdminPage = lazy(() => import("@/pages/AdminPage"));
 export const UserManagementPage = lazy(
@@ -42,6 +44,14 @@ const Router: React.FC = () => {
     {
       path: "/",
       element: <LandingPage />,
+    },
+    {
+      path: "/cart",
+      element: <CartPage />,
+    },
+    {
+      path: "/checkout",
+      element: <Checkout />,
     },
     {
       path: "/authen",

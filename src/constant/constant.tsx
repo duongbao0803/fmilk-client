@@ -1,8 +1,8 @@
 export const introItems = [
   {
     key: "1",
-    label: "StemPlus",
-    path: "/stem",
+    label: "FMilk",
+    path: "/",
   },
   {
     key: "2",
@@ -19,17 +19,17 @@ export const introItems = [
 export const programItems = [
   {
     key: "4",
-    label: "StemPlus",
+    label: "FMilk",
     path: "#",
   },
   {
     key: "5",
-    label: "StemPlus",
+    label: "FMilk",
     path: "#",
   },
   {
     key: "6",
-    label: "StemPlus",
+    label: "FMilk",
     path: "#",
   },
 ];
@@ -37,17 +37,17 @@ export const programItems = [
 export const sourceItems = [
   {
     key: "7",
-    label: "StemPlus",
+    label: "FMilk",
     path: "#",
   },
   {
     key: "8",
-    label: "StemPlus",
+    label: "FMilk",
     path: "#",
   },
   {
     key: "9",
-    label: "StemPlus",
+    label: "FMilk",
     path: "#",
   },
 ];

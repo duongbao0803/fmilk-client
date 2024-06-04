@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Dropdown, Menu, Space } from "antd";
-import { HomeFilled, DownOutlined } from "@ant-design/icons";
+import { HomeFilled, DownOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Avatar } from "@/components";
 import { introItems, programItems, sourceItems } from "@/constant/constant";
 
@@ -42,7 +42,7 @@ const Header: React.FC = React.memo(() => {
           />
           <div className="flex items-center gap-3 p-4 text-[18px] font-medium text-[#1385b7]">
             <Link
-              to="#"
+              to="/"
               onClick={handleLinkClick}
               className={`flex items-center rounded-2xl px-4 py-[10px] text-[15px] transition-all duration-500 hover:bg-[orange] hover:text-[#fff] ${
                 isSelectedLink ? "bg-[orange] text-[#fff]" : ""
@@ -165,6 +165,14 @@ const Header: React.FC = React.memo(() => {
               LIÊN HỆ
             </Link>
             <Avatar />
+            <Link
+              to="/cart"
+              className={`dropdownHeader cursor-pointer rounded-3xl px-3 py-1 transition-all duration-500 hover:bg-[orange] hover:text-[#fff] ${
+                isSelectedContact ? "bg-[orange] text-[#fff]" : ""
+              }`}
+            >
+              <ShoppingCartOutlined /> 
+            </Link>
           </div>
         </div>
       </div>

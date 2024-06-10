@@ -1,35 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Header } from '../../layout/HeaderAdmin';
 import { SideBar } from '../../layout/SideBarAdmin';
 import { Footer } from '../../layout/FooterAdmin';
 
-const products = [
-  { id: 1, image: 'image1.jpg', name: 'Product 1', quantity: 10, purchasePrice: 100, salePrice: 150, link: 'https://example.com/product1', status: 'Active' },
-  { id: 2, image: 'image2.jpg', name: 'Product 2', quantity: 20, purchasePrice: 200, salePrice: 250, link: 'https://example.com/product2', status: 'Active' },
-  { id: 3, image: 'image3.jpg', name: 'Product 3', quantity: 30, purchasePrice: 300, salePrice: 350, link: 'https://example.com/product3', status: 'Active' },
-  { id: 4, image: 'image4.jpg', name: 'Product 4', quantity: 40, purchasePrice: 400, salePrice: 450, link: 'https://example.com/product4', status: 'Active' },
-  { id: 5, image: 'image5.jpg', name: 'Product 5', quantity: 50, purchasePrice: 500, salePrice: 550, link: 'https://example.com/product5', status: 'Active' },
-  { id: 6, image: 'image6.jpg', name: 'Product 6', quantity: 60, purchasePrice: 600, salePrice: 650, link: 'https://example.com/product6', status: 'Active' },
-  { id: 7, image: 'image7.jpg', name: 'Product 7', quantity: 70, purchasePrice: 700, salePrice: 750, link: 'https://example.com/product7', status: 'Active' },
-  { id: 8, image: 'image8.jpg', name: 'Product 8', quantity: 80, purchasePrice: 800, salePrice: 850, link: 'https://example.com/product8', status: 'Active' },
-  { id: 9, image: 'image9.jpg', name: 'Product 9', quantity: 90, purchasePrice: 900, salePrice: 950, link: 'https://example.com/product9', status: 'Active' },
-  { id: 10, image: 'image10.jpg', name: 'Product 10', quantity: 100, purchasePrice: 1000, salePrice: 1050, link: 'https://example.com/product10', status: 'Active' },
-  { id: 11, image: 'image11.jpg', name: 'Product 11', quantity: 110, purchasePrice: 1100, salePrice: 1150, link: 'https://example.com/product11', status: 'Active' },
-  { id: 12, image: 'image12.jpg', name: 'Product 12', quantity: 120, purchasePrice: 1200, salePrice: 1250, link: 'https://example.com/product12', status: 'Active' },
-  { id: 13, image: 'image13.jpg', name: 'Product 13', quantity: 130, purchasePrice: 1300, salePrice: 1350, link: 'https://example.com/product13', status: 'Active' },
-  { id: 14, image: 'image14.jpg', name: 'Product 14', quantity: 140, purchasePrice: 1400, salePrice: 1450, link: 'https://example.com/product14', status: 'Active' },
-  { id: 15, image: 'image15.jpg', name: 'Product 15', quantity: 150, purchasePrice: 1500, salePrice: 1550, link: 'https://example.com/product15', status: 'Active' },
-  { id: 16, image: 'image16.jpg', name: 'Product 16', quantity: 160, purchasePrice: 1600, salePrice: 1650, link: 'https://example.com/product16', status: 'Active' },
-  { id: 17, image: 'image17.jpg', name: 'Product 17', quantity: 170, purchasePrice: 1700, salePrice: 1750, link: 'https://example.com/product17', status: 'Active' },
-  { id: 18, image: 'image18.jpg', name: 'Product 18', quantity: 180, purchasePrice: 1800, salePrice: 1850, link: 'https://example.com/product18', status: 'Active' },
-  { id: 19, image: 'image19.jpg', name: 'Product 19', quantity: 190, purchasePrice: 1900, salePrice: 1950, link: 'https://example.com/product19', status: 'Active' },
-  { id: 20, image: 'image20.jpg', name: 'Product 20', quantity: 200, purchasePrice: 2000, salePrice: 2050, link: 'https://example.com/product20', status: 'Active' },
-];
+interface Product {
+  _id: number;
+  image: string;
+  name: string;
+  quantity: number;
+  price: number;
+  link: string;
+}
 
 const ProductManagementPage: React.FC = () => {
+  const [products, setProducts] = useState<Product[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [dropdownVisible, setDropdownVisible] = useState<number | null>(null);
   const itemsPerPage = 7;
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get<{ products: Product[] }>('https://fmilk-server.onrender.com/api/v1/product/');
+        setProducts(response.data.products);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const indexOfLastProduct = currentPage * itemsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
@@ -93,13 +94,7 @@ const ProductManagementPage: React.FC = () => {
                       Số lượng
                     </th>
                     <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Giá Nhập
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Giá bán
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Status
                     </th>
                     <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Link
@@ -111,24 +106,22 @@ const ProductManagementPage: React.FC = () => {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {currentProducts.map((product) => (
-                    <tr key={product.id}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{product.id}</td>
+                    <tr key={product._id}>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{product._id}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex justify-center">
                         <img src={product.image} className="h-10 w-10 object-cover" />
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{product.name}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{product.quantity}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{product.purchasePrice}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{product.salePrice}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{product.status}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{product.price}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-500 text-center">
                         <a href={product.link} target="_blank" rel="noopener noreferrer">View</a>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center relative">
-                        <button onClick={() => toggleDropdown(product.id)} className="focus:outline-none">
+                        <button onClick={() => toggleDropdown(product._id)} className="focus:outline-none">
                           ...
                         </button>
-                        {dropdownVisible === product.id && (
+                        {dropdownVisible === product._id && (
                           <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg z-10">
                             <button className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">
                               Product Details

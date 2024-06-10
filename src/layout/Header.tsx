@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Dropdown, Menu, Space } from "antd";
-import { HomeFilled, DownOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import { HomeFilled, DownOutlined, ShoppingCartOutlined, BellOutlined } from "@ant-design/icons";
 import { Avatar } from "@/components";
 import { introItems, programItems, sourceItems } from "@/constant/constant";
+import Notification from "@/sections/notification/Notification";
 
-const Header: React.FC = React.memo(() => {
+const Header: React.FC = () => {
   const [isSelectedLink, setIsSelectedLink] = useState<boolean>(true);
   const [isSelectedContact, setIsSelectedContact] = useState<boolean>(false);
   const [selectedDropdown, setSelectedDropdown] = useState<string>("");
+  const [isNotificationVisible, setIsNotificationVisible] = useState<boolean>(false);
 
   const handleLinkClick = () => {
     setIsSelectedLink(true);
@@ -26,6 +28,14 @@ const Header: React.FC = React.memo(() => {
     setSelectedDropdown(key);
     setIsSelectedLink(false);
     setIsSelectedContact(false);
+  };
+
+  const showNotification = () => {
+    setIsNotificationVisible(true);
+  };
+
+  const closeNotification = () => {
+    setIsNotificationVisible(false);
   };
 
   return (
@@ -173,11 +183,18 @@ const Header: React.FC = React.memo(() => {
             >
               <ShoppingCartOutlined /> 
             </Link>
+            <div
+              onClick={showNotification}
+              className={`dropdownHeader cursor-pointer rounded-3xl px-3 py-1 transition-all duration-500 hover:bg-[orange] hover:text-[#fff]`}
+            >
+              <BellOutlined />
+            </div>
           </div>
         </div>
       </div>
+      <Notification visible={isNotificationVisible} onClose={closeNotification} />
     </>
   );
-});
+};
 
 export default Header;

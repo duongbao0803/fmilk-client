@@ -2,6 +2,7 @@ import Header from '@/layout/Header';
 import Footer from '@/layout/Footer';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useAuth from '@/hooks/useAuth';
 
 interface FormValues {
   email: string;
@@ -35,17 +36,27 @@ const Checkout: React.FC = () => {
   });
 
   const [cart, setCart] = useState<CartItem[]>([]);
+  const { isAuthenticated } = useAuth(); 
+  const navigate = useNavigate();
 
   const SHIPPING_FEE = 30;
 
-  const navigate = useNavigate();
+  const truncateProductName = (name: string, length: number) => {
+    return name.length > length ? `${name.slice(0, length)}...` : name;
+  };
 
   useEffect(() => {
+    if (!isAuthenticated) {
+      localStorage.setItem('redirectTo', '/checkout');
+      navigate('/authen');
+      return;
+    }
+
     const savedCart = localStorage.getItem('cart');
     if (savedCart) {
       setCart(JSON.parse(savedCart));
     }
-  }, []);
+  }, [isAuthenticated, navigate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -179,7 +190,7 @@ const Checkout: React.FC = () => {
                   <span className="text-lg font-semibold">Sản Phẩm</span>
                 </div>
                 <div className="col-span-1">
-                  <span className="text-lg font-semibold ml-8 whitespace-nowrap">Đơn Giá</span>
+                  <span className="text-lg font-semibold ml-20 whitespace-nowrap">Đơn Giá</span>
                 </div>
                 <div className="col-span-1">
                   <span className="text-lg font-semibold ml-4 whitespace-nowrap">Số Lượng</span>
@@ -192,10 +203,12 @@ const Checkout: React.FC = () => {
                     <React.Fragment key={item._id}>
                       <div className="col-span-1 flex items-center">
                         <img src={item.image} alt={item.name} className="w-16 h-16 object-cover mr-2" />
-                        <span className="text-sm whitespace-nowrap">{item.name}</span>
+                        <span className="whitespace-nowrap text-lg">
+                        {truncateProductName(item.name, 20)}
+                      </span>
                       </div>
                       <div className="col-span-1 flex items-center">
-                        <span className="text-sm ml-12">${item.price}</span>
+                        <span className="text-sm ml-24">${item.price}</span>
                       </div>
                       <div className="col-span-1 flex items-center ml-4">
                         <span className="text-sm ml-10">{item.quantity}</span>

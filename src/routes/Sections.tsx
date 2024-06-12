@@ -13,11 +13,6 @@ import CartPage from "@/sections/cart/CartPage";
 import Checkout from "@/sections/cart/Checkout";
 import Notification from "@/sections/notification/Notification";
 import Payment from "@/sections/cart/Payment";
-import AdminAccountPage from "@/sections/admin/AdminAccount";
-import AdminDashboardPage from "@/sections/admin/DashBoard";
-import AdminOrdersPage from "@/sections/admin/OrderManagement";
-import AdminProductManagementPage from "@/sections/admin/ProductManagement";
-import AdminStaffManagementPage from "@/sections/admin/StaffManagement";
 
 
 export const AdminPage = lazy(() => import("@/pages/AdminPage"));
@@ -52,26 +47,6 @@ const Router: React.FC = () => {
     {
       path: "/",
       element: <LandingPage />,
-    },
-    {
-      path: "/adminaccount",
-      element: <AdminAccountPage />,
-    },
-    {
-      path: "/admindashboard",
-      element: <AdminDashboardPage />,
-    },
-    {
-      path: "/adminorder",
-      element: <AdminOrdersPage />,
-    },
-    {
-      path: "/adminproduct",
-      element: <AdminProductManagementPage />,
-    },
-    {
-      path: "/adminstaff",
-      element: <AdminStaffManagementPage />,
     },
     {
       path: "/cart",

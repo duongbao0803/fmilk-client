@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Header from "@/layout/Header";
 import Footer from "@/layout/Footer";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import ProductDetails from "@/pages/ProductPage";
 
 interface Product {
   _id: string;
@@ -36,6 +38,9 @@ const HomePage: React.FC = () => {
 
     fetchProducts();
   }, []);
+
+  console.log("products",products);
+  
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
@@ -114,9 +119,9 @@ const HomePage: React.FC = () => {
                     <button onClick={() => handleAddToCart(product._id)} className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded w-full mb-1">
                       Add to Cart
                     </button>
-                    <button onClick={() => handleBuyNow(product._id)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded w-full">
+                    <Link to={`/productdetails/${product._id}`} onClick={() => handleBuyNow(product._id)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded w-full">
                       Buy Now
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>

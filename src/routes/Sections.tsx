@@ -13,6 +13,7 @@ import CartPage from "@/sections/cart/CartPage";
 import Checkout from "@/sections/cart/Checkout";
 import Notification from "@/sections/notification/Notification";
 import Payment from "@/sections/cart/Payment";
+import ProductDetails from "@/pages/ProductPage";
 
 
 export const AdminPage = lazy(() => import("@/pages/AdminPage"));
@@ -63,6 +64,10 @@ const Router: React.FC = () => {
     {
       path: "/notification",
       element: <Notification visible={isNotificationVisible} onClose={closeNotification} />,
+    },
+    {
+      path: "/productdetails/:id",
+      element: <ProductDetails />,
     },
     {
       path: "/authen",

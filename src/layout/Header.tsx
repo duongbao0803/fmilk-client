@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Dropdown, Menu, Space } from "antd";
-import { HomeFilled, DownOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import { Badge, Dropdown, Menu, Space } from "antd";
+import {
+  HomeFilled,
+  DownOutlined,
+  ShoppingCartOutlined,
+} from "@ant-design/icons";
 import { Avatar } from "@/components";
 import { introItems, programItems, sourceItems } from "@/constant/constant";
 
@@ -9,6 +13,7 @@ const Header: React.FC = React.memo(() => {
   const [isSelectedLink, setIsSelectedLink] = useState<boolean>(true);
   const [isSelectedContact, setIsSelectedContact] = useState<boolean>(false);
   const [selectedDropdown, setSelectedDropdown] = useState<string>("");
+  const [isSelectedCart, setIsSelectedCart] = useState<string>("");
 
   const handleLinkClick = () => {
     setIsSelectedLink(true);
@@ -26,6 +31,12 @@ const Header: React.FC = React.memo(() => {
     setSelectedDropdown(key);
     setIsSelectedLink(false);
     setIsSelectedContact(false);
+  };
+
+  const handleCartClick = (key: string) => {
+    setIsSelectedCart(key);
+    setIsSelectedLink(false);
+    setSelectedDropdown("");
   };
 
   return (
@@ -156,7 +167,7 @@ const Header: React.FC = React.memo(() => {
               </a>
             </Dropdown>
             <Link
-              to="/home"
+              to="/"
               onClick={handleSelectedContact}
               className={`dropdownHeader cursor-pointer rounded-3xl px-3 py-1 transition-all duration-500 hover:bg-[orange] hover:text-[#fff] ${
                 isSelectedContact ? "bg-[orange] text-[#fff]" : ""
@@ -167,11 +178,16 @@ const Header: React.FC = React.memo(() => {
             <Avatar />
             <Link
               to="/cart"
+              onClick={handleCartClick}
               className={`dropdownHeader cursor-pointer rounded-3xl px-3 py-1 transition-all duration-500 hover:bg-[orange] hover:text-[#fff] ${
-                isSelectedContact ? "bg-[orange] text-[#fff]" : ""
+                isSelectedCart ? "bg-[orange] text-[#fff]" : ""
               }`}
             >
-              <ShoppingCartOutlined /> 
+              <Badge count={5}>
+                <ShoppingCartOutlined
+                  className={`text-2xl ${isSelectedCart ? "text-[#fff]" : ""}`}
+                />
+              </Badge>
             </Link>
           </div>
         </div>

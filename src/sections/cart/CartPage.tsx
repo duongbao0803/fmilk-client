@@ -1,8 +1,8 @@
 import Header from "@/layout/Header";
 import Footer from "@/layout/Footer";
 import React, { useEffect, useState } from "react";
-import { FaTrashAlt } from 'react-icons/fa'; // Importing FontAwesome Trash Icon
-import { Link } from 'react-router-dom';
+// import { FaTrashAlt } from 'react-icons/fa'; // Importing FontAwesome Trash Icon
+import { Link } from "react-router-dom";
 
 interface CartItem {
   _id: string;
@@ -65,40 +65,67 @@ const CartPage: React.FC = () => {
       <Header />
       <div className="container mx-auto px-8 py-4">
         <div className="flex justify-center gap-4">
-          <div className="cart bg-white shadow-md rounded-lg p-8 mb-8 max-w-4xl">
-            <h2 className="text-lg font-semibold mb-4">Giỏ Hàng</h2>
+          <div className="cart mb-8 max-w-4xl rounded-lg bg-white p-8 shadow-md">
+            <h2 className="mb-4 text-lg font-semibold">Giỏ Hàng</h2>
             <div className="grid grid-cols-4 gap-4">
               <div className="col-span-1">
                 <span className="text-lg font-semibold">Sản Phẩm</span>
               </div>
               <div className="col-span-1">
-                <span className="text-lg font-semibold ml-32 whitespace-nowrap">Đơn Giá</span>
+                <span className="ml-32 whitespace-nowrap text-lg font-semibold">
+                  Đơn Giá
+                </span>
               </div>
               <div className="col-span-1">
-                <span className="text-lg font-semibold ml-20 whitespace-nowrap">Số Lượng</span>
+                <span className="ml-20 whitespace-nowrap text-lg font-semibold">
+                  Số Lượng
+                </span>
               </div>
               <div className="col-span-1">
-                <span className="text-lg font-semibold ml-24 whitespace-nowrap">Thành Tiền</span>
+                <span className="ml-24 whitespace-nowrap text-lg font-semibold">
+                  Thành Tiền
+                </span>
               </div>
               {cart.length > 0 ? (
                 cart.map((item, index) => (
                   <React.Fragment key={item._id}>
                     <div className="col-span-1 flex items-center">
-                      <img src={item.image} alt={item.name} className="w-20 h-20 object-cover mr-4" />
-                      <span className="text-lg whitespace-nowrap">{item.name}</span>
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="mr-4 h-20 w-20 object-cover"
+                      />
+                      <span className="whitespace-nowrap text-lg">
+                        {item.name}
+                      </span>
                     </div>
                     <div className="col-span-1 flex items-center">
-                      <span className="text-lg ml-36">${item.price}</span>
+                      <span className="ml-36 text-lg">${item.price}</span>
                     </div>
-                    <div className="col-span-1 flex items-center ml-24">
-                      <button onClick={() => decreaseQuantity(index)} className="text-lg ml-2 text-blue-500 focus:outline-none">-</button>
-                      <span className="text-lg ml-2">{item.quantity}</span>
-                      <button onClick={() => increaseQuantity(index)} className="text-lg ml-2 text-red-500 focus:outline-none">+</button>
+                    <div className="col-span-1 ml-24 flex items-center">
+                      <button
+                        onClick={() => decreaseQuantity(index)}
+                        className="ml-2 text-lg text-blue-500 focus:outline-none"
+                      >
+                        -
+                      </button>
+                      <span className="ml-2 text-lg">{item.quantity}</span>
+                      <button
+                        onClick={() => increaseQuantity(index)}
+                        className="ml-2 text-lg text-red-500 focus:outline-none"
+                      >
+                        +
+                      </button>
                     </div>
                     <div className="col-span-1 flex items-center">
-                      <span className="text-lg ml-28">${item.price * item.quantity}</span>
-                      <button onClick={() => removeItem(index)} className="text-lg ml-4 text-red-500 focus:outline-none">
-                        <FaTrashAlt />
+                      <span className="ml-28 text-lg">
+                        ${item.price * item.quantity}
+                      </span>
+                      <button
+                        onClick={() => removeItem(index)}
+                        className="ml-4 text-lg text-red-500 focus:outline-none"
+                      >
+                        {/* <FaTrashAlt /> */}
                       </button>
                     </div>
                   </React.Fragment>
@@ -111,24 +138,31 @@ const CartPage: React.FC = () => {
             </div>
           </div>
           <div className="w-1/4">
-            <div className="bg-white shadow-md rounded-lg p-8 mb-8">
-              <label className="block text-lg font-semibold mb-2">Mã Giảm Giá</label>
+            <div className="mb-8 rounded-lg bg-white p-8 shadow-md">
+              <label className="mb-2 block text-lg font-semibold">
+                Mã Giảm Giá
+              </label>
               <input
                 type="text"
                 placeholder="Nhập mã giảm giá"
-                className="border border-gray-300 rounded-md px-2 py-1 w-full mb-2"
+                className="mb-2 w-full rounded-md border border-gray-300 px-2 py-1"
                 value={discountCode}
                 onChange={(e) => setDiscountCode(e.target.value)}
               />
-              <button onClick={applyDiscountCode} className="bg-blue-500 text-white px-4 py-1 rounded-md w-full">Áp Dụng</button>
+              <button
+                onClick={applyDiscountCode}
+                className="w-full rounded-md bg-blue-500 px-4 py-1 text-white"
+              >
+                Áp Dụng
+              </button>
             </div>
-            <div className="bg-white shadow-md rounded-lg p-8">
-              <h3 className="text-lg font-semibold mb-4">Thông Tin Đơn Hàng</h3>
-              <div className="flex justify-between mb-2">
+            <div className="rounded-lg bg-white p-8 shadow-md">
+              <h3 className="mb-4 text-lg font-semibold">Thông Tin Đơn Hàng</h3>
+              <div className="mb-2 flex justify-between">
                 <span className="text-lg">Tổng Giá Sản Phẩm</span>
                 <span className="text-lg">${totalPrice.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between mb-2">
+              <div className="mb-2 flex justify-between">
                 <span className="text-lg">Phí Vận Chuyển</span>
                 <span className="text-lg">${SHIPPING_FEE.toFixed(2)}</span>
               </div>
@@ -137,7 +171,9 @@ const CartPage: React.FC = () => {
                 <span className="text-lg">${subtotal.toFixed(2)}</span>
               </div>
               <Link to="/checkout">
-              <button  className="bg-blue-500 text-white px-4 py-1 rounded-md w-full">Tiếp Tục</button>
+                <button className="w-full rounded-md bg-blue-500 px-4 py-1 text-white">
+                  Tiếp Tục
+                </button>
               </Link>
             </div>
           </div>

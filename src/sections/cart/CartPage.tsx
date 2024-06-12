@@ -63,7 +63,7 @@ const CartPage: React.FC = () => {
   return (
     <>
       <Header />
-      <div className="container mx-auto px-8 py-4">
+      <div className="container mx-auto min-h-screen px-8 py-4">
         <div className="flex justify-center gap-4">
           <div className="cart mb-8 max-w-4xl rounded-lg bg-white p-8 shadow-md">
             <h2 className="mb-4 text-lg font-semibold">Giỏ Hàng</h2>

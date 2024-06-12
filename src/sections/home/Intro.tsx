@@ -34,12 +34,13 @@ const Intro: React.FC = () => {
               </p>
               <p>- Góc Đồng Hành: Giới Thiệu Mẹo Hay Trong Sử Dụng Sữa.</p>
               <p>
-                Bên cạnh đó còn nhiều bất ngờ đang chờ đón bạn trong các số tiếp.
+                Bên cạnh đó còn nhiều bất ngờ đang chờ đón bạn trong các số
+                tiếp.
               </p>
             </div>
             <p>
               <i>Mời quý khách hàng cùng đón đọc! Bản tin số 1 – Tháng 6. </i>
-            </p>  
+            </p>
             <div data-aos="fade-up">
               <button className="cssbuttons-io-button">
                 Xem thêm
@@ -85,20 +86,20 @@ const Intro: React.FC = () => {
             <div className="flex flex-col gap-y-5" data-aos="fade-left">
               <div>
                 <p>
-                  Thứ nhất: Giáo dục STEM+ tích hợp theo cách tiếp cận liên môn
-                  (interdisciplinary) và thông qua thực hành. Mục tiêu nhằm giúp
-                  hỗ trợ hình thành những con người có năng lực làm việc hiệu
-                  quả trong môi trường làm việc có tính sáng tạo cao với những
-                  công việc đòi hỏi trí thức, trí tuệ của thế kỷ 21.
+                  Thứ nhất: Chúng tôi cam kết cung cấp các sản phẩm sữa chất
+                  lượng cao dành cho mẹ bầu và bé, giúp hỗ trợ sự phát triển
+                  khỏe mạnh thông qua các phương pháp tiếp cận liên môn và thực
+                  hành. Mục tiêu của chúng tôi là giúp mẹ bầu và bé sẵn sàng đối
+                  mặt với thách thức của thế kỷ 21.
                 </p>
               </div>
               <div>
                 <p>
-                  Thứ hai: Giáo dục STEM+ đề cao đến việc hình thành và phát
-                  triển năng lực giải quyết vấn đề cho người học. Trong mỗi bài
-                  học theo chủ đề STEM+, học sinh được đặt trước một tình huống
-                  có vấn đề thực tiễn cần giải quyết liên quan đến các kiến thức
-                  khoa học…
+                  Thứ hai: Chúng tôi chú trọng phát triển năng lực giải quyết
+                  vấn đề dinh dưỡng cho mẹ bầu và bé. Mỗi sản phẩm sữa kèm theo
+                  thông tin chi tiết về thành phần và lợi ích sức khỏe, giúp đưa
+                  ra các lựa chọn dinh dưỡng thông minh. Hãy cùng chúng tôi khám
+                  phá hành trình dinh dưỡng sáng tạo và thông minh!
                 </p>
               </div>
               <div data-aos="fade-up">

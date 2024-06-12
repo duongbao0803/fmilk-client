@@ -1,5 +1,5 @@
-import Header from '@/layout/Header';
-import React, { useState } from 'react';
+import Header from "@/layout/Header";
+import React, { useState } from "react";
 
 interface FormValues {
   email: string;
@@ -13,13 +13,13 @@ interface FormValues {
 
 const Checkout: React.FC = () => {
   const [form, setForm] = useState<FormValues>({
-    email: '',
-    name: '',
-    phone: '',
-    city: '',
-    district: '',
-    ward: '',
-    street: ''
+    email: "",
+    name: "",
+    phone: "",
+    city: "",
+    district: "",
+    ward: "",
+    street: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,53 +29,107 @@ const Checkout: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Form data:', form);
+    console.log("Form data:", form);
   };
 
   return (
     <div>
-    <Header/>
-    <div className="w-2/5 mx-auto p-6 border rounded-md border-gray-300 float-left ml-20">
-    <form onSubmit={handleSubmit}>
-        <div className='text-blue-800 text-2xl'>Địa Chỉ Giao Hàng</div>
-      <div className="mb-4">
-          <label>Email:</label>
-          <br />
-          <input className="w-full py-1 px-3 rounded-md border border-gray-300" type="email" name="email" value={form.email} onChange={handleChange} required />
-        </div>
-        <div className="mb-4">
-          <label>Họ và Tên*:</label>
-          <br />
-          <input className="w-full py-1 px-3 rounded-md border border-gray-300" type="text" name="name" value={form.name} onChange={handleChange} required />
-        </div>
-        <div className="mb-4">
-          <label>Số điện thoại*:</label>
-          <br />
-          <input className="w-full py-1 px-3 rounded-md border border-gray-300" type="tel" name="phone" value={form.phone} onChange={handleChange} required />
-        </div>
-        <div className="mb-4">
-          <label>Tỉnh/Thành Phố*:</label>
-          <br />
-          <input className="w-full py-1 px-3 rounded-md border border-gray-300" type="text" name="city" value={form.city} onChange={handleChange} required />
-        </div>
-        <div className="mb-4">
-          <label>Quận/Huyện*:</label>
-          <br />
-          <input className="w-full py-1 px-3 rounded-md border border-gray-300" type="text" name="district" value={form.district} onChange={handleChange} required />
-        </div>
-        <div className="mb-4">
-          <label>Phường/Xã*:</label>
-          <br />
-          <input className="w-full py-1 px-3 rounded-md border border-gray-300" type="text" name="ward" value={form.ward} onChange={handleChange} required />
-        </div>
-        <div className="mb-4">
-          <label>Số nhà, Tên đường*:</label>
-          <br />
-          <input className="w-full py-1 px-3 rounded-md border border-gray-300" type="text" name="street" value={form.street} onChange={handleChange} required />
-        </div>
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Tiếp Tục</button>
-      </form>
-    </div>
+      <Header />
+      <div className="float-left mx-auto ml-20 w-2/5 rounded-md border border-gray-300 p-6">
+        <form onSubmit={handleSubmit}>
+          <div className="text-2xl text-blue-800">Địa Chỉ Giao Hàng</div>
+          <div className="mb-4">
+            <label>Email:</label>
+            <br />
+            <input
+              className="w-full rounded-md border border-gray-300 px-3 py-1"
+              type="email"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label>Họ và Tên*:</label>
+            <br />
+            <input
+              className="w-full rounded-md border border-gray-300 px-3 py-1"
+              type="text"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label>Số điện thoại*:</label>
+            <br />
+            <input
+              className="w-full rounded-md border border-gray-300 px-3 py-1"
+              type="tel"
+              name="phone"
+              value={form.phone}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label>Tỉnh/Thành Phố*:</label>
+            <br />
+            <input
+              className="w-full rounded-md border border-gray-300 px-3 py-1"
+              type="text"
+              name="city"
+              value={form.city}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label>Quận/Huyện*:</label>
+            <br />
+            <input
+              className="w-full rounded-md border border-gray-300 px-3 py-1"
+              type="text"
+              name="district"
+              value={form.district}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label>Phường/Xã*:</label>
+            <br />
+            <input
+              className="w-full rounded-md border border-gray-300 px-3 py-1"
+              type="text"
+              name="ward"
+              value={form.ward}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label>Số nhà, Tên đường*:</label>
+            <br />
+            <input
+              className="w-full rounded-md border border-gray-300 px-3 py-1"
+              type="text"
+              name="street"
+              value={form.street}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <button
+            className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+            type="submit"
+          >
+            Tiếp Tục
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import Footer from "@/layout/Footer";
 import axios from "axios";
 import { Carousel } from "antd";
 import Intro from "./Intro";
+import Slider from "./Slider";
 
 interface Product {
   _id: string;
@@ -101,13 +102,18 @@ const HomePage: React.FC = () => {
         </div>
       </div>
       <Intro />
-      <div className="container mx-auto px-20 py-4">
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="container mx-auto mt-20 px-20 py-4">
+        <div className="mb-10 flex justify-center" data-aos="fade-down">
+          <span className="border-b-2 border-[#1385b7] border-x-[#1385b7] text-center text-[25px] font-medium text-[#1385b7]">
+            SẢN PHẨM
+          </span>
+        </div>
+        <div className="mb-24 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {products.length > 0 ? (
             products.map((product) => (
               <div
                 key={product._id}
-                className="product-item overflow-hidden rounded-lg bg-white shadow-md"
+                className="product-item rounded-lg bg-white shadow-md"
               >
                 <div className="flex h-full flex-col justify-between">
                   <div className="aspect-w-1 aspect-h-1">
@@ -147,6 +153,9 @@ const HomePage: React.FC = () => {
           ) : (
             <p>Loading products...</p>
           )}
+        </div>
+        <div>
+          <Slider />
         </div>
       </div>
       <Footer />

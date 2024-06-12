@@ -38,7 +38,6 @@ const EditProductModal: React.FC<EditModalProps> = (props) => {
   const handleOk = async () => {
     try {
       const values = await form.validateFields();
-
       setIsConfirmLoading(true);
       setTimeout(async () => {
         try {

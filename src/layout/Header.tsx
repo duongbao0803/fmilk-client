@@ -19,6 +19,14 @@ const Header: React.FC = React.memo(() => {
     navigate("/cart");
   };
 
+  const showNotification = () => {
+    setIsNotificationVisible(true);
+  };
+
+  const closeNotification = () => {
+    setIsNotificationVisible(false);
+  };
+
   return (
     <>
       <div className="z-[999] mx-5 flex h-[60px] justify-center text-[#000000]">
@@ -58,8 +66,9 @@ const Header: React.FC = React.memo(() => {
           </div>
         </div>
       </div>
+      <Notification visible={isNotificationVisible} onClose={closeNotification} />
     </>
   );
-});
+};
 
 export default Header;

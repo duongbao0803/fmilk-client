@@ -19,13 +19,13 @@ const Header: React.FC = React.memo(() => {
     navigate("/cart");
   };
 
-  const showNotification = () => {
-    setIsNotificationVisible(true);
-  };
+  // const showNotification = () => {
+  //   setIsNotificationVisible(true);
+  // };
 
-  const closeNotification = () => {
-    setIsNotificationVisible(false);
-  };
+  // const closeNotification = () => {
+  //   setIsNotificationVisible(false);
+  // };
 
   return (
     <>
@@ -66,9 +66,9 @@ const Header: React.FC = React.memo(() => {
           </div>
         </div>
       </div>
-      <Notification visible={isNotificationVisible} onClose={closeNotification} />
+      {/* <Notification visible={isNotificationVisible} onClose={closeNotification} /> */}
     </>
   );
-};
+});
 
 export default Header;

@@ -29,7 +29,7 @@ const Avatar: React.FC = () => {
     {
       label:
         role === Role.ADMIN || role === Role.STAFF ? (
-          <Link to="/user">Dashboard</Link>
+          <Link to="/chart">Dashboard</Link>
         ) : (
           <Link to="/profile">View profile</Link>
         ),

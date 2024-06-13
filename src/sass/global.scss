@@ -39,6 +39,26 @@
   bottom: 0;
 }
 
+.swiper {
+  width: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .ant-table-cell .first-column {
   position: sticky !important;
   left: 0;
@@ -80,16 +100,12 @@
   transform-origin: 0%;
 }
 
-// .right-bar {
-//   margin-left: 230px !important;
-// }
-
 .dropdownHeader:hover {
   background-color: orange !important;
 }
 
 .background {
-  background-image: url("https://stemplus.vn/wp-content/uploads/2022/04/Banner-web-scaled.jpg");
+  background-image: url("../assets/images/banner/banner_4.png");
   background-repeat: no-repeat;
   background-size: cover;
   min-height: 101vh;
@@ -97,7 +113,7 @@
 }
 
 .background2 {
-  background-image: url("https://tra.extension.colostate.edu/wp-content/uploads/sites/9/2022/08/STEM-Kit-Loan-Out-Website-Banner-Landscape-scaled.jpg");
+  background-image: url("../assets/images/banner/banner_1.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   min-height: 101vh;
@@ -129,7 +145,7 @@
   font-size: 17px;
   font-weight: 500;
   border-radius: 25px;
-  border: none;
+  // border: none;
   letter-spacing: 0.05em;
   display: flex;
   align-items: center;

@@ -1,7 +1,7 @@
-import Header from '@/layout/Header';
-import Footer from '@/layout/Footer';
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import Header from "@/layout/Header";
+import Footer from "@/layout/Footer";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface FormValues {
   email: string;
@@ -25,13 +25,13 @@ interface CartItem {
 
 const Checkout: React.FC = () => {
   const [form, setForm] = useState<FormValues>({
-    email: '',
-    name: '',
-    phone: '',
-    city: '',
-    district: '',
-    ward: '',
-    street: ''
+    email: "",
+    name: "",
+    phone: "",
+    city: "",
+    district: "",
+    ward: "",
+    street: "",
   });
 
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -41,7 +41,7 @@ const Checkout: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const savedCart = localStorage.getItem('cart');
+    const savedCart = localStorage.getItem("cart");
     if (savedCart) {
       setCart(JSON.parse(savedCart));
     }
@@ -54,7 +54,8 @@ const Checkout: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    navigate('/payment', { state: { form, cart, totalPrice, subtotal } });
+    console.log("Form data:", form);
+    navigate("/payment", { state: { form, cart, totalPrice, subtotal } });
   };
 
   const calculateTotalPrice = () => {
@@ -69,15 +70,17 @@ const Checkout: React.FC = () => {
       <Header />
       <div className="container mx-auto px-8 py-4">
         <div className="flex justify-center gap-4">
-          <div className="w-2/5 p-6 border rounded-md border-gray-300">
+          <div className="w-2/5 rounded-md border border-gray-300 p-6">
             <form onSubmit={handleSubmit}>
-              <div className="text-blue-800 text-2xl mb-6">Địa Chỉ Giao Hàng</div>
+              <div className="mb-6 text-2xl text-blue-800">
+                Địa Chỉ Giao Hàng
+              </div>
               <div className="mb-4">
                 <label htmlFor="email">Email:</label>
                 <br />
                 <input
                   id="email"
-                  className="w-full py-1 px-3 rounded-md border border-gray-300"
+                  className="w-full rounded-md border border-gray-300 px-3 py-1"
                   type="email"
                   name="email"
                   value={form.email}
@@ -90,7 +93,7 @@ const Checkout: React.FC = () => {
                 <br />
                 <input
                   id="name"
-                  className="w-full py-1 px-3 rounded-md border border-gray-300"
+                  className="w-full rounded-md border border-gray-300 px-3 py-1"
                   type="text"
                   name="name"
                   value={form.name}
@@ -103,7 +106,7 @@ const Checkout: React.FC = () => {
                 <br />
                 <input
                   id="phone"
-                  className="w-full py-1 px-3 rounded-md border border-gray-300"
+                  className="w-full rounded-md border border-gray-300 px-3 py-1"
                   type="tel"
                   name="phone"
                   value={form.phone}
@@ -116,7 +119,7 @@ const Checkout: React.FC = () => {
                 <br />
                 <input
                   id="city"
-                  className="w-full py-1 px-3 rounded-md border border-gray-300"
+                  className="w-full rounded-md border border-gray-300 px-3 py-1"
                   type="text"
                   name="city"
                   value={form.city}
@@ -129,7 +132,7 @@ const Checkout: React.FC = () => {
                 <br />
                 <input
                   id="district"
-                  className="w-full py-1 px-3 rounded-md border border-gray-300"
+                  className="w-full rounded-md border border-gray-300 px-3 py-1"
                   type="text"
                   name="district"
                   value={form.district}
@@ -142,7 +145,7 @@ const Checkout: React.FC = () => {
                 <br />
                 <input
                   id="ward"
-                  className="w-full py-1 px-3 rounded-md border border-gray-300"
+                  className="w-full rounded-md border border-gray-300 px-3 py-1"
                   type="text"
                   name="ward"
                   value={form.ward}
@@ -155,7 +158,7 @@ const Checkout: React.FC = () => {
                 <br />
                 <input
                   id="street"
-                  className="w-full py-1 px-3 rounded-md border border-gray-300"
+                  className="w-full rounded-md border border-gray-300 px-3 py-1"
                   type="text"
                   name="street"
                   value={form.street}
@@ -164,44 +167,58 @@ const Checkout: React.FC = () => {
                 />
               </div>
               <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
                 type="submit"
               >
                 Tiếp Tục
               </button>
             </form>
           </div>
-          <div className="w-2/3 ml-20">
-            <div className="bg-white shadow-md rounded-lg p-4 mb-8">
-              <h2 className="text-lg font-semibold mb-4">Giỏ Hàng</h2>
+          <div className="ml-20 w-2/3">
+            <div className="mb-8 rounded-lg bg-white p-4 shadow-md">
+              <h2 className="mb-4 text-lg font-semibold">Giỏ Hàng</h2>
               <div className="grid grid-cols-4 gap-4">
                 <div className="col-span-1">
                   <span className="text-lg font-semibold">Sản Phẩm</span>
                 </div>
                 <div className="col-span-1">
-                  <span className="text-lg font-semibold ml-8 whitespace-nowrap">Đơn Giá</span>
+                  <span className="ml-8 whitespace-nowrap text-lg font-semibold">
+                    Đơn Giá
+                  </span>
                 </div>
                 <div className="col-span-1">
-                  <span className="text-lg font-semibold ml-4 whitespace-nowrap">Số Lượng</span>
+                  <span className="ml-4 whitespace-nowrap text-lg font-semibold">
+                    Số Lượng
+                  </span>
                 </div>
                 <div className="col-span-1">
-                  <span className="text-lg font-semibold ml-4 whitespace-nowrap">Thành Tiền</span>
+                  <span className="ml-4 whitespace-nowrap text-lg font-semibold">
+                    Thành Tiền
+                  </span>
                 </div>
                 {cart.length > 0 ? (
                   cart.map((item) => (
                     <React.Fragment key={item._id}>
                       <div className="col-span-1 flex items-center">
-                        <img src={item.image} alt={item.name} className="w-16 h-16 object-cover mr-2" />
-                        <span className="text-sm whitespace-nowrap">{item.name}</span>
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="mr-2 h-16 w-16 object-cover"
+                        />
+                        <span className="whitespace-nowrap text-sm">
+                          {item.name}
+                        </span>
                       </div>
                       <div className="col-span-1 flex items-center">
-                        <span className="text-sm ml-12">${item.price}</span>
+                        <span className="ml-12 text-sm">${item.price}</span>
                       </div>
-                      <div className="col-span-1 flex items-center ml-4">
-                        <span className="text-sm ml-10">{item.quantity}</span>
+                      <div className="col-span-1 ml-4 flex items-center">
+                        <span className="ml-10 text-sm">{item.quantity}</span>
                       </div>
                       <div className="col-span-1 flex items-center">
-                        <span className="text-sm ml-10">${item.price * item.quantity}</span>
+                        <span className="ml-10 text-sm">
+                          ${item.price * item.quantity}
+                        </span>
                       </div>
                     </React.Fragment>
                   ))
@@ -212,26 +229,26 @@ const Checkout: React.FC = () => {
                 )}
               </div>
             </div>
-            <div className="bg-white shadow-md rounded-lg p-4">
-              <h3 className="text-lg font-semibold mb-4">Thông Tin Đơn Hàng</h3>
-              <div className="flex justify-between mb-2">
+            <div className="rounded-lg bg-white p-4 shadow-md">
+              <h3 className="mb-4 text-lg font-semibold">Thông Tin Đơn Hàng</h3>
+              <div className="mb-2 flex justify-between">
                 <span className="text-lg">Tổng Giá Sản Phẩm</span>
                 <span className="text-lg">${totalPrice.toFixed(2)}</span>
               </div>
-            <div className="flex justify-between mb-2">
+              <div className="mb-2 flex justify-between">
                 <span className="text-lg">Phí Vận Chuyển</span>
                 <span className="text-lg">${SHIPPING_FEE.toFixed(2)}</span>
               </div>
-            <div className="flex justify-between font-semibold">
-              <span className="text-lg">Tạm Tính</span>
-              <span className="text-lg">${subtotal.toFixed(2)}</span>
+              <div className="flex justify-between font-semibold">
+                <span className="text-lg">Tạm Tính</span>
+                <span className="text-lg">${subtotal.toFixed(2)}</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  <Footer />
-</>
+      <Footer />
+    </>
   );
 };
 

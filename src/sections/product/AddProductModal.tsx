@@ -18,7 +18,6 @@ export interface AddModalProps {
 
 const AddProductModal: React.FC<AddModalProps> = (props) => {
   const [fileChange, setFileChange] = useState<string>("");
-
   const { setIsOpen, isOpen } = props;
   const [isConfirmLoading, setIsConfirmLoading] = useState<boolean>(false);
   const { addNewProductItem } = useProductService();

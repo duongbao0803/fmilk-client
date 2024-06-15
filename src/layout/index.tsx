@@ -59,7 +59,7 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
 
   const resetDefaultSelectedKeys = () => {
     const selectedKeys = sessionStorage.getItem("keys");
-    return selectedKeys ? selectedKeys.split(",") : ["2"];
+    return selectedKeys ? selectedKeys.split(",") : ["1"];
   };
 
   const defaultSelectedKeys = useMemo(() => resetDefaultSelectedKeys(), []);

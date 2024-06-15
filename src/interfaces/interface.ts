@@ -111,3 +111,7 @@ export interface PostInfo {
   description?: string;
   image?: string;
 }
+
+export interface PriceFormatProps {
+  price: number;
+}

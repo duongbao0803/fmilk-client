@@ -1,3 +1,5 @@
+import { PriceFormatProps } from "@/interfaces/interface";
+
 export const validatePhoneNumber = (_: unknown, value: string) => {
   const phoneNumberPattern = /^[0-9]{10}$/;
   if (value && !phoneNumberPattern.test(value)) {
@@ -23,3 +25,12 @@ export function formatDate(dateString: string | number | Date) {
     return formattedDate;
   }
 }
+
+export const PriceFormat: React.FC<PriceFormatProps> = ({ price }) => {
+  const formattedPrice = price.toLocaleString("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  });
+
+  return formattedPrice;
+};

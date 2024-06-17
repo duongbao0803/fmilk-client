@@ -1,32 +1,31 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Dropdown, Menu, Space } from "antd";
-import { HomeFilled, DownOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import { Badge } from "antd";
+import { HomeFilled, ShoppingCartOutlined } from "@ant-design/icons";
 import { Avatar } from "@/components";
-import { introItems, programItems, sourceItems } from "@/constant/constant";
 
 const Header: React.FC = React.memo(() => {
-  const [isSelectedLink, setIsSelectedLink] = useState<boolean>(true);
-  const [isSelectedContact, setIsSelectedContact] = useState<boolean>(false);
-  const [selectedDropdown, setSelectedDropdown] = useState<string>("");
+  const navigate = useNavigate();
+
+  const [selectedOption, setSelectedOption] = useState("home");
 
   const handleLinkClick = () => {
-    setIsSelectedLink(true);
-    setIsSelectedContact(false);
-    setSelectedDropdown("");
+    setSelectedOption("home");
+    navigate("/");
   };
 
-  const handleSelectedContact = () => {
-    setIsSelectedContact(true);
-    setIsSelectedLink(false);
-    setSelectedDropdown("");
+  const handleSelectedCart = () => {
+    setSelectedOption("cart");
+    navigate("/cart");
   };
 
-  const handleItemClick = (key: string) => {
-    setSelectedDropdown(key);
-    setIsSelectedLink(false);
-    setIsSelectedContact(false);
-  };
+  // const showNotification = () => {
+  //   setIsNotificationVisible(true);
+  // };
+
+  // const closeNotification = () => {
+  //   setIsNotificationVisible(false);
+  // };
 
   return (
     <>
@@ -38,136 +37,36 @@ const Header: React.FC = React.memo(() => {
           <img
             src="https://insacmau.com/wp-content/uploads/2023/02/logo-FPT-Polytechnic-.png"
             alt=""
-            className="my-auto ml-4 h-fit w-[100px] object-cover"
+            className="my-auto ml-4 h-fit w-[100px] cursor-pointer object-cover"
+            onClick={handleLinkClick}
           />
-          <div className="flex items-center gap-3 p-4 text-[18px] font-medium text-[#1385b7]">
-            <Link
-              to="#"
+          <div className="flex items-center gap-3 p-4 text-[18px] font-medium text-black">
+            <div
               onClick={handleLinkClick}
-              className={`flex items-center rounded-2xl px-4 py-[10px] text-[15px] transition-all duration-500 hover:bg-[orange] hover:text-[#fff] ${
-                isSelectedLink ? "bg-[orange] text-[#fff]" : ""
+              className={`flex cursor-pointer items-center rounded-2xl px-4 py-[10px] text-[15px] transition-all duration-500 hover:bg-[orange] hover:text-[#fff] ${
+                selectedOption === "home" ? "bg-[orange] text-[#fff]" : ""
               }`}
             >
               <HomeFilled />
-            </Link>
-            <Dropdown
-              overlay={
-                <Menu>
-                  {introItems &&
-                    introItems.map((item) => (
-                      <Menu.Item
-                        key={item?.key}
-                        onClick={() => handleItemClick(item?.key)}
-                      >
-                        <a
-                          href={item?.path}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {item?.label}
-                        </a>
-                      </Menu.Item>
-                    ))}
-                </Menu>
-              }
-              className={`dropdownHeader cursor-pointer rounded-3xl px-3 py-1 transition-all duration-500 hover:text-[#fff] ${
-                selectedDropdown === "1" ||
-                selectedDropdown === "2" ||
-                selectedDropdown === "3"
-                  ? "bg-[orange] text-[#fff]"
-                  : ""
-              }`}
-            >
-              <a onClick={(e) => e.preventDefault()}>
-                <Space>
-                  GIỚI THIỆU
-                  <DownOutlined />
-                </Space>
-              </a>
-            </Dropdown>
-            <Dropdown
-              overlay={
-                <Menu>
-                  {programItems &&
-                    programItems.map((item) => (
-                      <Menu.Item
-                        key={item?.key}
-                        onClick={() => handleItemClick(item.key)}
-                      >
-                        <a
-                          href={item?.path}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {item.label}
-                        </a>
-                      </Menu.Item>
-                    ))}
-                </Menu>
-              }
-              className={`dropdownHeader cursor-pointer rounded-3xl px-3 py-1 transition-all duration-500 hover:text-[#fff] ${
-                selectedDropdown === "4" ||
-                selectedDropdown === "5" ||
-                selectedDropdown === "6"
-                  ? "bg-[orange] text-[#fff]"
-                  : ""
-              }`}
-            >
-              <a onClick={(e) => e.preventDefault()}>
-                <Space>
-                  CHƯƠNG TRÌNH
-                  <DownOutlined />
-                </Space>
-              </a>
-            </Dropdown>
-            <Dropdown
-              overlay={
-                <Menu>
-                  {sourceItems &&
-                    sourceItems.map((item) => (
-                      <Menu.Item
-                        key={item?.key}
-                        onClick={() => handleItemClick(item.key)}
-                      >
-                        <a
-                          href={item?.path}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {item.label}
-                        </a>
-                      </Menu.Item>
-                    ))}
-                </Menu>
-              }
-              className={`dropdownHeader cursor-pointer rounded-3xl px-3 py-1 transition-all duration-500 hover:text-[#fff] ${
-                selectedDropdown === "7" ||
-                selectedDropdown === "8" ||
-                selectedDropdown === "9"
-                  ? "bg-[orange] text-[#fff]"
-                  : ""
-              }`}
-            >
-              <a onClick={(e) => e.preventDefault()}>
-                <Space>
-                  TÀI NGUYÊN
-                  <DownOutlined />
-                </Space>
-              </a>
-            </Dropdown>
-            <Link
-              to="/home"
-              onClick={handleSelectedContact}
+            </div>
+
+            <div
+              onClick={handleSelectedCart}
               className={`dropdownHeader cursor-pointer rounded-3xl px-3 py-1 transition-all duration-500 hover:bg-[orange] hover:text-[#fff] ${
-                isSelectedContact ? "bg-[orange] text-[#fff]" : ""
+                selectedOption === "cart" ? "bg-[orange] text-[#fff]" : ""
               }`}
             >
-              LIÊN HỆ
-            </Link>
+              <Badge count={5}>
+                <ShoppingCartOutlined
+                  className={`text-2xl text-black hover:text-white ${selectedOption === "cart" ? "text-[#fff]" : ""}`}
+                />
+              </Badge>
+            </div>
             <Avatar />
           </div>
         </div>
       </div>
+      {/* <Notification visible={isNotificationVisible} onClose={closeNotification} /> */}
     </>
   );
 });

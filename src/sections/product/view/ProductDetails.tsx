@@ -31,7 +31,7 @@ interface Comment {
 
 function ProductDetailsPage() {
   const [product, setProduct] = useState<Product | null>(null);
-  const [comments, setComments] = useState<Comment[]>([
+  const [comments] = useState<Comment[]>([
     { id: 1, username: "Unknow", content: "unknow", date: "1000 ngày trước" },
     { id: 2, username: "Unknow", content: "unknow", date: "1000 ngày trước" },
     { id: 3, username: "Unknow", content: "unknow", date: "1000 ngày trước" },

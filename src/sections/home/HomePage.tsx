@@ -3,7 +3,6 @@ import Header from "@/layout/Header";
 import Footer from "@/layout/Footer";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import ProductDetails from "@/pages/ProductPage";
 
 interface Product {
   _id: string;
@@ -29,7 +28,9 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("https://fmilk-server.onrender.com/api/v1/product/");
+        const response = await axios.get(
+          "https://fmilk-server.onrender.com/api/v1/product/",
+        );
         setProducts(response.data.products);
       } catch (error) {
         console.error("Error fetching the products:", error);
@@ -39,8 +40,7 @@ const HomePage: React.FC = () => {
     fetchProducts();
   }, []);
 
-  console.log("products",products);
-  
+  console.log("products", products);
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
@@ -59,7 +59,7 @@ const HomePage: React.FC = () => {
           return prevCart.map((item) =>
             item._id === productId
               ? { ...item, quantity: item.quantity + 1 }
-              : item
+              : item,
           );
         } else {
           return [...prevCart, { ...product, quantity: 1 }];
@@ -81,9 +81,17 @@ const HomePage: React.FC = () => {
     const stars = [];
     for (let i = 1; i <= totalStars; i++) {
       if (i <= rating) {
-        stars.push(<span key={i} className="text-yellow-500">&#9733;</span>);
+        stars.push(
+          <span key={i} className="text-yellow-500">
+            &#9733;
+          </span>,
+        );
       } else {
-        stars.push(<span key={i} className="text-gray-400">&#9733;</span>);
+        stars.push(
+          <span key={i} className="text-gray-400">
+            &#9733;
+          </span>,
+        );
       }
     }
     return stars;
@@ -101,25 +109,45 @@ const HomePage: React.FC = () => {
     <>
       <Header />
       <div className="container mx-auto px-4 py-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
           {products.length > 0 ? (
             products.map((product) => (
-              <div key={product._id} className="product-item bg-white shadow-md rounded-lg overflow-hidden">
-                <div className="flex flex-col justify-between h-full">
-                  <div className="relative" style={{ paddingBottom: '75%' }}>
-                    <img src={product.image} alt={product.name} className="absolute top-0 left-0 w-full h-full object-cover" />
+              <div
+                key={product._id}
+                className="product-item overflow-hidden rounded-lg bg-white shadow-md"
+              >
+                <div className="flex h-full flex-col justify-between">
+                  <div className="relative" style={{ paddingBottom: "75%" }}>
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="absolute left-0 top-0 h-full w-full object-cover"
+                    />
                   </div>
-                  <div className="p-2 flex flex-col items-center text-center">
-                    <h3 className="text-lg font-semibold mb-1">{product.name}</h3>
-                    <p className="text-gray-600 mb-1">{truncateDescription(product.description, 10)}</p>
-                    <p className="text-gray-800 font-bold mb-1">Price: {product.price}</p>
+                  <div className="flex flex-col items-center p-2 text-center">
+                    <h3 className="mb-1 text-lg font-semibold">
+                      {product.name}
+                    </h3>
+                    <p className="mb-1 text-gray-600">
+                      {truncateDescription(product.description, 10)}
+                    </p>
+                    <p className="mb-1 font-bold text-gray-800">
+                      Price: {product.price}
+                    </p>
                     <div className="mb-2">
                       Rating: {renderStars(product.rating)}
                     </div>
-                    <button onClick={() => handleAddToCart(product._id)} className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded w-full mb-1">
+                    <button
+                      onClick={() => handleAddToCart(product._id)}
+                      className="mb-1 w-full rounded bg-green-500 px-2 py-1 font-bold text-white hover:bg-green-700"
+                    >
                       Add to Cart
                     </button>
-                    <Link to={`/productdetails/${product._id}`} onClick={() => handleBuyNow(product._id)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded w-full">
+                    <Link
+                      to={`/productdetails/${product._id}`}
+                      onClick={() => handleBuyNow(product._id)}
+                      className="w-full rounded bg-blue-500 px-2 py-1 font-bold text-white hover:bg-blue-700"
+                    >
                       Buy Now
                     </Link>
                   </div>
@@ -132,7 +160,7 @@ const HomePage: React.FC = () => {
         </div>
       </div>
       {notification && (
-        <div className="fixed bottom-4 left-4 bg-green-500 text-black py-4 px-6 rounded-md flex items-center shadow-lg z-50">
+        <div className="fixed bottom-4 left-4 z-50 flex items-center rounded-md bg-green-500 px-6 py-4 text-black shadow-lg">
           <span>&#10003;</span>
           <span className="ml-2 font-semibold">{notification}</span>
         </div>

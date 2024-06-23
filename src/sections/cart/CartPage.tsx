@@ -29,7 +29,7 @@ const CartPage: React.FC = () => {
     if (savedCart) {
       setCart(JSON.parse(savedCart));
     }
-  }, []); // [] đảm bảo useEffect chỉ chạy một lần sau khi component được render
+  }, []);
 
   const decreaseQuantity = (index: number) => {
     const updatedCart = [...cart];

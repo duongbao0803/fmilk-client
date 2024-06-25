@@ -115,12 +115,14 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
         defaultCollapsed={false}
       >
         <div className="demo-logo-vertical" />
-        <div className="my-4 flex justify-center">
-          <img
-            className="w-5/12 select-none object-cover"
-            src="https://insacmau.com/wp-content/uploads/2023/02/logo-FPT-Polytechnic-.png"
-            alt=""
-          />
+        <div className=" flex justify-center">
+          <Link to="/">
+            <img
+              className="h-[120px] w-[200px] select-none object-cover"
+              src="https://firebasestorage.googleapis.com/v0/b/swd392-d2c4e.appspot.com/o/FMilk%2Flogo_fmilk.png?alt=media&token=2b0d6848-7bf9-459e-a28d-444dab95a287"
+              alt=""
+            />
+          </Link>
         </div>
         <Menu
           theme="light"

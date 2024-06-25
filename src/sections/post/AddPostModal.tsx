@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { Modal, Form, Input } from "antd";
+import { Modal, Form, Input, Select } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import UploadImagePost from "./UploadImagePost";
 import usePostService from "@/services/postService";
+import useProductService from "@/services/productService";
+import { ProductInfo } from "@/interfaces/interface";
 
 export interface AddPostModalProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -10,8 +12,9 @@ export interface AddPostModalProps {
 }
 
 const AddPostModal: React.FC<AddPostModalProps> = (props) => {
+  const { Option } = Select;
   const [fileChange, setFileChange] = useState<string>("");
-
+  const { products } = useProductService();
   const { setIsOpen, isOpen } = props;
   const [isConfirmLoading, setIsConfirmLoading] = useState<boolean>(false);
   const { addNewPostItem } = usePostService();
@@ -104,6 +107,32 @@ const AddPostModal: React.FC<AddPostModalProps> = (props) => {
             placeholder="Description"
             autoFocus
           />
+        </Form.Item>
+
+        <Form.Item
+          name="productId"
+          rules={[
+            {
+              required: true,
+              message: "Please select product",
+            },
+          ]}
+          colon={true}
+          label="Product"
+          labelCol={{ span: 24 }}
+          className="formItem"
+        >
+          <Select
+            showSearch
+            placeholder="Please select product"
+            optionFilterProp="children"
+          >
+            {products.map((product: ProductInfo, index: number) => (
+              <Option key={index} value={`${product._id}`} label={product.name}>
+                {`${product.name}`}
+              </Option>
+            ))}
+          </Select>
         </Form.Item>
         <Form.Item
           name="image"

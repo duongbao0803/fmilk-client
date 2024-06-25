@@ -54,7 +54,7 @@ const usePostService = () => {
     onSuccess: () => {
       notification.success({
         message: "Delete Successful",
-        description: "Delete product successful",
+        description: "Delete post successful",
         duration: 2,
       });
       queryClient.invalidateQueries("posts");
@@ -91,7 +91,7 @@ const usePostService = () => {
     onSuccess: () => {
       notification.success({
         message: "Add Successful",
-        description: "Add product successful",
+        description: "Add post successful",
         duration: 2,
       });
       queryClient.invalidateQueries("posts");

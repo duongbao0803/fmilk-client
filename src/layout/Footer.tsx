@@ -26,9 +26,9 @@ const Footer: React.FC = React.memo(() => {
           </div>
           <div className="flex flex-col items-center">
             <img
-              src="https://insacmau.com/wp-content/uploads/2023/02/logo-FPT-Polytechnic-.png"
+              src="https://firebasestorage.googleapis.com/v0/b/swd392-d2c4e.appspot.com/o/FMilk%2Flogo_fmilk.png?alt=media&token=2b0d6848-7bf9-459e-a28d-444dab95a287"
               alt=""
-              className="h-[100px] w-[200px] object-cover"
+              className="h-[100px] w-[200px] rounded-2xl object-cover"
             />
             <div className="mt-4 flex items-center gap-12">
               <a href="https://www.facebook.com/FEExpSpace" target="_blank">

@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
-import { Button, Form, Input, Checkbox, notification } from "antd";
+import { Button, Form, Input, Checkbox, notification, Spin } from "antd";
 import {
   UserOutlined,
   LockOutlined,
   EyeInvisibleOutlined,
   EyeOutlined,
+  LoadingOutlined,
 } from "@ant-design/icons";
 import Cookies from "js-cookie";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
@@ -197,7 +198,13 @@ const Signin: React.FC = () => {
                     htmlType="submit"
                     className="login-form-button mx-auto mt-5 block h-11 w-full text-lg tracking-wider"
                   >
-                    Sign In
+                    {isLoggingIn ? (
+                      <Spin
+                        indicator={<LoadingOutlined className="text-[#fff]" />}
+                      />
+                    ) : (
+                      "Sign In"
+                    )}
                   </Button>
                 </div>
               </Form.Item>

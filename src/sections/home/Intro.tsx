@@ -64,7 +64,7 @@ const Intro: React.FC = () => {
         </div>
         <div className="flex items-center" data-aos="flip-up">
           <img
-            src="https://insacmau.com/wp-content/uploads/2023/02/logo-FPT-Polytechnic-.png"
+            src="https://firebasestorage.googleapis.com/v0/b/swd392-d2c4e.appspot.com/o/FMilk%2Flogo_fmilk.png?alt=media&token=2b0d6848-7bf9-459e-a28d-444dab95a287"
             alt=""
             className="object-cover"
           />

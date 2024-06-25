@@ -35,9 +35,9 @@ const Header: React.FC = React.memo(() => {
           data-aos="fade-down"
         >
           <img
-            src="https://insacmau.com/wp-content/uploads/2023/02/logo-FPT-Polytechnic-.png"
+            src="https://firebasestorage.googleapis.com/v0/b/swd392-d2c4e.appspot.com/o/FTravel%2FLogo_FTravel_3.png?alt=media&token=744b0241-f414-4139-affa-5c523c3bcbc2"
             alt=""
-            className="my-auto ml-4 h-fit w-[100px] cursor-pointer object-cover"
+            className="my-auto ml-5 h-fit w-[40px] cursor-pointer object-cover"
             onClick={handleLinkClick}
           />
           <div className="flex items-center gap-3 p-4 text-[18px] font-medium text-black">

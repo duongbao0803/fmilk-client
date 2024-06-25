@@ -19,7 +19,6 @@ import AdminProductManagementPage from "@/sections/admin/ProductManagement";
 import AdminStaffManagementPage from "@/sections/admin/StaffManagement";
 import PostMangementPage from "@/pages/PostMangementPage";
 
-export const AdminPage = lazy(() => import("@/pages/AdminPage"));
 export const UserManagementPage = lazy(
   () => import("@/pages/UserManagementPage"),
 );

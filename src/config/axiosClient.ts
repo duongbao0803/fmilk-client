@@ -7,6 +7,11 @@ const axiosClient = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+
+  // baseURL: "https://fmilk-server.onrender.com/api",
+  // headers: {
+  //   "Content-Type": "application/json",
+  // },
 });
 
 axiosClient.interceptors.request.use(

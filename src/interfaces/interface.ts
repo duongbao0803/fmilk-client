@@ -12,6 +12,7 @@ export interface UserInfo {
 }
 
 export interface ProductInfo {
+  _id: string;
   name?: string;
   image?: string;
   description?: string;
@@ -107,6 +108,7 @@ export interface AddNewUserProps {
 }
 
 export interface PostInfo {
+  productId: string;
   title?: string;
   description?: string;
   image?: string;

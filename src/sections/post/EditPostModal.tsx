@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { Modal, Form, Input } from "antd";
+import { Modal, Form, Input, Select } from "antd";
 import { FormOutlined, UnorderedListOutlined } from "@ant-design/icons";
 import { DataType } from "./PostList";
 import usePostService from "@/services/postService";
 import UploadImagePost from "./UploadImagePost";
+import { ProductInfo } from "@/interfaces/interface";
+import useProductService from "@/services/productService";
 
 export interface EditModalProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -13,9 +15,11 @@ export interface EditModalProps {
 
 const EditPostModal: React.FC<EditModalProps> = (props) => {
   const { setIsOpen, isOpen, postInfo } = props;
+  const { Option } = Select;
   const [fileChange, setFileChange] = useState<string>("");
   const [isConfirmLoading, setIsConfirmLoading] = useState<boolean>(false);
   const { updatePostItem } = usePostService();
+  const { products } = useProductService();
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -115,6 +119,31 @@ const EditPostModal: React.FC<EditModalProps> = (props) => {
             placeholder="Description"
             autoFocus
           />
+        </Form.Item>
+        <Form.Item
+          name="productId"
+          rules={[
+            {
+              required: true,
+              message: "Please select product",
+            },
+          ]}
+          colon={true}
+          label="Product"
+          labelCol={{ span: 24 }}
+          className="formItem"
+        >
+          <Select
+            showSearch
+            placeholder="Please select product"
+            optionFilterProp="children"
+          >
+            {products.map((product: ProductInfo, index: number) => (
+              <Option key={index} value={`${product._id}`} label={product.name}>
+                {`${product.name}`}
+              </Option>
+            ))}
+          </Select>
         </Form.Item>
         <Form.Item
           name="image"

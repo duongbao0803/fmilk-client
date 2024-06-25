@@ -5,7 +5,6 @@ import { Role } from "@/enums/enum";
 import DashboardLayout from "@/layout";
 import { useAnimation } from "@/hooks/useAnimation";
 import useAuth from "@/hooks/useAuth";
-import Form from "@/sections/contact/Form";
 import AuthenPage from "@/pages/AuthenPage";
 import LandingPage from "@/pages/LandingPage";
 import { UserInfo } from "@/interfaces/interface";
@@ -18,17 +17,23 @@ import AdminDashboardPage from "@/sections/admin/DashBoard";
 import AdminOrdersPage from "@/sections/admin/OrderManagement";
 import AdminProductManagementPage from "@/sections/admin/ProductManagement";
 import AdminStaffManagementPage from "@/sections/admin/StaffManagement";
+import PostMangementPage from "@/pages/PostMangementPage";
 
-
-export const AdminPage = lazy(() => import("@/pages/AdminPage"));
-export const UserManagementPage = lazy(() => import("@/pages/UserManagementPage"));
-export const ProductManagementPage = lazy(() => import("@/pages/ProductManagementPage"));
+export const UserManagementPage = lazy(
+  () => import("@/pages/UserManagementPage"),
+);
+export const ProductManagementPage = lazy(
+  () => import("@/pages/ProductManagementPage"),
+);
 export const ChartPage = lazy(() => import("@/pages/ChartPage"));
+export const PostManagementPage = lazy(
+  () => import("@/pages/PostMangementPage"),
+);
 
 const UserRoute: React.FC = () => {
   return (
     <Routes>
-      <Route path="/contact" element={<Form />} />
+      <Route path="/contact" />
     </Routes>
   );
 };
@@ -38,11 +43,11 @@ const Router: React.FC = () => {
   const isAuthenticated = useAuth((state) => state.isAuthenticated);
 
   const { role } = infoUser as UserInfo;
-  useAnimation(); // Apply animations
+  useAnimation();
   const isAuthority = role === Role.ADMIN || role === Role.STAFF;
 
-  const [isNotificationVisible, setIsNotificationVisible] = useState<boolean>(false);
-
+  const [isNotificationVisible, setIsNotificationVisible] =
+    useState<boolean>(false);
 
   const closeNotification = () => {
     setIsNotificationVisible(false);
@@ -87,7 +92,12 @@ const Router: React.FC = () => {
     },
     {
       path: "/notification",
-      element: <Notification visible={isNotificationVisible} onClose={closeNotification} />,
+      element: (
+        <Notification
+          visible={isNotificationVisible}
+          onClose={closeNotification}
+        />
+      ),
     },
     {
       path: "/authen",
@@ -119,6 +129,10 @@ const Router: React.FC = () => {
           path: "/product",
         },
         {
+          element: <PostMangementPage />,
+          path: "/post",
+        },
+        {
           element: <ChartPage />,
           path: "/chart",
         },
@@ -133,7 +147,10 @@ const Router: React.FC = () => {
   return (
     <>
       {routes}
-      <Notification visible={isNotificationVisible} onClose={closeNotification} />
+      <Notification
+        visible={isNotificationVisible}
+        onClose={closeNotification}
+      />
     </>
   );
 };

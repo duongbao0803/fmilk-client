@@ -3,6 +3,12 @@ import successIcon from "@/assets/images/success-icon.png";
 import { PriceFormat } from "@/util/validate";
 
 const PaymentSuccess: React.FC = () => {
+  const price = "123456";
+  const priceNumber = Number(price);
+
+  const formattedCurrency = PriceFormat.format(priceNumber);
+  console.log(formattedCurrency);
+
   return (
     <div className="bg-[#f5f5f5]">
       <div className="mx-auto my-0 min-h-[100px] w-[573px] px-0 py-[50px]  ">
@@ -41,9 +47,7 @@ const PaymentSuccess: React.FC = () => {
                 </tr>
                 <tr>
                   <th className="text-left">Số tiền:</th>
-                  <td className="absolute right-[30px]">
-                    <PriceFormat price={Number(12345678)} />
-                  </td>
+                  <td className="absolute right-[30px]">{formattedCurrency}</td>
                 </tr>
                 <tr>
                   <th className="text-left">Mã giao dịch:</th>

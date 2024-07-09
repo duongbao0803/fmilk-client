@@ -26,6 +26,8 @@ const HomePage: React.FC = () => {
     return savedCart ? JSON.parse(savedCart) : [];
   });
 
+  console.log("re-render");
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -118,24 +120,24 @@ const HomePage: React.FC = () => {
                 <div className="flex h-full flex-col justify-between">
                   <div className="aspect-w-1 aspect-h-1">
                     <img
-                      src={product.image}
-                      alt={product.name}
+                      src={product?.image}
+                      alt={product?.name}
                       className="h-full w-full object-cover"
                     />
                   </div>
                   <div className="flex flex-col items-center p-4 text-center">
                     <h3 className="mb-2 text-lg font-semibold">
-                      {product.name}
+                      {product?.name}
                     </h3>
-                    <p className="mb-2 text-gray-600">{product.description}</p>
+                    <p className="mb-2 text-gray-600">{product?.description}</p>
                     <p className="mb-2 font-bold text-gray-800">
-                      Price: {product.price}
+                      Price: {product?.price}
                     </p>
                     <div className="mb-4">
-                      Rating: {renderStars(product.rating)}
+                      Rating: {renderStars(product?.rating)}
                     </div>
                     <button
-                      onClick={() => handleAddToCart(product._id)}
+                      onClick={() => handleAddToCart(product?._id)}
                       className="mb-2 w-full rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
                     >
                       Add to Cart

@@ -26,8 +26,8 @@ const ChipTabs = () => {
     if (currentTab) {
       setSelected(currentTab.name);
     }
-    if (location.pathname === '/cart') {
-      setSelected('');
+    if (location.pathname === "/cart") {
+      setSelected("");
     }
   }, [location]);
 
@@ -36,7 +36,7 @@ const ChipTabs = () => {
   };
 
   return (
-    <div className="flex flex-wrap items-center gap-6">
+    <div className="mt-4 flex flex-col flex-wrap items-center gap-2 font-medium lg:mt-0 lg:flex-row lg:space-x-8">
       {tabs.map((tab) => (
         <Chip
           text={tab.name}

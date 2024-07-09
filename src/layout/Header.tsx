@@ -8,6 +8,11 @@ import logo from "@/assets/images/logo/logo_fmilk_web.png";
 const Header: React.FC = React.memo(() => {
   const navigate = useNavigate();
 
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
   const [, setSelectedOption] = useState("home");
 
   const handleLinkClick = () => {
@@ -76,13 +81,7 @@ const Header: React.FC = React.memo(() => {
             onClick={handleLinkClick}
           />
           <div className="flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
-            {/* <button
-              type="button"
-              className="rounded-lg bg-blue-700 px-4 py-2 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
-            >
-              Get started
-            </button> */}
-            <div className="flex items-center justify-center gap-8">
+            <div className="flex items-center justify-center gap-10">
               <div onClick={handleSelectedCart}>
                 <Badge count={5}>
                   <ShoppingCartOutlined className="cursor-pointer text-2xl text-black hover:text-[#08cde9]" />
@@ -96,9 +95,10 @@ const Header: React.FC = React.memo(() => {
             <button
               data-collapse-toggle="navbar-cta"
               type="button"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 md:hidden "
+              className="inline-flex h-10 w-10 items-center justify-center  rounded-lg border-none bg-transparent p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 md:hidden "
               aria-controls="navbar-cta"
               aria-expanded="false"
+              onClick={toggleMobileMenu}
             >
               <span className="sr-only">Open main menu</span>
               <svg
@@ -119,44 +119,11 @@ const Header: React.FC = React.memo(() => {
             </button>
           </div>
           <div
-            className="hidden w-full items-center justify-between md:order-1 md:flex md:w-auto"
+            className={`${
+              isMobileMenuOpen ? "" : "hidden"
+            } w-full items-center justify-between md:order-1 md:flex md:w-auto`}
             id="navbar-cta"
           >
-            {/* <ul className="md mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:p-0 rtl:space-x-reverse">
-              <li>
-                <a
-                  href="#"
-                  className="block rounded bg-blue-700 px-3 py-2 font-semibold text-white md:bg-transparent md:p-0 md:text-[#08cde9] "
-                  aria-current="page"
-                >
-                  Trang chủ
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block rounded px-3 py-2 font-semibold text-gray-900 hover:bg-gray-100 md:p-0 md:hover:bg-transparent md:hover:text-[#08cde9] "
-                >
-                  Sản phẩm
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block rounded px-3 py-2 font-semibold text-gray-900 hover:bg-gray-100 md:p-0 md:hover:bg-transparent md:hover:text-[#08cde9]"
-                >
-                  Tin tức
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block rounded px-3 py-2 font-semibold text-gray-900 hover:bg-gray-100 md:p-0 md:hover:bg-transparent md:hover:text-[#08cde9]"
-                >
-                  Liên hệ
-                </a>
-              </li>
-            </ul> */}
             <ChipTabs />
           </div>
         </div>

@@ -90,3 +90,16 @@ export const roles = [
   { value: "STAFF", label: "STAFF" },
   { value: "MEMBER", label: "MEMBER" },
 ];
+
+export const Countries = [
+  "VIỆT NAM",
+  "HOA KỲ",
+  "TRUNG QUỐC",
+  "ANH",
+  "PHÁP",
+  "CANADA",
+  "ĐỨC",
+  "THỤY SĨ",
+  "HÀ LAN",
+  "ÚC",
+];

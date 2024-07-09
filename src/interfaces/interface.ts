@@ -17,9 +17,10 @@ export interface ProductInfo {
   image?: string;
   description?: string;
   quantity?: number;
-  typeOfProduct?: string;
   price?: number;
   rating?: number;
+  origin?: string;
+  brand?: string;
 }
 
 export interface AuthState {

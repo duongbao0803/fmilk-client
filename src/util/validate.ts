@@ -26,11 +26,10 @@ export function formatDate(dateString: string | number | Date) {
   }
 }
 
-export const PriceFormat: React.FC<PriceFormatProps> = ({ price }) => {
-  const formattedPrice = price.toLocaleString("vi-VN", {
+export function convertToVND(number: number) {
+  const formattedNumber = new Intl.NumberFormat("vi-VN", {
     style: "currency",
     currency: "VND",
-  });
-
-  return formattedPrice;
-};
+  }).format(number);
+  return formattedNumber;
+}

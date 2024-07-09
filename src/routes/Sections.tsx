@@ -18,6 +18,7 @@ import AdminOrdersPage from "@/sections/admin/OrderManagement";
 import AdminProductManagementPage from "@/sections/admin/ProductManagement";
 import AdminStaffManagementPage from "@/sections/admin/StaffManagement";
 import PostMangementPage from "@/pages/PostMangementPage";
+import Paymentt from "@/pages/Payment";
 
 export const UserManagementPage = lazy(
   () => import("@/pages/UserManagementPage"),
@@ -28,6 +29,10 @@ export const ProductManagementPage = lazy(
 export const ChartPage = lazy(() => import("@/pages/ChartPage"));
 export const PostManagementPage = lazy(
   () => import("@/pages/PostMangementPage"),
+);
+
+export const BrandManagementPage = lazy(
+  () => import("@/pages/BrandManagementPage"),
 );
 
 const UserRoute: React.FC = () => {
@@ -57,6 +62,10 @@ const Router: React.FC = () => {
     {
       path: "/",
       element: <LandingPage />,
+    },
+    {
+      path: "/payment",
+      element: <Paymentt />,
     },
     {
       path: "/adminaccount",
@@ -131,6 +140,10 @@ const Router: React.FC = () => {
         {
           element: <PostMangementPage />,
           path: "/post",
+        },
+        {
+          path: "/brand",
+          element: <BrandManagementPage />,
         },
         {
           element: <ChartPage />,

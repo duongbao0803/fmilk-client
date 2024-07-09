@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Button, Input, Table } from "antd";
+import { Button, Input, Table, Tag } from "antd";
 import type { TablePaginationConfig, TableProps } from "antd";
 import { AppstoreAddOutlined, FilterOutlined } from "@ant-design/icons";
 import useProductService from "@/services/productService";
 import ExportButton from "./ExportProduct";
 import DropdownFunction from "./DropdownFunction";
 import AddProductModal from "./AddProductModal";
+import useBrandService from "@/services/brandService";
+import { Dayjs } from "dayjs";
 
 export interface DataType {
   _id: string;
@@ -14,9 +16,10 @@ export interface DataType {
   image: string;
   description: string;
   quantity: number;
-  typeOfProduct: string;
   price: number;
-  rating: number;
+  brand: string;
+  origin: string;
+  expireDate: string | number | Date | Dayjs | null | undefined;
 }
 
 const ProductList: React.FC = () => {
@@ -25,22 +28,28 @@ const ProductList: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const { brands } = useBrandService();
 
   const handleTableChange = (pagination: TablePaginationConfig) => {
     setCurrentPage(pagination.current || 1);
+  };
+
+  const getBrandNameById = (brandId: string) => {
+    const brand = brands?.find((brand) => brand?._id === brandId);
+    return brand ? brand?.brandName : "N/A";
   };
 
   const columns: TableProps<DataType>["columns"] = [
     {
       title: "Name",
       dataIndex: "name",
-      width: "25%",
+      width: "15%",
       className: "first-column",
     },
     {
       title: "Image",
       dataIndex: "image",
-      width: "15%",
+      width: "10%",
       render: (image) => (
         <img
           src={image}
@@ -52,29 +61,51 @@ const ProductList: React.FC = () => {
     {
       title: "Description",
       dataIndex: "description",
-      width: "27%",
+      width: "25%",
     },
     {
       title: "Quantity",
       dataIndex: "quantity",
-      width: "5%",
+      width: "2%",
     },
     {
-      title: "Type",
-      dataIndex: "typeOfProduct",
+      title: "Brand",
+      dataIndex: "brand",
+      width: "5%",
+      render: (brandId: string) => getBrandNameById(brandId),
+    },
+    {
+      title: "Origin",
+      dataIndex: "origin",
       width: "13%",
     },
-
     {
       title: "Price",
       dataIndex: "price",
       width: "10%",
     },
     {
-      title: "Rating",
-      dataIndex: "rating",
-      width: "5%",
+      title: "Status",
+      dataIndex: "status",
+      width: "10%",
+      render: (status) => {
+        let color;
+        switch (status) {
+          case "AVAILABLE":
+            color = "green";
+            break;
+          case "EXPIRE":
+            color = "red";
+            break;
+        }
+        return (
+          <Tag color={color} key={status}>
+            {status}
+          </Tag>
+        );
+      },
     },
+
     {
       title: "",
       dataIndex: "",

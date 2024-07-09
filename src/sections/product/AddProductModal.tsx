@@ -1,8 +1,16 @@
 import { useEffect, useState } from "react";
-import { Modal, Form, Input, Row, Col, InputNumber } from "antd";
+import {
+  Modal,
+  Form,
+  Input,
+  Row,
+  Col,
+  InputNumber,
+  DatePicker,
+  Select,
+} from "antd";
 import {
   UserOutlined,
-  PhoneOutlined,
   StarOutlined,
   PoundCircleOutlined,
   BarsOutlined,
@@ -10,6 +18,10 @@ import {
 } from "@ant-design/icons";
 import useProductService from "@/services/productService";
 import UploadImageProduct from "./UploadImageProduct";
+import moment from "moment/moment";
+import useBrandService from "@/services/brandService";
+import { Countries } from "@/constant/constant";
+import { formatDate } from "@/util/validate";
 
 export interface AddModalProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -21,19 +33,29 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
   const { setIsOpen, isOpen } = props;
   const [isConfirmLoading, setIsConfirmLoading] = useState<boolean>(false);
   const { addNewProductItem } = useProductService();
+  const { brands } = useBrandService();
+  const { Option } = Select;
+  const { TextArea } = Input;
+
   const [form] = Form.useForm();
 
   useEffect(() => {
     form.setFieldsValue({ image: fileChange });
   }, [fileChange, form]);
 
+  const disabledDate = (current: object) => {
+    return current && current < moment().startOf("day");
+  };
+
   const handleOk = async () => {
     try {
       const values = await form.validateFields();
+      const formattedDate = formatDate(values.dob);
+      const updatedValues = { ...values, dob: formattedDate };
       setIsConfirmLoading(true);
       setTimeout(async () => {
         try {
-          await addNewProductItem(values);
+          await addNewProductItem(updatedValues);
           form.resetFields();
           setIsConfirmLoading(false);
           setIsOpen(false);
@@ -93,53 +115,102 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
           </Col>
           <Col span={12}>
             <Form.Item
-              name="typeOfProduct"
+              name="expireDate"
               rules={[
                 {
                   required: true,
-                  message: "Please input typeOfProduct",
+                  message: "Please select expireDate",
                 },
               ]}
               colon={true}
-              label="Type Of Product"
+              label="Expire Date"
               labelCol={{ span: 24 }}
               className="formItem"
             >
-              <Input
-                prefix={
-                  <PhoneOutlined className="site-form-item-icon mr-1 rotate-90" />
-                }
-                placeholder="Phone"
-                maxLength={10}
+              <DatePicker
+                picker="date"
+                disabledDate={disabledDate}
+                format="YYYY-MM-DD"
+                className="w-full"
               />
+            </Form.Item>
+          </Col>
+        </Row>
+
+        <Row gutter={16} className="relative mt-1">
+          <Col span={12}>
+            <Form.Item
+              name="brand"
+              rules={[
+                {
+                  required: true,
+                  message: "Please select brand",
+                },
+              ]}
+              colon={true}
+              label="Brand"
+              labelCol={{ span: 24 }}
+              className="formItem"
+            >
+              <Select placeholder="Select brand">
+                {brands?.map((brand, index: number) => (
+                  <Option
+                    key={index}
+                    value={`${brand?._id}`}
+                    label={brand.brandName}
+                  >
+                    {`${brand?.brandName}`}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="origin"
+              rules={[
+                {
+                  required: true,
+                  message: "Please select origin",
+                },
+              ]}
+              colon={true}
+              label="Origin"
+              labelCol={{ span: 24 }}
+              className="formItem"
+            >
+              <Select placeholder="Select brand">
+                {Countries?.map((country, index: number) => (
+                  <Option key={index} value={country} label={country}>
+                    {country}
+                  </Option>
+                ))}
+              </Select>
             </Form.Item>
           </Col>
         </Row>
         <Row gutter={16} className="relative mt-1">
           <Col span={12}>
             <Form.Item
-              name="rating"
+              name="price"
               rules={[
                 {
                   required: true,
-                  message: "Please input rating",
-                },
-                {
-                  type: "number",
-                  min: 1,
-                  max: 5,
-                  message: "Rating must be at least 1 and most 5",
+                  message: "Please input price",
                 },
               ]}
               colon={true}
-              label="Rating"
+              label="Price"
               labelCol={{ span: 24 }}
               className="formItem"
             >
               <InputNumber
                 className="w-full"
-                prefix={<StarOutlined className="site-form-item-icon mr-1" />}
-                placeholder="Rating"
+                type="number"
+                prefix={
+                  <PoundCircleOutlined className="site-form-item-icon mr-1" />
+                }
+                placeholder="Price"
               />
             </Form.Item>
           </Col>
@@ -151,11 +222,6 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
                   required: true,
                   message: "Please input quantity",
                 },
-                {
-                  type: "number",
-                  min: 1,
-                  message: "Quantity must be at least 1",
-                },
               ]}
               colon={true}
               label="Quantity"
@@ -163,9 +229,10 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
               className="formItem"
             >
               <InputNumber
+                type="number"
                 className="w-full"
                 prefix={
-                  <AppstoreAddOutlined className="site-form-item-icon mr-1" />
+                  <PoundCircleOutlined className="site-form-item-icon mr-1" />
                 }
                 placeholder="Quantity"
               />
@@ -184,32 +251,9 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
           labelCol={{ span: 24 }}
           className="formItem"
         >
-          <Input
-            prefix={<BarsOutlined className="site-form-item-icon mr-1" />}
-            placeholder="Description"
-          />
+          <TextArea placeholder="Description" />
         </Form.Item>
-        <Form.Item
-          name="price"
-          rules={[
-            {
-              required: true,
-              message: "Please input price",
-            },
-          ]}
-          colon={true}
-          label="Price"
-          labelCol={{ span: 24 }}
-          className="formItem"
-        >
-          <InputNumber
-            className="w-full"
-            prefix={
-              <PoundCircleOutlined className="site-form-item-icon mr-1" />
-            }
-            placeholder="Price"
-          />
-        </Form.Item>
+
         <Form.Item
           name="image"
           rules={[

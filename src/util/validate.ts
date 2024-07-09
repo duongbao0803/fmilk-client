@@ -1,5 +1,3 @@
-import { PriceFormatProps } from "@/interfaces/interface";
-
 export const validatePhoneNumber = (_: unknown, value: string) => {
   const phoneNumberPattern = /^[0-9]{10}$/;
   if (value && !phoneNumberPattern.test(value)) {
@@ -26,10 +24,7 @@ export function formatDate(dateString: string | number | Date) {
   }
 }
 
-export function convertToVND(number: number) {
-  const formattedNumber = new Intl.NumberFormat("vi-VN", {
-    style: "currency",
-    currency: "VND",
-  }).format(number);
-  return formattedNumber;
-}
+export const PriceFormat = new Intl.NumberFormat("vi-VN", {
+  style: "currency",
+  currency: "VND",
+});

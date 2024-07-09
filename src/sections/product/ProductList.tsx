@@ -35,7 +35,9 @@ const ProductList: React.FC = () => {
   };
 
   const getBrandNameById = (brandId: string) => {
-    const brand = brands?.find((brand) => brand?._id === brandId);
+    const brand = brands?.find(
+      (brand: { _id: string }) => brand?._id === brandId,
+    );
     return brand ? brand?.brandName : "N/A";
   };
 

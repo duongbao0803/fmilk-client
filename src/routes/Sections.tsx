@@ -18,7 +18,6 @@ import AdminOrdersPage from "@/sections/admin/OrderManagement";
 import AdminProductManagementPage from "@/sections/admin/ProductManagement";
 import AdminStaffManagementPage from "@/sections/admin/StaffManagement";
 import PostMangementPage from "@/pages/PostMangementPage";
-import Paymentt from "@/pages/Payment";
 
 export const UserManagementPage = lazy(
   () => import("@/pages/UserManagementPage"),
@@ -62,10 +61,6 @@ const Router: React.FC = () => {
     {
       path: "/",
       element: <LandingPage />,
-    },
-    {
-      path: "/payment",
-      element: <Paymentt />,
     },
     {
       path: "/adminaccount",

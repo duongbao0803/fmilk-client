@@ -9,13 +9,7 @@ import {
   DatePicker,
   Select,
 } from "antd";
-import {
-  UserOutlined,
-  StarOutlined,
-  PoundCircleOutlined,
-  BarsOutlined,
-  AppstoreAddOutlined,
-} from "@ant-design/icons";
+import { UserOutlined, PoundCircleOutlined } from "@ant-design/icons";
 import useProductService from "@/services/productService";
 import UploadImageProduct from "./UploadImageProduct";
 import moment from "moment/moment";
@@ -153,15 +147,20 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
               className="formItem"
             >
               <Select placeholder="Select brand">
-                {brands?.map((brand, index: number) => (
-                  <Option
-                    key={index}
-                    value={`${brand?._id}`}
-                    label={brand.brandName}
-                  >
-                    {`${brand?.brandName}`}
-                  </Option>
-                ))}
+                {brands?.map(
+                  (
+                    brand: { _id: unknown; brandName: unknown },
+                    index: number,
+                  ) => (
+                    <Option
+                      key={index}
+                      value={`${brand?._id}`}
+                      label={brand.brandName}
+                    >
+                      {`${brand?.brandName}`}
+                    </Option>
+                  ),
+                )}
               </Select>
             </Form.Item>
           </Col>

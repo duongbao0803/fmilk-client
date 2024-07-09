@@ -30,6 +30,10 @@ export const PostManagementPage = lazy(
   () => import("@/pages/PostMangementPage"),
 );
 
+export const BrandManagementPage = lazy(
+  () => import("@/pages/BrandManagementPage"),
+);
+
 const UserRoute: React.FC = () => {
   return (
     <Routes>
@@ -131,6 +135,10 @@ const Router: React.FC = () => {
         {
           element: <PostMangementPage />,
           path: "/post",
+        },
+        {
+          path: "/brand",
+          element: <BrandManagementPage />,
         },
         {
           element: <ChartPage />,

@@ -250,6 +250,12 @@
   }
 }
 
+@media (min-width: 1900px) {
+  .productList {
+    grid-template-columns: repeat(5, 1fr) !important;
+  }
+}
+
 @media (max-width: 991px) {
   .right-bar {
     margin-left: 55px !important;

@@ -38,7 +38,7 @@ const Avatar: React.FC = () => {
     {
       label: (
         <Link to="/authen" rel="noopener noreferrer" onClick={logout}>
-          Sign out
+          Đăng xuất
         </Link>
       ),
       key: "2",

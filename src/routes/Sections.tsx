@@ -1,6 +1,6 @@
 import React, { Suspense, lazy, useState } from "react";
 import { Navigate, Outlet, Route, Routes, useRoutes } from "react-router-dom";
-import { Error, Loading, ScrollToTop } from "@/components";
+import { Loading, ScrollToTop } from "@/components";
 import { Role } from "@/enums/enum";
 import DashboardLayout from "@/layout";
 import { useAnimation } from "@/hooks/useAnimation";
@@ -12,11 +12,7 @@ import CartPage from "@/sections/cart/CartPage";
 import Checkout from "@/sections/cart/Checkout";
 import Notification from "@/sections/notification/Notification";
 import Payment from "@/sections/cart/Payment";
-import AdminAccountPage from "@/sections/admin/AdminAccount";
-import AdminDashboardPage from "@/sections/admin/DashBoard";
-import AdminOrdersPage from "@/sections/admin/OrderManagement";
-import AdminProductManagementPage from "@/sections/admin/ProductManagement";
-import AdminStaffManagementPage from "@/sections/admin/StaffManagement";
+
 import PostMangementPage from "@/pages/PostMangementPage";
 
 export const UserManagementPage = lazy(
@@ -62,26 +58,7 @@ const Router: React.FC = () => {
       path: "/",
       element: <LandingPage />,
     },
-    {
-      path: "/adminaccount",
-      element: <AdminAccountPage />,
-    },
-    {
-      path: "/admindashboard",
-      element: <AdminDashboardPage />,
-    },
-    {
-      path: "/adminorder",
-      element: <AdminOrdersPage />,
-    },
-    {
-      path: "/adminproduct",
-      element: <AdminProductManagementPage />,
-    },
-    {
-      path: "/adminstaff",
-      element: <AdminStaffManagementPage />,
-    },
+
     {
       path: "/cart",
       element: <CartPage />,
@@ -146,10 +123,10 @@ const Router: React.FC = () => {
         },
       ],
     },
-    {
-      element: <Error />,
-      path: "*",
-    },
+    // {
+    //   element: <Error />,
+    //   path: "*",
+    // },
   ]);
 
   return (

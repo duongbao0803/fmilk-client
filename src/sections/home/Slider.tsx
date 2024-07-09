@@ -3,11 +3,15 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
-import { FreeMode, Pagination } from "swiper/modules";
+import "swiper/swiper-bundle.css";
+import { Autoplay, FreeMode, Pagination } from "swiper/modules";
 import { Card } from "antd";
+import usePostService from "@/services/postService";
+import { PostInfo } from "@/interfaces/interface";
 
 const Slider: React.FC = () => {
   const { Meta } = Card;
+  const { posts } = usePostService();
 
   return (
     <>
@@ -18,99 +22,60 @@ const Slider: React.FC = () => {
       </div>
       <div data-aos="fade-right">
         <Swiper
-          slidesPerView={4}
           freeMode={true}
           pagination={{
             clickable: true,
           }}
-          modules={[FreeMode, Pagination]}
-          className="mySwiper h-[450px]"
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+          }}
+          breakpoints={{
+            320: {
+              slidesPerView: 1,
+            },
+            640: {
+              slidesPerView: 2,
+            },
+            900: {
+              slidesPerView: 2,
+            },
+            1150: {
+              slidesPerView: 3,
+            },
+            1200: {
+              slidesPerView: 3,
+            },
+            1400: {
+              slidesPerView: 4,
+            },
+            1500: {
+              slidesPerView: 4,
+            },
+            1900: {
+              slidesPerView: 5,
+            },
+            2400: {
+              slidesPerView: 6,
+            },
+            3300: {
+              slidesPerView: 7,
+            },
+          }}
+          modules={[FreeMode, Pagination, Autoplay]}
+          className="mySwiper h-[500px]"
         >
-          <SwiperSlide>
-            <Card
-              hoverable
-              style={{ width: 240 }}
-              cover={
-                <img
-                  alt="example"
-                  src="https://firebasestorage.googleapis.com/v0/b/swd392-d2c4e.appspot.com/o/FMilk%2Fsua-tiet-trung-co-gai-ha-lan-dutch-lady-220ml.jpg?alt=media&token=60f64885-f78a-4e92-99ad-ff0245e59a02"
-                />
-              }
-            >
-              <Meta
-                title="Europe Street beat"
-                description="www.instagram.com"
-              />
-            </Card>
-          </SwiperSlide>
-          <SwiperSlide>
-            <Card
-              hoverable
-              style={{ width: 240 }}
-              cover={
-                <img
-                  alt="example"
-                  src="https://firebasestorage.googleapis.com/v0/b/swd392-d2c4e.appspot.com/o/FMilk%2Fsua-tiet-trung-co-gai-ha-lan-dutch-lady-220ml.jpg?alt=media&token=60f64885-f78a-4e92-99ad-ff0245e59a02"
-                />
-              }
-            >
-              <Meta
-                title="Europe Street beat"
-                description="www.instagram.com"
-              />
-            </Card>
-          </SwiperSlide>{" "}
-          <SwiperSlide>
-            <Card
-              hoverable
-              style={{ width: 240 }}
-              cover={
-                <img
-                  alt="example"
-                  src="https://firebasestorage.googleapis.com/v0/b/swd392-d2c4e.appspot.com/o/FMilk%2Fsua-tiet-trung-co-gai-ha-lan-dutch-lady-220ml.jpg?alt=media&token=60f64885-f78a-4e92-99ad-ff0245e59a02"
-                />
-              }
-            >
-              <Meta
-                title="Europe Street beat"
-                description="www.instagram.com"
-              />
-            </Card>
-          </SwiperSlide>{" "}
-          <SwiperSlide>
-            <Card
-              hoverable
-              style={{ width: 240 }}
-              cover={
-                <img
-                  alt="example"
-                  src="https://firebasestorage.googleapis.com/v0/b/swd392-d2c4e.appspot.com/o/FMilk%2Fsua-tiet-trung-co-gai-ha-lan-dutch-lady-220ml.jpg?alt=media&token=60f64885-f78a-4e92-99ad-ff0245e59a02"
-                />
-              }
-            >
-              <Meta
-                title="Europe Street beat"
-                description="www.instagram.com"
-              />
-            </Card>
-          </SwiperSlide>{" "}
-          <SwiperSlide>
-            <Card
-              hoverable
-              style={{ width: 240 }}
-              cover={
-                <img
-                  alt="example"
-                  src="https://firebasestorage.googleapis.com/v0/b/swd392-d2c4e.appspot.com/o/FMilk%2Fsua-tiet-trung-co-gai-ha-lan-dutch-lady-220ml.jpg?alt=media&token=60f64885-f78a-4e92-99ad-ff0245e59a02"
-                />
-              }
-            >
-              <Meta
-                title="Europe Street beat"
-                description="www.instagram.com"
-              />
-            </Card>
-          </SwiperSlide>
+          {posts.map((post: PostInfo, index: number) => (
+            <SwiperSlide key={index}>
+              <Card
+                hoverable
+                className="w-[250px] border-2"
+                cover={<img alt={post?.title} src={post?.image} />}
+              >
+                <Meta title={post?.title} description={post?.description} />
+              </Card>
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
     </>

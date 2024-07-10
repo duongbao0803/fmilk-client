@@ -10,6 +10,7 @@ import localeData from "dayjs/plugin/localeData";
 import weekday from "dayjs/plugin/weekday";
 import weekOfYear from "dayjs/plugin/weekOfYear";
 import weekYear from "dayjs/plugin/weekYear";
+import { ScrollToTop } from "./components";
 
 const queryClient = new QueryClient();
 dayjs.extend(customParseFormat);
@@ -34,7 +35,9 @@ const App: React.FC = () => {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <Router />
+        <ScrollToTop>
+          <Router />
+        </ScrollToTop>
       </QueryClientProvider>
     </>
   );

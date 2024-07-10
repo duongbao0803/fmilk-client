@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
-import { Avatar, ChipTabs } from "@/components";
+import { Avatar, CustomNav } from "@/components";
 import logo from "@/assets/images/logo/logo_fmilk_web.png";
+import useCartStore from "@/hooks/useCartStore";
 
 const Header: React.FC = React.memo(() => {
   const navigate = useNavigate();
+  const cartCount = useCartStore((state) => state.cart);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -84,7 +86,7 @@ const Header: React.FC = React.memo(() => {
           <div className="flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
             <div className="flex items-center justify-center gap-10">
               <div onClick={handleSelectedCart}>
-                <Badge count={5}>
+                <Badge count={cartCount.length}>
                   <ShoppingCartOutlined className="cursor-pointer text-2xl text-black hover:text-[#08cde9]" />
                 </Badge>
               </div>
@@ -125,7 +127,7 @@ const Header: React.FC = React.memo(() => {
             } w-full items-center justify-between md:order-2 lg:order-1 lg:flex lg:w-auto`}
             id="navbar-cta"
           >
-            <ChipTabs />
+            <CustomNav />
           </div>
         </div>
       </nav>

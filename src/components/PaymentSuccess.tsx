@@ -7,7 +7,6 @@ const PaymentSuccess: React.FC = () => {
   const priceNumber = Number(price);
 
   const formattedCurrency = PriceFormat.format(priceNumber);
-  console.log(formattedCurrency);
 
   return (
     <div className="bg-[#f5f5f5]">

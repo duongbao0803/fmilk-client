@@ -2,10 +2,10 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-type Tab = {
+export interface Tab {
   name: string;
   path: string;
-};
+}
 
 const tabs: Tab[] = [
   { name: "Trang chủ", path: "/" },
@@ -14,33 +14,31 @@ const tabs: Tab[] = [
   { name: "Liên hệ", path: "/contact" },
 ];
 
-const ChipTabs = () => {
+const CustomNav = () => {
   const [selected, setSelected] = useState("");
+  const location = useLocation();
   const navigate = useNavigate();
 
-  const location = useLocation();
-
   useEffect(() => {
-    const currentTab = tabs.find((tab) =>
-      location.pathname.startsWith(tab.path),
-    );
+    const currentTab = tabs.find((tab) => location.pathname === tab.path);
     if (currentTab) {
       setSelected(currentTab.name);
-    }
-    if (location.pathname === "/cart") {
+    } else if (location.pathname === "/cart") {
       setSelected("");
     }
   }, [location]);
 
-  const handleTabClick = async (tab: Tab) => {
+  const handleTabClick = (tab: Tab) => {
     setSelected(tab.name);
-    navigate(tab.path);
+    setTimeout(() => {
+      navigate(tab.path);
+    }, 250);
   };
 
   return (
     <div className="mt-4 flex flex-col flex-wrap items-center gap-2 font-medium lg:mt-0 lg:flex-row lg:space-x-8">
       {tabs.map((tab) => (
-        <Chip
+        <Nav
           text={tab.name}
           selected={selected === tab.name}
           onClick={() => handleTabClick(tab)}
@@ -51,36 +49,32 @@ const ChipTabs = () => {
   );
 };
 
-type ChipProps = {
+export interface CustomNavProps {
   text: string;
   selected: boolean;
   onClick: () => void;
-  icon?: JSX.Element; // Optional icon prop
-};
+}
 
-const Chip: React.FC<ChipProps> = ({ text, selected, onClick, icon }) => {
+const Nav: React.FC<CustomNavProps> = ({ text, selected, onClick }) => {
   return (
     <button
       onClick={onClick}
       className={`relative rounded-md px-2.5 py-0.5 text-sm transition-colors ${
         selected
           ? "bg-[#08cde9] text-white"
-          : "text-black hover:bg-[#08cde9] hover:text-white"
+          : "text-black transition-all duration-300 ease-in-out hover:bg-[#08cde9] hover:text-white"
       }`}
     >
-      <span className="relative z-10 text-xl font-medium">
-        {icon}
-        {text}
-      </span>
+      <span className="relative z-10 text-xl font-medium">{text}</span>
       {selected && (
         <motion.span
           layoutId="pill-tab"
           transition={{ type: "spring", duration: 0.5 }}
-          className="absolute inset-0 z-0 rounded-md bg-[#08cde9]"
+          className="absolute inset-0 z-0 h-full w-full rounded-md bg-[#08cde9]"
         ></motion.span>
       )}
     </button>
   );
 };
 
-export default ChipTabs;
+export default CustomNav;

@@ -1,81 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import Header from "@/layout/Header";
 import Footer from "@/layout/Footer";
-import { Carousel, Skeleton } from "antd";
+import { Carousel, notification, Skeleton } from "antd";
 import Intro from "./Intro";
 import Slider from "./Slider";
 import useProductService from "@/services/productService";
 import { ProductInfo } from "@/interfaces/interface";
 import { PriceFormat } from "@/util/validate";
+import useCartStore from "@/hooks/useCartStore";
 
-interface Product {
-  _id: string;
-  name: string;
-  description: string;
-  image: string;
-  price: number;
-  rating: number;
-}
-
-interface CartItem extends Product {
-  quantity: number;
-}
-
-const HomePage: React.FC = () => {
+const HomePage: React.FC = React.memo(() => {
   const { products } = useProductService();
-  const [cart] = useState<CartItem[]>(() => {
-    const savedCart = localStorage.getItem("cart");
-    return savedCart ? JSON.parse(savedCart) : [];
-  });
+  const addToCart = useCartStore((state) => state.addToCart);
+  const removeCart = useCartStore((state) => state.removeCart);
 
-  console.log("re-render");
-
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
-
-  // const handleBuyNow = (productId: string) => {
-  //   console.log("Buy now clicked for product with ID:", productId);
-  // };
-
-  // const handleAddToCart = (productId: string) => {
-  //   const product = products.find((p: { _id: string }) => p._id === productId);
-  //   if (product) {
-  //     setCart((prevCart) => {
-  //       const existingItem = prevCart.find((item) => item._id === productId);
-  //       if (existingItem) {
-  //         return prevCart.map((item) =>
-  //           item._id === productId
-  //             ? { ...item, quantity: item.quantity + 1 }
-  //             : item,
-  //         );
-  //       } else {
-  //         return [...prevCart, { ...product, quantity: 1 }];
-  //       }
-  //     });
-  //   }
-  // };
-
-  // const renderStars = (rating: number) => {
-  //   const totalStars = 5;
-  //   const stars = [];
-  //   for (let i = 1; i <= totalStars; i++) {
-  //     if (i <= rating) {
-  //       stars.push(
-  //         <span key={i} className="text-yellow-500">
-  //           &#9733;
-  //         </span>,
-  //       );
-  //     } else {
-  //       stars.push(
-  //         <span key={i} className="text-gray-400">
-  //           &#9733;
-  //         </span>,
-  //       );
-  //     }
-  //   }
-  //   return stars;
-  // };
+  const handleAddtoCart = useCallback(
+    (product: ProductInfo) => {
+      addToCart(product);
+      notification.success({
+        message: "Thêm giỏ hàng thành công",
+        description: (
+          <span>
+            Bạn đã thêm{" "}
+            <strong className="text-[#1385b7]">{product?.name}</strong> vào giỏ
+            hàng
+          </span>
+        ),
+        duration: 2,
+      });
+    },
+    [addToCart],
+  );
 
   return (
     <>
@@ -112,12 +67,11 @@ const HomePage: React.FC = () => {
                         alt={product?.name}
                         className="h-full w-full object-cover p-3 transition-all duration-300 ease-in-out group-hover:scale-110"
                       />
-                      <button
-                        // onClick={() => handleAddToCart(productId)}
-                        className="absolute bottom-0 flex h-full w-full items-center justify-center bg-gray-800 bg-opacity-50 opacity-0 transition-all duration-300 ease-in-out group-hover:scale-110 group-hover:transform group-hover:opacity-100"
-                      >
+                      <button className="absolute bottom-0 flex h-full w-full items-center justify-center bg-gray-800 bg-opacity-50 opacity-0 transition-all duration-300 ease-in-out group-hover:scale-110 group-hover:transform group-hover:opacity-100">
                         <p className="text-md mx-5 border-2 p-2 font-semibold text-[#fff] hover:bg-[#fff] hover:text-black xl:text-lg">
-                          + Thêm vào giỏ hàng
+                          <button onClick={() => handleAddtoCart(product)}>
+                            + Thêm vào giỏ hàng
+                          </button>
                         </p>
                       </button>
                     </div>
@@ -137,19 +91,9 @@ const HomePage: React.FC = () => {
                           {PriceFormat.format(product.price ?? 0)}
                         </span>
                       </p>
-
-                      {/* <button
-                        onClick={() => handleAddToCart(product?._id)}
-                        className="mb-2 w-full rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
-                      >
-                        Add to Cart
+                      <button onClick={() => removeCart(product._id)}>
+                        removeCart
                       </button>
-                      <button
-                        onClick={() => handleBuyNow(product._id)}
-                        className="w-full rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-                      >
-                        Buy Now
-                      </button> */}
                     </div>
                   </div>
                 </div>
@@ -170,6 +114,6 @@ const HomePage: React.FC = () => {
       <Footer />
     </>
   );
-};
+});
 
 export default HomePage;

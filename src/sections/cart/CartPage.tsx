@@ -1,6 +1,6 @@
 import Header from "@/layout/Header";
 import Footer from "@/layout/Footer";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 // import { FaTrashAlt } from 'react-icons/fa'; // Importing FontAwesome Trash Icon
 import { Link } from "react-router-dom";
 
@@ -19,14 +19,6 @@ const CartPage: React.FC = () => {
   const [discountCode, setDiscountCode] = useState<string>("");
 
   const SHIPPING_FEE = 30;
-
-  useEffect(() => {
-    // Lấy giỏ hàng từ Local Storage khi trang được tải lại
-    const savedCart = localStorage.getItem("cart");
-    if (savedCart) {
-      setCart(JSON.parse(savedCart));
-    }
-  }, []); // [] đảm bảo useEffect chỉ chạy một lần sau khi component được render
 
   const decreaseQuantity = (index: number) => {
     const updatedCart = [...cart];
@@ -49,7 +41,6 @@ const CartPage: React.FC = () => {
   };
 
   const applyDiscountCode = () => {
-    console.log("Áp dụng mã giảm giá:", discountCode);
     setDiscountCode("");
   };
 
@@ -63,7 +54,14 @@ const CartPage: React.FC = () => {
   return (
     <>
       <Header />
-      <div className="container mx-auto min-h-screen px-8 py-4">
+      <div>
+        <div className="background4 relative top-[69.5px]">
+          <div className="absolute inset-1/2 -translate-x-1/2 -translate-y-1/2 transform bg-[red]">
+            hihi
+          </div>
+        </div>
+
+        {/* <div className="container mx-auto min-h-screen px-8 py-4"> */}
         <div className="flex justify-center gap-4">
           <div className="cart mb-8 max-w-4xl rounded-lg bg-white p-8 shadow-md">
             <h2 className="mb-4 text-lg font-semibold">Giỏ Hàng</h2>

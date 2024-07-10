@@ -8,7 +8,6 @@ const useBrandService = () => {
 
   const fetchBrands = async (page: number) => {
     const res = await getAllBrand(page);
-    console.log("check res", res);
     const totalBrands = res.data.totalbrands || 0;
     const brands = res.data.brands;
     return { totalBrands, brands };

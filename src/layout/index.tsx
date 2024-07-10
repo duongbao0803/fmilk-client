@@ -41,10 +41,9 @@ const items: MenuItem[] = [
 
     "/user",
   ),
-  getItem("Product", "3", <ProductOutlined />, undefined, "/product"),
+  getItem("Product", "3", <ProductOutlined />, undefined, "/manageProduct"),
   getItem("Post", "8", <FileOutlined />, undefined, "/post"),
   getItem("Brand", "9", <FileOutlined />, undefined, "/brand"),
-
 ];
 
 const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {

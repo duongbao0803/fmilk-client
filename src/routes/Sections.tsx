@@ -14,6 +14,7 @@ import Notification from "@/sections/notification/Notification";
 import Payment from "@/sections/cart/Payment";
 
 import PostMangementPage from "@/pages/PostMangementPage";
+import ProductPublicPage from "@/pages/ProductPublicPage";
 
 export const UserManagementPage = lazy(
   () => import("@/pages/UserManagementPage"),
@@ -72,6 +73,10 @@ const Router: React.FC = () => {
       element: <Payment />,
     },
     {
+      path: "/product",
+      element: <ProductPublicPage />,
+    },
+    {
       path: "/notification",
       element: (
         <Notification
@@ -107,7 +112,7 @@ const Router: React.FC = () => {
         },
         {
           element: <ProductManagementPage />,
-          path: "/product",
+          path: "/manageProduct",
         },
         {
           element: <PostMangementPage />,

@@ -58,7 +58,6 @@ const EditProductModal: React.FC<EditModalProps> = (props) => {
       const values = await form.validateFields();
       const formattedDate = formatDate(values.expireDate);
       const updatedValues = { ...values, expireDate: formattedDate };
-      console.log("check", updatedValues);
       setIsConfirmLoading(true);
       setTimeout(async () => {
         try {

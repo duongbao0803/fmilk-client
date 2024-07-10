@@ -108,7 +108,7 @@
   background-image: url("../assets/images/banner/banner_4.png");
   background-repeat: no-repeat;
   background-size: cover;
-  min-height: 101vh;
+  min-height: 100vh;
   width: 100%;
 }
 
@@ -116,23 +116,15 @@
   background-image: url("../assets/images/banner/banner_1.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  min-height: 101vh;
-  width: 100%;
-}
-
-.background3 {
-  background-image: url("https://stemplus.vn/wp-content/uploads/2019/08/N%E1%BB%81n-ph%E1%BA%A7n-ch%C6%B0%C6%A1ng-tr%C3%ACnh-01.png");
-  background-repeat: repeat-x;
-  background-size: contain;
-  min-height: 835px;
+  min-height: 100vh;
   width: 100%;
 }
 
 .background4 {
-  background-image: url("https://stemplus.vn/wp-content/uploads/2019/08/N%E1%BB%81n-footer.png");
-  background-repeat: repeat-x;
+  background-image: url("../assets/images/banner/milk_banner.jpg");
+  background-repeat: no-repeat;
   background-size: cover;
-  min-height: 400px;
+  height: 400px;
   width: 100%;
 }
 

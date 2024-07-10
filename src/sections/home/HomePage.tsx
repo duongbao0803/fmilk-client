@@ -12,7 +12,6 @@ import useCartStore from "@/hooks/useCartStore";
 const HomePage: React.FC = React.memo(() => {
   const { products } = useProductService();
   const addToCart = useCartStore((state) => state.addToCart);
-  const removeCart = useCartStore((state) => state.removeCart);
 
   const handleAddtoCart = useCallback(
     (product: ProductInfo) => {
@@ -91,9 +90,6 @@ const HomePage: React.FC = React.memo(() => {
                           {PriceFormat.format(product.price ?? 0)}
                         </span>
                       </p>
-                      <button onClick={() => removeCart(product._id)}>
-                        removeCart
-                      </button>
                     </div>
                   </div>
                 </div>

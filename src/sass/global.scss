@@ -121,11 +121,16 @@
 }
 
 .background4 {
-  background-image: url("../assets/images/banner/milk_banner.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.3)),
+    url("../assets/images/banner/milk_banner.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  height: 400px;
+  background-position: center;
+  height: 500px;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .cssbuttons-io-button {

@@ -9,6 +9,8 @@ import ExportButton from "./ExportUser";
 import DropdownFunctionUser from "./DropdownFunctionUser";
 
 export interface DataType {
+  image: string | undefined;
+  quantity: number;
   _id: string;
   key: string;
   name: string;

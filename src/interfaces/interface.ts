@@ -118,3 +118,16 @@ export interface PostInfo {
 export interface PriceFormatProps {
   price: number;
 }
+
+export interface CartItem extends ProductInfo {
+  quantity: number;
+  totalProductPrice: number;
+}
+
+export interface CartState {
+  cart: CartItem[];
+  itemsPrice: number;
+  addToCart: (item: ProductInfo) => void;
+  removeCart: (itemId: string) => void;
+  clearCart: () => void;
+}

@@ -1,60 +1,82 @@
-import { ProductInfo } from "@/interfaces/interface";
-import create, { StateCreator } from "zustand";
+import { CartState, ProductInfo } from "@/interfaces/interface";
+import { StateCreator } from "zustand";
+import { create } from "zustand";
 import { persist, PersistOptions } from "zustand/middleware";
 
-interface CartItem extends ProductInfo {
-  quantity: number;
+interface CartPersist {
+  (
+    config: StateCreator<CartState>,
+    options: PersistOptions<CartState>,
+  ): StateCreator<CartState>;
 }
-
-interface CartState {
-  cart: CartItem[];
-  addToCart: (item: ProductInfo) => void;
-  removeCart: (itemId: string) => void;
-  clearCart: () => void;
-}
-
-type CartPersist = (
-  config: StateCreator<CartState>,
-  options: PersistOptions<CartState>,
-) => StateCreator<CartState>;
 
 const useCartStore = create<CartState>(
   (persist as CartPersist)(
     (set) => ({
       cart: [],
+      itemsPrice: 0,
+
       addToCart: (item: ProductInfo) =>
         set((state) => {
           const existingItem = state.cart.find(
             (cartItem) => cartItem._id === item._id,
           );
+          let newCart;
+          let newTotalPrice = state.itemsPrice;
+
           if (existingItem) {
-            return {
-              cart: state.cart.map((cartItem) =>
-                cartItem._id === item._id
-                  ? { ...cartItem, quantity: cartItem.quantity + 1 }
-                  : cartItem,
-              ),
-            };
+            newCart = state.cart.map((cartItem) =>
+              cartItem._id === item._id
+                ? {
+                    ...cartItem,
+                    quantity: cartItem.quantity + 1,
+                    totalProductPrice:
+                      (cartItem.quantity + 1) * (cartItem.price || 0),
+                  }
+                : cartItem,
+            );
+            newTotalPrice += item.price || 0;
+          } else {
+            newCart = [
+              ...state.cart,
+              { ...item, quantity: 1, totalProductPrice: item.price || 0 },
+            ];
+            newTotalPrice += item.price || 0;
           }
-          return { cart: [...state.cart, { ...item, quantity: 1 }] };
+
+          return { cart: newCart, itemsPrice: newTotalPrice };
         }),
+
       removeCart: (itemId: string) =>
         set((state) => {
           const existingItem = state.cart.find((item) => item._id === itemId);
-          if (existingItem && existingItem.quantity > 1) {
-            return {
-              cart: state.cart.map((item) =>
+          if (existingItem) {
+            let newCart;
+            let newTotalPrice = state.itemsPrice;
+
+            if (existingItem.quantity > 1) {
+              newCart = state.cart.map((item) =>
                 item._id === itemId
-                  ? { ...item, quantity: item.quantity - 1 }
+                  ? {
+                      ...item,
+                      quantity: item.quantity - 1,
+                      totalProductPrice:
+                        (item.quantity - 1) * (item.price || 0),
+                    }
                   : item,
-              ),
-            };
+              );
+              newTotalPrice -= existingItem.price || 0;
+            } else {
+              newCart = state.cart.filter((item) => item._id !== itemId);
+              newTotalPrice -= existingItem.price || 0;
+            }
+
+            return { cart: newCart, itemsPrice: newTotalPrice };
           }
-          return {
-            cart: state.cart.filter((item) => item._id !== itemId),
-          };
+          return state;
         }),
-      clearCart: () => set({ cart: [] }),
+
+      clearCart: () => set({ cart: [], itemsPrice: 0 }),
     }),
     {
       name: "cart",

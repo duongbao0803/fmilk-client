@@ -67,15 +67,20 @@ const Slider: React.FC = () => {
         >
           {posts.length > 0
             ? posts.map((post: PostInfo, index: number) => (
-                <SwiperSlide key={index}>
-                  <Card
-                    hoverable
-                    className="w-[250px] border-2"
-                    cover={<img alt={post?.title} src={post?.image} />}
-                  >
-                    <Meta title={post?.title} description={post?.description} />
-                  </Card>
-                </SwiperSlide>
+                <div data-aos-delay={`${index * 300}`}>
+                  <SwiperSlide key={index}>
+                    <Card
+                      hoverable
+                      className="w-[250px] border-2"
+                      cover={<img alt={post?.title} src={post?.image} />}
+                    >
+                      <Meta
+                        title={post?.title}
+                        description={post?.description}
+                      />
+                    </Card>
+                  </SwiperSlide>
+                </div>
               ))
             : Array.from({ length: 4 }).map((_, index) => (
                 <SwiperSlide key={index}>

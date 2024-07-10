@@ -98,9 +98,11 @@ const HomePage: React.FC = () => {
           data-aos="fade-right"
         >
           {products.length > 0
-            ? products.map((product: ProductInfo) => (
+            ? products.map((product: ProductInfo, index: number) => (
                 <div
                   key={product._id}
+                  data-aos="fade-right"
+                  data-aos-delay={`${index * 150}`}
                   className="product-item cursor-pointer rounded-lg border-[0.5px] bg-white shadow-md transition-all duration-700 ease-in-out hover:shadow-lg"
                 >
                   <div className="flex h-full flex-col items-center justify-center transition-all duration-700 ease-in-out">

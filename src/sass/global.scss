@@ -229,6 +229,12 @@
   width: 250%;
 }
 
+//swipperjs
+.swiper-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
 //antd
 :where(.css-1okl62o).ant-col-24.ant-form-item-label {
   padding: 0 !important;

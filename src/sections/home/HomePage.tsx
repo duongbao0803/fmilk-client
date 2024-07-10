@@ -152,7 +152,7 @@ const HomePage: React.FC = () => {
                   </div>
                 </div>
               ))
-            : Array.from({ length: 6 }).map((_, index) => (
+            : Array.from({ length: 8 }).map((_, index) => (
                 <div
                   key={index}
                   className="rounded-lg border-[0.2px] border-[#e6e6e6] p-5"

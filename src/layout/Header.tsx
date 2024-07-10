@@ -13,6 +13,7 @@ const Header: React.FC = React.memo(() => {
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
+
   const [, setSelectedOption] = useState("home");
 
   const handleLinkClick = () => {
@@ -95,7 +96,7 @@ const Header: React.FC = React.memo(() => {
             <button
               data-collapse-toggle="navbar-cta"
               type="button"
-              className="inline-flex h-10 w-10 items-center justify-center  rounded-lg border-none bg-transparent p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 md:hidden "
+              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border-none bg-transparent p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 lg:hidden "
               aria-controls="navbar-cta"
               aria-expanded="false"
               onClick={toggleMobileMenu}
@@ -121,7 +122,7 @@ const Header: React.FC = React.memo(() => {
           <div
             className={`${
               isMobileMenuOpen ? "" : "hidden"
-            } w-full items-center justify-between md:order-1 md:flex md:w-auto`}
+            } w-full items-center justify-between md:order-2 lg:order-1 lg:flex lg:w-auto`}
             id="navbar-cta"
           >
             <ChipTabs />

@@ -5,7 +5,7 @@ import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import "swiper/swiper-bundle.css";
 import { Autoplay, FreeMode, Pagination } from "swiper/modules";
-import { Card } from "antd";
+import { Card, Skeleton } from "antd";
 import usePostService from "@/services/postService";
 import { PostInfo } from "@/interfaces/interface";
 
@@ -65,17 +65,25 @@ const Slider: React.FC = () => {
           modules={[FreeMode, Pagination, Autoplay]}
           className="mySwiper h-[500px]"
         >
-          {posts.map((post: PostInfo, index: number) => (
-            <SwiperSlide key={index}>
-              <Card
-                hoverable
-                className="w-[250px] border-2"
-                cover={<img alt={post?.title} src={post?.image} />}
-              >
-                <Meta title={post?.title} description={post?.description} />
-              </Card>
-            </SwiperSlide>
-          ))}
+          {posts.length > 0
+            ? posts.map((post: PostInfo, index: number) => (
+                <SwiperSlide key={index}>
+                  <Card
+                    hoverable
+                    className="w-[250px] border-2"
+                    cover={<img alt={post?.title} src={post?.image} />}
+                  >
+                    <Meta title={post?.title} description={post?.description} />
+                  </Card>
+                </SwiperSlide>
+              ))
+            : Array.from({ length: 4 }).map((_, index) => (
+                <SwiperSlide key={index}>
+                  <div className="w-full rounded-lg border-[0.2px] border-[#e6e6e6] p-5">
+                    <Skeleton loading={true} active />
+                  </div>
+                </SwiperSlide>
+              ))}
         </Swiper>
       </div>
     </>

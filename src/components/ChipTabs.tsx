@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 type Tab = {
   name: string;
@@ -16,6 +16,7 @@ const tabs: Tab[] = [
 
 const ChipTabs = () => {
   const [selected, setSelected] = useState("");
+  const navigate = useNavigate();
 
   const location = useLocation();
 
@@ -33,6 +34,7 @@ const ChipTabs = () => {
 
   const handleTabClick = async (tab: Tab) => {
     setSelected(tab.name);
+    navigate(tab.path);
   };
 
   return (

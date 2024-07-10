@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "antd";
-import { HomeFilled, ShoppingCartOutlined } from "@ant-design/icons";
-import { Avatar } from "@/components";
+import { ShoppingCartOutlined } from "@ant-design/icons";
+import { Avatar, ChipTabs } from "@/components";
+import logo from "@/assets/images/logo/logo_fmilk_web.png";
 
 const Header: React.FC = React.memo(() => {
   const navigate = useNavigate();
 
-  const [selectedOption, setSelectedOption] = useState("home");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const [, setSelectedOption] = useState("home");
 
   const handleLinkClick = () => {
     setSelectedOption("home");
@@ -29,7 +36,7 @@ const Header: React.FC = React.memo(() => {
 
   return (
     <>
-      <div className="z-[999] mx-5 flex h-[60px] justify-center text-[#000000]">
+      {/* <div className="z-[999] mx-5 flex h-[60px] justify-center text-[#000000]">
         <div
           className="navbar flex w-[1100px] max-w-[1220px] flex-row flex-nowrap justify-between rounded-[40px] bg-[#f8f8f8] bg-opacity-75"
           data-aos="fade-down"
@@ -65,7 +72,63 @@ const Header: React.FC = React.memo(() => {
             <Avatar />
           </div>
         </div>
-      </div>
+      </div> */}
+      <nav className="fixed z-[999] w-full border-gray-200 bg-white shadow-lg">
+        <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
+          <img
+            src={logo}
+            alt="logo"
+            className="my-auto ml-5 h-fit w-[40px] cursor-pointer object-cover"
+            onClick={handleLinkClick}
+          />
+          <div className="flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
+            <div className="flex items-center justify-center gap-10">
+              <div onClick={handleSelectedCart}>
+                <Badge count={5}>
+                  <ShoppingCartOutlined className="cursor-pointer text-2xl text-black hover:text-[#08cde9]" />
+                </Badge>
+              </div>
+              <div>
+                <Avatar />
+              </div>
+            </div>
+
+            <button
+              data-collapse-toggle="navbar-cta"
+              type="button"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border-none bg-transparent p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 lg:hidden "
+              aria-controls="navbar-cta"
+              aria-expanded="false"
+              onClick={toggleMobileMenu}
+            >
+              <span className="sr-only">Open main menu</span>
+              <svg
+                className="h-5 w-5"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 17 14"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M1 1h15M1 7h15M1 13h15"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            className={`${
+              isMobileMenuOpen ? "" : "hidden"
+            } w-full items-center justify-between md:order-2 lg:order-1 lg:flex lg:w-auto`}
+            id="navbar-cta"
+          >
+            <ChipTabs />
+          </div>
+        </div>
+      </nav>
       {/* <Notification visible={isNotificationVisible} onClose={closeNotification} /> */}
     </>
   );

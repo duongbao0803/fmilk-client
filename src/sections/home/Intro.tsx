@@ -4,7 +4,7 @@ const Intro: React.FC = () => {
   return (
     <>
       {/* Intro */}
-      <div className="my-10 grid grid-cols-3 px-52">
+      <div className="mx-16 my-10 grid grid-cols-1 lg:mx-44 lg:grid-cols-3 ">
         <div className="text-justify">
           <div className="relative mb-8" data-aos="fade-down">
             <h2 className="text-[25px] font-medium text-[#1385b7]">
@@ -62,7 +62,7 @@ const Intro: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="flex items-center" data-aos="flip-up">
+        <div className="flex items-center justify-center" data-aos="flip-up">
           <img
             src="https://firebasestorage.googleapis.com/v0/b/swd392-d2c4e.appspot.com/o/FMilk%2Flogo_fmilk.png?alt=media&token=2b0d6848-7bf9-459e-a28d-444dab95a287"
             alt=""
@@ -75,9 +75,9 @@ const Intro: React.FC = () => {
               <h2 className="text-[25px] font-medium text-[#1385b7]">
                 VÌ SAO NÊN CHỌN{" "}
                 <img
-                  src="https://insacmau.com/wp-content/uploads/2023/02/logo-FPT-Polytechnic-.png"
+                  src="https://firebasestorage.googleapis.com/v0/b/swd392-d2c4e.appspot.com/o/FMilk%2Flogo_fmilk.png?alt=media&token=2b0d6848-7bf9-459e-a28d-444dab95a287"
                   alt=""
-                  className="inline h-[40px] object-cover"
+                  className="inline h-[70px] object-cover"
                 />
               </h2>
               <div className="absolute bottom-[-10px] mb-1 h-[1px] w-12 bg-[#1385b7]"></div>

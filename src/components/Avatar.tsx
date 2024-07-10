@@ -38,7 +38,7 @@ const Avatar: React.FC = () => {
     {
       label: (
         <Link to="/authen" rel="noopener noreferrer" onClick={logout}>
-          Sign out
+          Đăng xuất
         </Link>
       ),
       key: "2",
@@ -56,28 +56,25 @@ const Avatar: React.FC = () => {
             <img
               src={avatarAdmin}
               alt="avatar"
-              className="h-10 w-10 cursor-pointer rounded-full object-cover ring-2 ring-gray-300 hover:ring-[orange]"
+              className="h-10 w-10 cursor-pointer rounded-full object-cover ring-2 ring-gray-300 hover:ring-[#08cde9]"
             />
           ) : role === Role.STAFF ? (
             <img
               src={avatarStaff}
               alt="avatar"
-              className="h-10 w-10 cursor-pointer rounded-full object-cover ring-2 ring-gray-300 hover:ring-[orange]"
+              className="h-10 w-10 cursor-pointer rounded-full object-cover ring-2 ring-gray-300 hover:ring-[#08cde9]"
             />
           ) : (
             <img
               src={avatarUser}
               alt="avatar"
-              className="h-10 w-10 cursor-pointer rounded-full object-cover ring-2 ring-gray-300 hover:ring-[orange]"
+              className="h-10 w-10 cursor-pointer rounded-full object-cover ring-2 ring-gray-300 hover:ring-[#08cde9]"
             />
           )}
         </Dropdown>
       ) : (
-        <Link
-          to="/authen"
-          className="${flex items-center rounded-2xl px-3 py-1 text-[18px] transition-all duration-500 hover:bg-[orange] hover:text-[#fff]"
-        >
-          ĐĂNG NHẬP
+        <Link to="/authen">
+          <button className="buttonAuthen">ĐĂNG NHẬP</button>
         </Link>
       )}
     </>

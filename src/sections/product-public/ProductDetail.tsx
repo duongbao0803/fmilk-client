@@ -36,6 +36,9 @@ const ProductDetail: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { infoUser } = useAuth();
 
+  const formattedPrice =
+    product?.price !== undefined ? PriceFormat.format(product.price) : "";
+
   useEffect(() => {
     if (productId) {
       const fetchData = async () => {
@@ -102,12 +105,10 @@ const ProductDetail: React.FC = () => {
                 </span>
               </div>
               <div>
-                <span className="text-4xl">
-                  {PriceFormat.format(product?.price)}
-                </span>
+                <span className="text-4xl">{formattedPrice}</span>
               </div>
               <button
-                onClick={() => handleAddtoCart(product)}
+                onClick={() => product && handleAddtoCart(product)}
                 className=" border-2 border-[#08cde9] bg-[#fff] px-5 py-3 transition-all duration-500 ease-in-out hover:rounded-xl hover:border-2  hover:bg-[#08cde9] hover:font-bold hover:text-[#fff]"
               >
                 Thêm giỏ hàng
@@ -173,7 +174,7 @@ const ProductDetail: React.FC = () => {
                   </div>
                   <div className="mb-2 flex">
                     <span>
-                      5<Rate allowHalf count={1} value={1} className="mx-1" />
+                      4<Rate allowHalf count={1} value={1} className="mx-1" />
                     </span>
                     <Progress
                       percent={30}
@@ -185,7 +186,7 @@ const ProductDetail: React.FC = () => {
                   </div>
                   <div className="mb-2 flex">
                     <span>
-                      5<Rate allowHalf count={1} value={1} className="mx-1" />
+                      3<Rate allowHalf count={1} value={1} className="mx-1" />
                     </span>
                     <Progress
                       percent={30}
@@ -197,7 +198,7 @@ const ProductDetail: React.FC = () => {
                   </div>
                   <div className="mb-2 flex">
                     <span>
-                      5<Rate allowHalf count={1} value={1} className="mx-1" />
+                      2<Rate allowHalf count={1} value={1} className="mx-1" />
                     </span>
                     <Progress
                       percent={30}
@@ -209,7 +210,7 @@ const ProductDetail: React.FC = () => {
                   </div>
                   <div className="mb-2 flex">
                     <span>
-                      5<Rate allowHalf count={1} value={1} className="mx-1" />
+                      1<Rate allowHalf count={1} value={1} className="mx-1" />
                     </span>
                     <Progress
                       percent={30}

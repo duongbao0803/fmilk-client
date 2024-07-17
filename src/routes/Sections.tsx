@@ -9,12 +9,13 @@ import AuthenPage from "@/pages/AuthenPage";
 import LandingPage from "@/pages/LandingPage";
 import { UserInfo } from "@/interfaces/interface";
 import CartPage from "@/sections/cart/CartPage";
-import Checkout from "@/sections/cart/Checkout";
+// import Checkout from "@/sections/cart/Checkoutt";
 import Notification from "@/sections/notification/Notification";
-import Payment from "@/sections/cart/Payment";
+import Checkout from "@/sections/cart/Checkout";
 
 import PostMangementPage from "@/pages/PostMangementPage";
 import ProductPublicPage from "@/pages/ProductPublicPage";
+import ProductDetail from "@/sections/product-public/ProductDetail";
 
 export const UserManagementPage = lazy(
   () => import("@/pages/UserManagementPage"),
@@ -70,11 +71,15 @@ const Router: React.FC = () => {
     },
     {
       path: "/payment",
-      element: <Payment />,
+      // element: <Payment />,
     },
     {
       path: "/product",
       element: <ProductPublicPage />,
+    },
+    {
+      path: "/product/:productId",
+      element: <ProductDetail />,
     },
     {
       path: "/notification",

@@ -1,247 +1,280 @@
 import Header from "@/layout/Header";
 import Footer from "@/layout/Footer";
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-interface FormValues {
-  email: string;
-  name: string;
-  phone: string;
-  city: string;
-  district: string;
-  ward: string;
-  street: string;
-}
-
-interface CartItem {
-  _id: string;
-  name: string;
-  description: string;
-  image: string;
-  price: number;
-  rating: number;
-  quantity: number;
-}
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import {
+  Button,
+  Form,
+  Input,
+  Radio,
+  RadioChangeEvent,
+  Table,
+  TableProps,
+} from "antd";
+import { HomeFilled, RightOutlined } from "@ant-design/icons";
+import useCartStore from "@/hooks/useCartStore";
+import { PriceFormat } from "@/util/validate";
+import { CartItem } from "@/interfaces/interface";
+import LogoVnpay from "@/assets/images/logo/logo_vnpay.png";
+import LogoCash from "@/assets/images/logo/logo_cash.png";
 
 const Checkout: React.FC = () => {
-  const [form, setForm] = useState<FormValues>({
-    email: "",
-    name: "",
-    phone: "",
-    city: "",
-    district: "",
-    ward: "",
-    street: "",
-  });
+  const { cart, itemsPrice } = useCartStore();
+  const [, setValue] = useState(1);
 
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const onChange = (e: RadioChangeEvent) => {
+    console.log("radio checked", e.target.value);
+    setValue(e.target.value);
+  };
 
-  const SHIPPING_FEE = 30;
+  const TRANSFER_FEE = [
+    { min: 2000000, fee: 0 },
+    { min: 1500000, max: 2000000, fee: 20000 },
+    { min: 1000000, max: 1500000, fee: 40000 },
+    { max: 1000000, fee: 60000 },
+    { min: 0, fee: 0 },
+  ];
 
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const savedCart = localStorage.getItem("cart");
-    if (savedCart) {
-      setCart(JSON.parse(savedCart));
+  const getShippingFee = (itemsPrice: number) => {
+    for (let i = 0; i < TRANSFER_FEE.length; i++) {
+      const { min = 0, max = Infinity, fee } = TRANSFER_FEE[i];
+      if (itemsPrice >= min && itemsPrice < max) {
+        return fee;
+      }
     }
-  }, []);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
+    return 0;
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("Form data:", form);
-    navigate("/payment", { state: { form, cart, totalPrice, subtotal } });
-  };
+  const transferPrice = getShippingFee(itemsPrice);
+  const subtotal = itemsPrice + transferPrice;
 
-  const calculateTotalPrice = () => {
-    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
-  };
-
-  const totalPrice = calculateTotalPrice();
-  const subtotal = totalPrice + SHIPPING_FEE;
+  const columns: TableProps<CartItem>["columns"] = [
+    {
+      title: "STT",
+      dataIndex: "index",
+      key: "index",
+      render: (_, _record, index) => index + 1,
+    },
+    {
+      title: "Sản phẩm",
+      dataIndex: "name",
+      key: "name",
+      render: (_text, record) => (
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <img
+            src={record?.image}
+            alt={record.name}
+            style={{ width: 50, height: 50, marginRight: 10 }}
+          />
+          <span>{record.name}</span>
+        </div>
+      ),
+    },
+    {
+      title: "Giá",
+      dataIndex: "price",
+      render: (price) => (
+        <span>
+          {new Intl.NumberFormat("vi-VN", {
+            style: "currency",
+            currency: "VND",
+          }).format(price)}
+        </span>
+      ),
+    },
+    {
+      title: "Số lượng",
+      dataIndex: "quantity",
+      key: "quantity",
+      render: (_text, record) => (
+        <div className="flex items-center">
+          <span className="text-md mx-2">{record.quantity}</span>
+        </div>
+      ),
+    },
+    {
+      title: "Tổng cộng",
+      dataIndex: "totalProductPrice",
+      render: (totalProductPrice) => (
+        <span>
+          {new Intl.NumberFormat("vi-VN", {
+            style: "currency",
+            currency: "VND",
+          }).format(totalProductPrice)}
+        </span>
+      ),
+    },
+  ];
 
   return (
     <>
       <Header />
-      <div className="container mx-auto px-8 py-4">
-        <div className="flex justify-center gap-4">
-          <div className="w-2/5 rounded-md border border-gray-300 p-6">
-            <form onSubmit={handleSubmit}>
-              <div className="mb-6 text-2xl text-blue-800">
-                Địa Chỉ Giao Hàng
-              </div>
-              <div className="mb-4">
-                <label htmlFor="email">Email:</label>
-                <br />
-                <input
-                  id="email"
-                  className="w-full rounded-md border border-gray-300 px-3 py-1"
-                  type="email"
-                  name="email"
-                  value={form.email}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="mb-4">
-                <label htmlFor="name">Họ và Tên*:</label>
-                <br />
-                <input
-                  id="name"
-                  className="w-full rounded-md border border-gray-300 px-3 py-1"
-                  type="text"
-                  name="name"
-                  value={form.name}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="mb-4">
-                <label htmlFor="phone">Số điện thoại*:</label>
-                <br />
-                <input
-                  id="phone"
-                  className="w-full rounded-md border border-gray-300 px-3 py-1"
-                  type="tel"
-                  name="phone"
-                  value={form.phone}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="mb-4">
-                <label htmlFor="city">Tỉnh/Thành Phố*:</label>
-                <br />
-                <input
-                  id="city"
-                  className="w-full rounded-md border border-gray-300 px-3 py-1"
-                  type="text"
-                  name="city"
-                  value={form.city}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="mb-4">
-                <label htmlFor="district">Quận/Huyện*:</label>
-                <br />
-                <input
-                  id="district"
-                  className="w-full rounded-md border border-gray-300 px-3 py-1"
-                  type="text"
-                  name="district"
-                  value={form.district}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="mb-4">
-                <label htmlFor="ward">Phường/Xã*:</label>
-                <br />
-                <input
-                  id="ward"
-                  className="w-full rounded-md border border-gray-300 px-3 py-1"
-                  type="text"
-                  name="ward"
-                  value={form.ward}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="mb-4">
-                <label htmlFor="street">Số nhà, Tên đường*:</label>
-                <br />
-                <input
-                  id="street"
-                  className="w-full rounded-md border border-gray-300 px-3 py-1"
-                  type="text"
-                  name="street"
-                  value={form.street}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <button
-                className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-                type="submit"
-              >
-                Tiếp Tục
-              </button>
-            </form>
+      <div>
+        <div className="h-[600px]">
+          <div className="background4 relative top-[69.5px]">
+            <div className="text-center">
+              <h4 className="py-3 text-3xl font-semibold tracking-widest text-[#08cde9]">
+                FMILK
+              </h4>
+              <h1 className="text-4xl font-bold text-white">GIỎ HÀNG</h1>
+            </div>
           </div>
-          <div className="ml-20 w-2/3">
-            <div className="mb-8 rounded-lg bg-white p-4 shadow-md">
-              <h2 className="mb-4 text-lg font-semibold">Giỏ Hàng</h2>
-              <div className="grid grid-cols-4 gap-4">
-                <div className="col-span-1">
-                  <span className="text-lg font-semibold">Sản Phẩm</span>
-                </div>
-                <div className="col-span-1">
-                  <span className="ml-8 whitespace-nowrap text-lg font-semibold">
-                    Đơn Giá
-                  </span>
-                </div>
-                <div className="col-span-1">
-                  <span className="ml-4 whitespace-nowrap text-lg font-semibold">
-                    Số Lượng
-                  </span>
-                </div>
-                <div className="col-span-1">
-                  <span className="ml-4 whitespace-nowrap text-lg font-semibold">
-                    Thành Tiền
-                  </span>
-                </div>
-                {cart.length > 0 ? (
-                  cart.map((item) => (
-                    <React.Fragment key={item._id}>
-                      <div className="col-span-1 flex items-center">
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                          className="mr-2 h-16 w-16 object-cover"
-                        />
-                        <span className="whitespace-nowrap text-sm">
-                          {item.name}
-                        </span>
+        </div>
+
+        <div className="mx-10 mb-16 min-h-screen md:mx-36">
+          <div className="mb-5">
+            <Link to={"/"}>
+              <HomeFilled className="text-xl text-[#08cde9]" />
+            </Link>
+            <RightOutlined className="mx-2 text-[#08cde9]" />
+            <Link to={"/cart"}>Giỏ hàng của bạn</Link>
+            <RightOutlined className="mx-2 text-[#08cde9]" />
+            <span className="font-bold">Thanh toán</span>
+          </div>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+            <div className="cart col-span-2 rounded-lg bg-white">
+              <div>
+                <div className="col-span-3 mb-5">
+                  <Form>
+                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+                      <div className="col-span-3 mb-5">
+                        <div className="rounded-lg bg-white p-4 shadow-md">
+                          <label className="mb-2 block text-[14px] font-semibold">
+                            Thông tin người dùng
+                          </label>
+                          <Form.Item
+                            label="Tên"
+                            name="name"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Vui lòng nhập tên của bạn",
+                              },
+                            ]}
+                          >
+                            <Input placeholder="Nhập tên của bạn" />
+                          </Form.Item>
+                          <Form.Item
+                            label="Địa chỉ"
+                            name="address"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Vui lòng nhập địa chỉ của bạn",
+                              },
+                            ]}
+                          >
+                            <Input placeholder="Nhập địa chỉ của bạn" />
+                          </Form.Item>
+                          <Form.Item
+                            label="Số điện thoại"
+                            name="phone"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Vui lòng nhập số điện thoại của bạn",
+                              },
+                            ]}
+                          >
+                            <Input placeholder="Nhập số điện thoại của bạn" />
+                          </Form.Item>
+                          <Button
+                            className="h-10 rounded-md"
+                            type="primary"
+                            htmlType="submit"
+                          >
+                            Xác nhận thông tin
+                          </Button>
+                        </div>
                       </div>
-                      <div className="col-span-1 flex items-center">
-                        <span className="ml-12 text-sm">${item.price}</span>
-                      </div>
-                      <div className="col-span-1 ml-4 flex items-center">
-                        <span className="ml-10 text-sm">{item.quantity}</span>
-                      </div>
-                      <div className="col-span-1 flex items-center">
-                        <span className="ml-10 text-sm">
-                          ${item.price * item.quantity}
-                        </span>
-                      </div>
-                    </React.Fragment>
-                  ))
-                ) : (
-                  <div className="col-span-4">
-                    <p className="text-sm">Giỏ Hàng Của Bạn Trống.</p>
-                  </div>
-                )}
+                    </div>
+                  </Form>
+                </div>
+                <div>
+                  <strong>Đơn hàng của bạn</strong>
+                  <Table
+                    id="myTable"
+                    columns={columns}
+                    dataSource={cart}
+                    pagination={false}
+                  />
+                </div>
               </div>
             </div>
-            <div className="rounded-lg bg-white p-4 shadow-md">
-              <h3 className="mb-4 text-lg font-semibold">Thông Tin Đơn Hàng</h3>
-              <div className="mb-2 flex justify-between">
-                <span className="text-lg">Tổng Giá Sản Phẩm</span>
-                <span className="text-lg">${totalPrice.toFixed(2)}</span>
+            <div className="col-span-1">
+              <div className="rounded-lg bg-white shadow-md">
+                <label className="block rounded-lg rounded-bl-none rounded-br-none bg-[#fafafa] p-4 text-[14px] font-semibold">
+                  Thông tin đơn hàng
+                </label>
+                <div className="mb-5 px-5 py-3">
+                  <div className="mb-2 flex justify-between">
+                    <span className="text-md">Tổng Giá Sản Phẩm</span>
+                    <span className="text-md">
+                      {" "}
+                      {PriceFormat.format(itemsPrice ?? 0)}
+                    </span>
+                  </div>
+                  <div className="mb-2 flex justify-between">
+                    <span className="text-md">Phí Vận Chuyển</span>
+                    {transferPrice === 0
+                      ? "Miễn phí"
+                      : `${PriceFormat.format(transferPrice)}`}
+                  </div>
+                  <div className="flex justify-between font-semibold">
+                    <span className="text-md">Tạm Tính</span>
+                    {PriceFormat.format(subtotal)}
+                  </div>
+                </div>
               </div>
-              <div className="mb-2 flex justify-between">
-                <span className="text-lg">Phí Vận Chuyển</span>
-                <span className="text-lg">${SHIPPING_FEE.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between font-semibold">
-                <span className="text-lg">Tạm Tính</span>
-                <span className="text-lg">${subtotal.toFixed(2)}</span>
+              <div className="mb-8 rounded-lg shadow-md">
+                <label className="block rounded-lg rounded-bl-none rounded-br-none bg-[#fafafa] p-4 text-[14px] font-semibold">
+                  Phương thức thanh toán
+                </label>
+                <div className="px-5 py-3">
+                  <Radio.Group onChange={onChange} className="w-full">
+                    <div className="relative mb-5 flex w-full items-center justify-between rounded-lg border border-[#bebcbc] p-5 hover:border-[#08a2e9]">
+                      <Radio value={"VNPAY"} className="w-full">
+                        <div className="inline w-full">
+                          <div className="border-1 w-full">
+                            Thanh toán VNPAY
+                          </div>
+                        </div>
+                      </Radio>
+                      <div className="ml-4">
+                        <img
+                          src={LogoVnpay}
+                          alt="Logo-vnpay"
+                          className="w-11"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="relative flex w-full items-center justify-between rounded-lg border border-[#bebcbc] p-5 hover:border-[#08a2e9]">
+                      <Radio value={"CASH"} className="w-full">
+                        <div className="inline w-full">
+                          <div className="border-1 w-full">
+                            Thanh toán khi nhận hàng
+                          </div>
+                        </div>
+                      </Radio>
+                      <div className="ml-4">
+                        <img src={LogoCash} alt="Logo-cash" className="w-11" />
+                      </div>
+                    </div>
+                  </Radio.Group>
+                  <div className="mt-5 flex gap-2">
+                    <input type="checkbox" required />
+                    <p className="text-sm">
+                      Vui lòng xác nhận lại đơn hàng trước khi thanh toán
+                    </p>
+                  </div>
+                  <Button
+                    className="mt-5 h-10 w-full rounded-md py-1"
+                    type="primary"
+                  >
+                    Thanh toán
+                  </Button>
+                </div>
               </div>
             </div>
           </div>

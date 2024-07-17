@@ -27,7 +27,7 @@ export interface AuthState {
   isAuthenticated: boolean;
   login: () => void;
   logout: () => void;
-  infoUser: object;
+  infoUser: UserInfo;
   fetchUserInfo: () => void;
 }
 
@@ -130,4 +130,21 @@ export interface CartState {
   addToCart: (item: ProductInfo) => void;
   removeCart: (itemId: string) => void;
   clearCart: () => void;
+}
+
+export interface CartProduct {
+  _id: string;
+  brand: string;
+  comments: unknown[];
+  createdAt: string;
+  description: string;
+  expireDate: string;
+  image: string;
+  name: string;
+  origin: string;
+  price: number;
+  quantity: number;
+  status: string;
+  totalProductPrice: number;
+  updatedAt: string;
 }

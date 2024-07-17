@@ -1,6 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { notification } from "antd";
-import { addBrand, editBrand, getAllBrand, removeBrand } from "@/api/brandApi";
+import {
+  addBrand,
+  editBrand,
+  getAllBrand,
+  getDetailBrand,
+  removeBrand,
+} from "@/api/brandApi";
 import { CustomError } from "../interfaces/interface";
 
 const useBrandService = () => {
@@ -11,6 +17,11 @@ const useBrandService = () => {
     const totalBrands = res.data.totalbrands || 0;
     const brands = res.data.brands;
     return { totalBrands, brands };
+  };
+
+  const getInfoBrandDetail = async (brandId: string) => {
+    const res = await getDetailBrand(brandId);
+    return res.data.brandInfo;
   };
 
   const deleteBrand = async (brandId: string) => {
@@ -118,6 +129,7 @@ const useBrandService = () => {
     addNewBrandItem,
     updateBrandItem,
     isFetching,
+    getInfoBrandDetail,
   };
 };
 

@@ -285,6 +285,10 @@
   display: none !important;
 }
 
+.ant-table-cell {
+  border-bottom: none !important;
+}
+
 //responsive
 @media (min-width: 3000) {
   .navbar {

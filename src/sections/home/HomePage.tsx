@@ -8,6 +8,7 @@ import useProductService from "@/services/productService";
 import { ProductInfo } from "@/interfaces/interface";
 import { PriceFormat } from "@/util/validate";
 import useCartStore from "@/hooks/useCartStore";
+import { Link } from "react-router-dom";
 
 const HomePage: React.FC = React.memo(() => {
   const { products } = useProductService();
@@ -43,7 +44,7 @@ const HomePage: React.FC = React.memo(() => {
       <Intro />
       <div className="mx-16 mt-20 py-4 lg:mx-44">
         <div className="mb-10 flex justify-center" data-aos="fade-down">
-          <span className="border-b-2 border-[#1385b7] border-x-[#1385b7] text-center text-[25px] font-medium text-[#1385b7]">
+          <span className="border-b-2 border-[#739aaa] border-x-[#1385b7] text-center text-[25px] font-medium text-[#1385b7]">
             SẢN PHẨM
           </span>
         </div>
@@ -74,23 +75,24 @@ const HomePage: React.FC = React.memo(() => {
                         </p>
                       </button>
                     </div>
-
-                    <div className="flex flex-col items-center p-4 text-center">
-                      <h3 className="mb-2 text-lg font-semibold">
-                        {product?.name}
-                      </h3>
-                      <p className="mb-2">
-                        <span className="font-bold">Xuất xứ:</span>{" "}
-                        <span className="font-bold text-red-500">
-                          {product?.origin}
-                        </span>
-                      </p>
-                      <p className="mb-2 text-xl font-bold ">
-                        <span className="text-red-500">
-                          {PriceFormat.format(product.price ?? 0)}
-                        </span>
-                      </p>
-                    </div>
+                    <Link to={`/product/${product?._id}`}>
+                      <div className="flex flex-col items-center p-4 text-center">
+                        <h3 className="mb-2 text-lg font-semibold">
+                          {product?.name}
+                        </h3>
+                        <p className="mb-2">
+                          <span className="font-bold">Xuất xứ:</span>{" "}
+                          <span className="font-bold text-red-500">
+                            {product?.origin}
+                          </span>
+                        </p>
+                        <p className="mb-2 text-xl font-bold ">
+                          <span className="text-red-500">
+                            {PriceFormat.format(product.price ?? 0)}
+                          </span>
+                        </p>
+                      </div>
+                    </Link>
                   </div>
                 </div>
               ))

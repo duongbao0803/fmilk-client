@@ -3,15 +3,15 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const axiosClient = axios.create({
-  // baseURL: "http://localhost:8000/api",
-  // headers: {
-  //   "Content-Type": "application/json",
-  // },
-
-  baseURL: "https://fmilk-server.onrender.com/api",
+  baseURL: "http://localhost:8000/api",
   headers: {
     "Content-Type": "application/json",
   },
+
+  // baseURL: "https://fmilk-server.onrender.com/api",
+  // headers: {
+  //   "Content-Type": "application/json",
+  // },
 });
 
 axiosClient.interceptors.request.use(

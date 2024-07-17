@@ -9,6 +9,10 @@ const getAllBrand = (page: number) => {
   });
 };
 
+const getDetailBrand = (brandId: string) => {
+  return axiosClient.put(`/v1/brand/${brandId}`);
+};
+
 const editBrand = (brandId: string, brandName: string) => {
   return axiosClient.put(`/v1/brand/${brandId}`, brandName);
 };
@@ -21,4 +25,4 @@ const removeBrand = (brandId: string) => {
   return axiosClient.delete(`/v1/brand/${brandId}`);
 };
 
-export { getAllBrand, removeBrand, addBrand, editBrand };
+export { getAllBrand, removeBrand, addBrand, editBrand, getDetailBrand };

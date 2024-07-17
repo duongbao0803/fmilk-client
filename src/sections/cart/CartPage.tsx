@@ -2,8 +2,7 @@ import Header from "@/layout/Header";
 import Footer from "@/layout/Footer";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, notification, Table, TableProps } from "antd";
-import { DataType } from "../user/UserList";
+import { Button, Input, notification, Table, TableProps } from "antd";
 import {
   HomeFilled,
   MinusCircleOutlined,
@@ -12,6 +11,8 @@ import {
 } from "@ant-design/icons";
 import useCartStore from "@/hooks/useCartStore";
 import { PriceFormat } from "@/util/validate";
+import DeleteCartModal from "./DeleteCartModal";
+import { CartItem } from "@/interfaces/interface";
 
 const CartPage: React.FC = () => {
   const [discountCode, setDiscountCode] = useState<string>("");
@@ -36,10 +37,22 @@ const CartPage: React.FC = () => {
     return 0;
   };
 
+  const handleRemove = (record: CartItem) => {
+    console.log("check record", record);
+    if (record.quantity === 1) {
+      DeleteCartModal({
+        removeCart,
+        record,
+      });
+    } else {
+      removeCart(record._id);
+    }
+  };
+
   const transferPrice = getShippingFee(itemsPrice);
   const subtotal = itemsPrice + transferPrice;
 
-  const columns: TableProps<DataType>["columns"] = [
+  const columns: TableProps<CartItem>["columns"] = [
     {
       title: "STT",
       dataIndex: "index",
@@ -78,9 +91,9 @@ const CartPage: React.FC = () => {
       dataIndex: "quantity",
       key: "quantity",
       render: (_text, record) => (
-        <div className="flex items-center justify-center">
+        <div className="flex items-center">
           <MinusCircleOutlined
-            onClick={() => removeCart(record._id)}
+            onClick={() => handleRemove(record)}
             className="text-xl text-[black]"
           />
           <span className="text-md mx-2">{record.quantity}</span>
@@ -132,7 +145,7 @@ const CartPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="mx-40 min-h-screen">
+        <div className="mx-10 min-h-screen md:mx-36">
           <div className="mb-5">
             <Link to={"/"}>
               <HomeFilled className="text-xl text-[#08cde9]" />
@@ -140,7 +153,7 @@ const CartPage: React.FC = () => {
             <RightOutlined className="mx-2 text-[#08cde9]" />
             <span className="font-bold">Giỏ hàng của bạn</span>
           </div>
-          <div className="grid grid-cols-3 gap-4 ">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
             <div className="cart col-span-2 rounded-lg bg-white">
               <Table
                 className="pagination h-full"
@@ -151,52 +164,65 @@ const CartPage: React.FC = () => {
               />
             </div>
             <div className="col-span-1">
-              <div className="mb-8 rounded-lg bg-white p-8 shadow-md">
-                <label className="mb-2 block text-lg font-semibold">
+              <div className="mb-8 rounded-lg shadow-md">
+                <label className="block rounded-lg rounded-bl-none rounded-br-none bg-[#fafafa] p-4 text-[14px] font-semibold">
                   Mã Giảm Giá
                 </label>
-                <input
-                  type="text"
-                  placeholder="Nhập mã giảm giá"
-                  className="mb-2 w-full rounded-md border border-gray-300 px-2 py-1"
-                  value={discountCode}
-                  onChange={(e) => setDiscountCode(e.target.value)}
-                />
-                <button
-                  // onClick={applyDiscountCode}
-                  className="w-full rounded-md bg-blue-500 px-4 py-1 text-white"
-                >
-                  Áp Dụng
-                </button>
+                <div className="px-5 py-3">
+                  <Input
+                    placeholder="Mã giám giá"
+                    value={discountCode}
+                    className="mb-2 w-full rounded-md border border-gray-300 px-2 py-1"
+                    onChange={(e) => setDiscountCode(e.target.value)}
+                  />
+                  <Button
+                    // onClick={applyDiscountCode}
+                    className="h-10 w-full rounded-md py-1"
+                    type="primary"
+                  >
+                    Áp Dụng
+                  </Button>
+                </div>
               </div>
-              <div className="rounded-lg bg-white p-8 shadow-md">
-                <h3 className="mb-4 text-lg font-semibold">
-                  Thông Tin Đơn Hàng
-                </h3>
-                <div className="mb-2 flex justify-between">
-                  <span className="text-lg">Tổng Giá Sản Phẩm</span>
-                  <span className="text-lg">
-                    {" "}
-                    {PriceFormat.format(itemsPrice ?? 0)}
-                  </span>
+              <div className="rounded-lg bg-white shadow-md">
+                <label className="block rounded-lg rounded-bl-none rounded-br-none bg-[#fafafa] p-4 text-[14px] font-semibold">
+                  Thông tin đơn hàng
+                </label>
+                <div className="px-5 py-3">
+                  <div className="mb-2 flex justify-between">
+                    <span className="text-md">Tổng Giá Sản Phẩm</span>
+                    <span className="text-md">
+                      {" "}
+                      {PriceFormat.format(itemsPrice ?? 0)}
+                    </span>
+                  </div>
+                  <div className="mb-2 flex justify-between">
+                    <span className="text-md">Phí Vận Chuyển</span>
+                    {transferPrice === 0
+                      ? "Miễn phí"
+                      : `${PriceFormat.format(transferPrice)}`}
+                  </div>
+                  <div className="flex justify-between font-semibold">
+                    <span className="text-md">Tạm Tính</span>
+                    {PriceFormat.format(subtotal)}
+                  </div>
+                  <div className="mt-5 flex flex-col gap-3">
+                    <Button
+                      onClick={handleCart}
+                      className="h-10 w-full rounded-md"
+                      type="primary"
+                    >
+                      Tiếp tục
+                    </Button>
+                    <Button
+                      onClick={() => navigate("/")}
+                      className="h-10 w-full rounded-md"
+                      type="default"
+                    >
+                      Mua thêm
+                    </Button>
+                  </div>
                 </div>
-                <div className="mb-2 flex justify-between">
-                  <span className="text-lg">Phí Vận Chuyển</span>
-                  {transferPrice === 0
-                    ? "Miễn phí"
-                    : `${PriceFormat.format(transferPrice)}`}
-                </div>
-                <div className="flex justify-between font-semibold">
-                  <span className="text-lg">Tạm Tính</span>
-                  {PriceFormat.format(subtotal)}
-                </div>
-                <Button
-                  onClick={handleCart}
-                  className="bpx-4 w-full rounded-md py-1"
-                  type="primary"
-                >
-                  Tiếp Tục
-                </Button>
               </div>
             </div>
           </div>

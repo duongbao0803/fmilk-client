@@ -42,7 +42,7 @@ const items: MenuItem[] = [
     "/user",
   ),
   getItem("Product", "3", <ProductOutlined />, undefined, "/manageProduct"),
-  getItem("Post", "8", <FileOutlined />, undefined, "/post"),
+  getItem("Post", "8", <FileOutlined />, undefined, "/managePost"),
   getItem("Brand", "9", <FileOutlined />, undefined, "/brand"),
 ];
 

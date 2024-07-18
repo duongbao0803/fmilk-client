@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Modal, Form, Input, Select } from "antd";
-import { FormOutlined, UnorderedListOutlined } from "@ant-design/icons";
+import { FormOutlined } from "@ant-design/icons";
 import { DataType } from "./PostList";
 import usePostService from "@/services/postService";
 import UploadImagePost from "./UploadImagePost";
@@ -21,6 +21,7 @@ const EditPostModal: React.FC<EditModalProps> = (props) => {
   const { updatePostItem } = usePostService();
   const { products } = useProductService();
   const [form] = Form.useForm();
+  const { TextArea } = Input;
 
   useEffect(() => {
     if (isOpen) {
@@ -112,13 +113,7 @@ const EditPostModal: React.FC<EditModalProps> = (props) => {
           labelCol={{ span: 24 }}
           className="formItem"
         >
-          <Input
-            prefix={
-              <UnorderedListOutlined className="site-form-item-icon mr-1" />
-            }
-            placeholder="Description"
-            autoFocus
-          />
+          <TextArea placeholder="Description" />
         </Form.Item>
         <Form.Item
           name="productId"

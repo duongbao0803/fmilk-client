@@ -16,6 +16,10 @@ import Checkout from "@/sections/cart/Checkout";
 import PostMangementPage from "@/pages/PostMangementPage";
 import ProductPublicPage from "@/pages/ProductPublicPage";
 import ProductDetail from "@/sections/product-public/ProductDetail";
+import PaymentSuccess from "@/sections/payment/PaymentSuccess";
+import PaymentPage from "@/pages/PaymentPage";
+import PaymentFailure from "@/sections/payment/PaymentFailure";
+import PostDetail from "@/sections/post-public/PostDetail";
 
 export const UserManagementPage = lazy(
   () => import("@/pages/UserManagementPage"),
@@ -71,11 +75,15 @@ const Router: React.FC = () => {
     },
     {
       path: "/payment",
-      // element: <Payment />,
+      element: <PaymentPage />,
     },
     {
       path: "/product",
       element: <ProductPublicPage />,
+    },
+    {
+      path: "/post/:postId",
+      element: <PostDetail />,
     },
     {
       path: "/product/:productId",
@@ -89,6 +97,18 @@ const Router: React.FC = () => {
           onClose={closeNotification}
         />
       ),
+    },
+    {
+      path: "/payment",
+      element: <PaymentPage />,
+    },
+    {
+      path: "/payment/success",
+      element: <PaymentSuccess />,
+    },
+    {
+      path: "/payment/failure",
+      element: <PaymentFailure />,
     },
     {
       path: "/authen",
@@ -121,7 +141,7 @@ const Router: React.FC = () => {
         },
         {
           element: <PostMangementPage />,
-          path: "/post",
+          path: "/managePost",
         },
         {
           path: "/brand",

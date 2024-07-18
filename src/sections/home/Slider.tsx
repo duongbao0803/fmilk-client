@@ -8,6 +8,7 @@ import { Autoplay, FreeMode, Pagination } from "swiper/modules";
 import { Card, Skeleton } from "antd";
 import usePostService from "@/services/postService";
 import { PostInfo } from "@/interfaces/interface";
+import { Link } from "react-router-dom";
 
 const Slider: React.FC = () => {
   const { Meta } = Card;
@@ -68,13 +69,21 @@ const Slider: React.FC = () => {
           {posts.length > 0
             ? posts.map((post: PostInfo, index: number) => (
                 <SwiperSlide key={index}>
-                  <Card
-                    hoverable
-                    className="w-[250px] border-2"
-                    cover={<img alt={post?.title} src={post?.image} />}
-                  >
-                    <Meta title={post?.title} description={post?.description} />
-                  </Card>
+                  <Link to={`/post/${post?._id}`}>
+                    <Card
+                      hoverable
+                      className="w-[250px] border-2"
+                      cover={<img alt={post?.title} src={post?.image} />}
+                    >
+                      <Meta
+                        description={
+                          <span className="text-sm font-semibold text-[black]">
+                            {post?.title}
+                          </span>
+                        }
+                      />
+                    </Card>
+                  </Link>
                 </SwiperSlide>
               ))
             : Array.from({ length: 4 }).map((_, index) => (

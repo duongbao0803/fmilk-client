@@ -1,3 +1,4 @@
+import useStateStore from "@/hooks/useStateStore";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -10,7 +11,7 @@ export interface Tab {
 const tabs: Tab[] = [
   { name: "Trang chủ", path: "/" },
   { name: "Sản phẩm", path: "/product" },
-  { name: "Bài viết", path: "/blog" },
+  { name: "Bài viết", path: "/post" },
   { name: "Liên hệ", path: "/contact" },
 ];
 
@@ -18,9 +19,18 @@ const CustomNav = () => {
   const [selected, setSelected] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
+  const setCartState = useStateStore((state) => state.setCartState);
 
   useEffect(() => {
-    const currentTab = tabs.find((tab) => location.pathname === tab.path);
+    const currentTab = tabs.find((tab) => {
+      if (tab.path === "/product") {
+        return location.pathname.startsWith(tab.path);
+      } else if (tab.path === "/post") {
+        return location.pathname.startsWith(tab.path);
+      }
+      return location.pathname === tab.path;
+    });
+
     if (currentTab) {
       setSelected(currentTab.name);
     } else if (location.pathname === "/cart") {
@@ -29,6 +39,7 @@ const CustomNav = () => {
   }, [location]);
 
   const handleTabClick = (tab: Tab) => {
+    setCartState(false);
     setSelected(tab.name);
     setTimeout(() => {
       navigate(tab.path);

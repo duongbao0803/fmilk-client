@@ -133,8 +133,16 @@
   align-items: center;
 }
 
+.not-found-message {
+  display: block;
+}
+
+.not-found-message.hidden {
+  display: none;
+}
+
 .cssbuttons-io-button {
-  background: #198ab6;
+  background: #08cde9;
   color: white;
   font-family: inherit;
   padding: 0.35em;

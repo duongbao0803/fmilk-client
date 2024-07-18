@@ -1,11 +1,13 @@
 import axiosClient from "@/config/axiosClient";
 import { ProductInfo } from "@/interfaces/interface";
 
-const getAllProduct = (page: number) => {
+const getAllProduct = (page: number, productName: string, origin: string) => {
   return axiosClient.get(`/v1/product`, {
     params: {
       page: page,
       pageSize: 20,
+      productName: productName,
+      origin: origin,
     },
   });
 };

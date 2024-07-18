@@ -23,7 +23,7 @@ export interface DataType {
 }
 
 const ProductList: React.FC = () => {
-  const { products, isFetching } = useProductService();
+  const { products, isFetching, totalCount } = useProductService("", "");
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -155,7 +155,7 @@ const ProductList: React.FC = () => {
         }))}
         pagination={{
           current: currentPage,
-          total: products.totalProducts || 0,
+          total: totalCount || 0,
           pageSize: 5,
         }}
         onChange={handleTableChange}

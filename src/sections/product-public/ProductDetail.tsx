@@ -28,7 +28,8 @@ import { Link, useParams } from "react-router-dom";
 
 const ProductDetail: React.FC = () => {
   const { productId } = useParams();
-  const { getInfoProductDetail } = useProductService();
+  const { getInfoProductDetail } = useProductService("", "");
+
   const [product, setProduct] = useState<ProductInfo>();
   const [star, setStar] = useState<number>(5);
   const addToCart = useCartStore((state) => state.addToCart);
@@ -109,7 +110,7 @@ const ProductDetail: React.FC = () => {
               </div>
               <button
                 onClick={() => product && handleAddtoCart(product)}
-                className=" border-2 border-[#08cde9] bg-[#fff] px-5 py-3 transition-all duration-500 ease-in-out hover:rounded-xl hover:border-2  hover:bg-[#08cde9] hover:font-bold hover:text-[#fff]"
+                className="w-full border-2 bg-[#08cde9] py-3 font-bold text-[white] transition-all duration-500 ease-in-out hover:rounded-2xl hover:border-[#08cde9] hover:bg-[white] hover:tracking-widest hover:text-[#08cde9]"
               >
                 Thêm giỏ hàng
               </button>

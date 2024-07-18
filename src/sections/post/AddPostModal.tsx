@@ -110,7 +110,7 @@ const AddPostModal: React.FC<AddPostModalProps> = (props) => {
         </Form.Item>
 
         <Form.Item
-          name="productId"
+          name="product"
           rules={[
             {
               required: true,

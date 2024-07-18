@@ -6,6 +6,7 @@ import {
   Button,
   Form,
   Input,
+  notification,
   Radio,
   RadioChangeEvent,
   Table,
@@ -17,15 +18,22 @@ import { PriceFormat } from "@/util/validate";
 import { CartItem } from "@/interfaces/interface";
 import LogoVnpay from "@/assets/images/logo/logo_vnpay.png";
 import LogoCash from "@/assets/images/logo/logo_cash.png";
+import useAuth from "@/hooks/useAuth";
+import { createOrder } from "@/api/orderApi";
 
 const Checkout: React.FC = () => {
+  const testPrice = localStorage.getItem("cart");
+  const parseJson = JSON.parse(testPrice);
   const { cart, itemsPrice } = useCartStore();
-  const [, setValue] = useState(1);
+  const [value, setValue] = useState("");
+  const { infoUser } = useAuth();
 
   const onChange = (e: RadioChangeEvent) => {
     console.log("radio checked", e.target.value);
     setValue(e.target.value);
   };
+
+  console.log("check user", infoUser);
 
   const TRANSFER_FEE = [
     { min: 2000000, fee: 0 },
@@ -105,6 +113,48 @@ const Checkout: React.FC = () => {
       ),
     },
   ];
+  const filteredArray = cart.map(({ _id, quantity }) => ({ _id, quantity }));
+  const updatedProducts = filteredArray.map((product) => ({
+    productId: product._id,
+    amount: product.quantity,
+  }));
+
+  console.log(updatedProducts);
+
+  const [data] = useState({
+    transferAddress: {
+      fullName: infoUser?.username,
+      address: infoUser?.address,
+      phone: infoUser?.phone,
+    },
+    orderProducts: updatedProducts,
+    userId: infoUser._id,
+    paymentMethod: "VNPAY",
+    itemsPrice: parseJson.state.itemsPrice,
+    transferPrice: transferPrice,
+    totalPrice: subtotal,
+  });
+
+  const handlePayment = async () => {
+    try {
+      const formValues = data;
+      const res = await createOrder(formValues);
+      if (res && res.status === 200) {
+        notification.success({
+          message: "Tạo đơn hàng thành công",
+          description:
+            "Đơn hàng đã được tạo thành công! Chuyển hướng đến trang thanh toán trong 3 giây...",
+          duration: 2,
+        });
+
+        setTimeout(() => {
+          window.location.href = res.data.data;
+        }, 3000);
+      }
+    } catch (err) {
+      console.error("Err payment", err);
+    }
+  };
 
   return (
     <>
@@ -116,7 +166,7 @@ const Checkout: React.FC = () => {
               <h4 className="py-3 text-3xl font-semibold tracking-widest text-[#08cde9]">
                 FMILK
               </h4>
-              <h1 className="text-4xl font-bold text-white">GIỎ HÀNG</h1>
+              <h1 className="text-4xl font-bold text-white">THANH TOÁN</h1>
             </div>
           </div>
         </div>
@@ -271,6 +321,7 @@ const Checkout: React.FC = () => {
                   <Button
                     className="mt-5 h-10 w-full rounded-md py-1"
                     type="primary"
+                    onClick={handlePayment}
                   >
                     Thanh toán
                   </Button>

@@ -5,10 +5,13 @@ import { ShoppingCartOutlined } from "@ant-design/icons";
 import { Avatar, CustomNav } from "@/components";
 import logo from "@/assets/images/logo/logo_fmilk_web.png";
 import useCartStore from "@/hooks/useCartStore";
+import useStateStore from "@/hooks/useStateStore";
 
 const Header: React.FC = React.memo(() => {
   const navigate = useNavigate();
   const cartCount = useCartStore((state) => state.cart);
+  const setCartState = useStateStore((state) => state.setCartState);
+  const cartState = useStateStore((state) => state.cartState);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -24,6 +27,7 @@ const Header: React.FC = React.memo(() => {
   };
 
   const handleSelectedCart = () => {
+    setCartState(true);
     setSelectedOption("cart");
     navigate("/cart");
   };
@@ -87,7 +91,9 @@ const Header: React.FC = React.memo(() => {
             <div className="flex items-center justify-center gap-10">
               <div onClick={handleSelectedCart}>
                 <Badge count={cartCount.length}>
-                  <ShoppingCartOutlined className="cursor-pointer text-2xl text-black hover:text-[#08cde9]" />
+                  <ShoppingCartOutlined
+                    className={`cursor-pointer text-2xl  hover:text-[#08cde9] ${cartState ? "text-[#08cde9]" : "text-black"}`}
+                  />
                 </Badge>
               </div>
               <div>

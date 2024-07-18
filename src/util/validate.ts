@@ -24,6 +24,17 @@ export function formatDate(dateString: string | number | Date) {
   }
 }
 
+export const formatDateFromString = (dateString: string | undefined) => {
+  const year = dateString?.slice(0, 4);
+  const month = dateString?.slice(4, 6);
+  const day = dateString?.slice(6, 8);
+  const hours = dateString?.slice(8, 10);
+  const minutes = dateString?.slice(10, 12);
+  const seconds = dateString?.slice(12, 14);
+
+  return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+};
+
 export const PriceFormat = new Intl.NumberFormat("vi-VN", {
   style: "currency",
   currency: "VND",

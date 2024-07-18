@@ -31,9 +31,13 @@ const BrandList: React.FC = () => {
     {
       title: "Brand Name",
       dataIndex: "brandName",
-      width: "50%",
+      width: "25%",
     },
-
+    {
+      title: "Origin",
+      dataIndex: "origin",
+      width: "25%",
+    },
     {
       title: "Create date",
       dataIndex: "createdAt",

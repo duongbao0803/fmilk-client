@@ -1,10 +1,10 @@
 import React from "react";
-import PostDetail from "../PostDetail";
+import PostPublicList from "../PostPublicList";
 
 const PostDetailView: React.FC = () => {
   return (
     <>
-      <PostDetail />
+      <PostPublicList />
     </>
   );
 };

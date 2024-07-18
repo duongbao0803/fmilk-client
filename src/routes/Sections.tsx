@@ -20,6 +20,8 @@ import PaymentSuccess from "@/sections/payment/PaymentSuccess";
 import PaymentPage from "@/pages/PaymentPage";
 import PaymentFailure from "@/sections/payment/PaymentFailure";
 import PostDetail from "@/sections/post-public/PostDetail";
+import PostPublicPage from "@/pages/PostPublicPage";
+import PersonalPage from "@/pages/PersonalPage";
 
 export const UserManagementPage = lazy(
   () => import("@/pages/UserManagementPage"),
@@ -82,6 +84,10 @@ const Router: React.FC = () => {
       element: <ProductPublicPage />,
     },
     {
+      path: "/post",
+      element: <PostPublicPage />,
+    },
+    {
       path: "/post/:postId",
       element: <PostDetail />,
     },
@@ -113,6 +119,10 @@ const Router: React.FC = () => {
     {
       path: "/authen",
       element: isAuthenticated ? <Navigate to="/" /> : <AuthenPage />,
+    },
+    {
+      path: "/personal",
+      element: <PersonalPage />,
     },
     {
       element: isAuthenticated ? (

@@ -1,10 +1,6 @@
 import React from "react";
 import successIcon from "@/assets/images/success-icon.png";
-import {
-  formatDateFromString,
-  formatDateTime,
-  PriceFormat,
-} from "@/util/validate";
+import { formatDateFromString, PriceFormat } from "@/util/validate";
 import Header from "@/layout/Header";
 import Footer from "@/layout/Footer";
 import usePaymentResult from "@/hooks/usePaymentResult";

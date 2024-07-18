@@ -9,14 +9,25 @@ import { ProductInfo } from "@/interfaces/interface";
 import { PriceFormat } from "@/util/validate";
 import useCartStore from "@/hooks/useCartStore";
 import { Link, useNavigate } from "react-router-dom";
+import useAuth from "@/hooks/useAuth";
+import { Role } from "@/enums/enum";
 
 const HomePage: React.FC = React.memo(() => {
   const navigate = useNavigate();
   const { products } = useProductService("", "");
+  const { infoUser } = useAuth();
   const addToCart = useCartStore((state) => state.addToCart);
 
   const handleAddtoCart = useCallback(
     (product: ProductInfo) => {
+      if (infoUser?.role === Role.ADMIN || infoUser?.role === Role.STAFF) {
+        notification.warning({
+          message: "Thêm giỏ hàng thất bại",
+          description: "Bạn không có quyền mua hàng",
+          duration: 2,
+        });
+        return;
+      }
       addToCart(product);
       notification.success({
         message: "Thêm giỏ hàng thành công",
@@ -84,12 +95,12 @@ const HomePage: React.FC = React.memo(() => {
                           </h3>
                           <p className="mb-2">
                             <span className="font-bold">Xuất xứ:</span>{" "}
-                            <span className="font-bold text-red-500">
-                              {product?.origin}
+                            <span className="font-bold text-[#08cde9]">
+                              {product?.brand?.origin}
                             </span>
                           </p>
                           <p className="mb-2 text-xl font-bold ">
-                            <span className="text-red-500">
+                            <span className="text-[#08cde9]">
                               {PriceFormat.format(product.price ?? 0)}
                             </span>
                           </p>

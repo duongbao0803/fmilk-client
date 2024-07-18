@@ -127,7 +127,7 @@ const AddPostModal: React.FC<AddPostModalProps> = (props) => {
             placeholder="Please select product"
             optionFilterProp="children"
           >
-            {products.map((product: ProductInfo, index: number) => (
+            {products?.map((product: ProductInfo, index: number) => (
               <Option key={index} value={`${product._id}`} label={product.name}>
                 {`${product.name}`}
               </Option>

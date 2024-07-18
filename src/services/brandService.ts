@@ -7,7 +7,7 @@ import {
   getDetailBrand,
   removeBrand,
 } from "@/api/brandApi";
-import { CustomError } from "../interfaces/interface";
+import { BrandData, CustomError } from "../interfaces/interface";
 
 const useBrandService = () => {
   const queryClient = useQueryClient();
@@ -29,18 +29,18 @@ const useBrandService = () => {
     return brandId;
   };
 
-  const addNewBrand = async (brandName: string) => {
-    await addBrand(brandName);
+  const addNewBrand = async (formValues: BrandData) => {
+    await addBrand(formValues);
   };
 
   const updateBrandInfo = async ({
     brandId,
-    brandName,
+    formValues,
   }: {
     brandId: string;
-    brandName: string;
+    formValues: BrandData;
   }) => {
-    await editBrand(brandId, brandName);
+    await editBrand(brandId, formValues);
   };
 
   const { data: brandData, isLoading: isFetching } = useQuery(
@@ -111,12 +111,12 @@ const useBrandService = () => {
     await deleteBrandMutation.mutateAsync(brandId);
   };
 
-  const updateBrandItem = async (brandId: string, brandName: string) => {
-    await updateBrandInfoMutation.mutateAsync({ brandId, brandName });
+  const updateBrandItem = async (brandId: string, formValues: BrandData) => {
+    await updateBrandInfoMutation.mutateAsync({ brandId, formValues });
   };
 
-  const addNewBrandItem = async (brandName: string) => {
-    await addNewBrandMutation.mutateAsync(brandName);
+  const addNewBrandItem = async (formValues: BrandData) => {
+    await addNewBrandMutation.mutateAsync(formValues);
   };
 
   const totalCount = brandData?.totalBrands;

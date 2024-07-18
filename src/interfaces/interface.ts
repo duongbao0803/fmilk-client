@@ -19,8 +19,10 @@ export interface ProductInfo {
   quantity?: number;
   price?: number;
   rating?: number;
-  origin?: string;
-  brand?: string;
+  brand?: {
+    origin: string;
+    brandName: string;
+  };
 }
 
 export interface AuthState {
@@ -162,4 +164,9 @@ export interface PaymentData {
   vnp_TransactionNo?: string;
   vnp_TransactionStatus?: string;
   vnp_TxnRef?: string;
+}
+
+export interface BrandData {
+  brandName: string;
+  origin: string;
 }

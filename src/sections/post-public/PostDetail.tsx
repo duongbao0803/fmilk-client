@@ -1,3 +1,5 @@
+import { Role } from "@/enums/enum";
+import useAuth from "@/hooks/useAuth";
 import useCartStore from "@/hooks/useCartStore";
 import { PostInfo, ProductInfo } from "@/interfaces/interface";
 import Footer from "@/layout/Footer";
@@ -14,6 +16,7 @@ const PostDetail: React.FC = () => {
   const { getInfoPostDetail } = usePostService();
   const [post, setPost] = useState<PostInfo>();
   const addToCart = useCartStore((state) => state.addToCart);
+  const { infoUser } = useAuth();
 
   useEffect(() => {
     if (postId) {
@@ -32,6 +35,14 @@ const PostDetail: React.FC = () => {
 
   const handleAddtoCart = useCallback(
     (product: ProductInfo) => {
+      if (infoUser?.role === Role.ADMIN || infoUser?.role === Role.STAFF) {
+        notification.warning({
+          message: "Thêm giỏ hàng thất bại",
+          description: "Bạn không có quyền mua hàng",
+          duration: 2,
+        });
+        return;
+      }
       addToCart(product);
       notification.success({
         message: "Thêm giỏ hàng thành công",
@@ -84,7 +95,19 @@ const PostDetail: React.FC = () => {
                     />
                     <button className="absolute bottom-0 flex h-full w-full items-center justify-center bg-gray-800 bg-opacity-50 opacity-0 transition-all duration-300 ease-in-out group-hover:scale-110 group-hover:transform group-hover:opacity-100">
                       <p className="text-md mx-5 border-2 p-2 font-semibold text-[#fff] hover:bg-[#fff] hover:text-black xl:text-lg">
-                        <button onClick={() => handleAddtoCart(post?.product)}>
+                        <button
+                          onClick={() => {
+                            if (post?.product) {
+                              handleAddtoCart(post.product);
+                            } else {
+                              notification.warning({
+                                message: "Thêm giỏ hàng thất bại",
+                                description: "Sản phẩm không tồn tại",
+                                duration: 2,
+                              });
+                            }
+                          }}
+                        >
                           + Thêm vào giỏ hàng
                         </button>
                       </p>

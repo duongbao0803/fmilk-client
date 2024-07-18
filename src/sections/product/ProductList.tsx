@@ -30,11 +30,14 @@ const ProductList: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const { brands } = useBrandService();
 
+  console.log("check brands", brands);
+
   const handleTableChange = (pagination: TablePaginationConfig) => {
     setCurrentPage(pagination.current || 1);
   };
 
   const getBrandNameById = (brandId: string) => {
+    console.log("check id", brandId);
     const brand = brands?.find(
       (brand: { _id: string }) => brand?._id === brandId,
     );
@@ -74,12 +77,13 @@ const ProductList: React.FC = () => {
       title: "Brand",
       dataIndex: "brand",
       width: "5%",
-      render: (brandId: string) => getBrandNameById(brandId),
+      render: (brand) => brand?.brandName || "N/A",
     },
     {
       title: "Origin",
-      dataIndex: "origin",
+      dataIndex: "brand",
       width: "13%",
+      render: (brand) => brand?.origin || "N/A",
     },
     {
       title: "Price",

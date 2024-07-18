@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Modal, Form, Input } from "antd";
+import { Modal, Form, Input, Select } from "antd";
 import { BarcodeOutlined } from "@ant-design/icons";
 import useBrandService from "../../services/brandService";
+import { Countries } from "@/constant/constant";
 
 export interface AddModalProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -13,6 +14,7 @@ const AddBrandModal: React.FC<AddModalProps> = React.memo((props) => {
   const { setIsOpen, isOpen } = props;
   const [isConfirmLoading, setIsConfirmLoading] = useState<boolean>(false);
   const [form] = Form.useForm();
+  const { Option } = Select;
 
   const handleOk = async () => {
     try {
@@ -67,6 +69,27 @@ const AddBrandModal: React.FC<AddModalProps> = React.memo((props) => {
             className="p-2"
             autoFocus
           />
+        </Form.Item>
+        <Form.Item
+          name="origin"
+          rules={[
+            {
+              required: true,
+              message: "Please select origin",
+            },
+          ]}
+          colon={true}
+          label="Origin"
+          labelCol={{ span: 24 }}
+          className="formItem"
+        >
+          <Select placeholder="Select brand">
+            {Countries?.map((country, index: number) => (
+              <Option key={index} value={country} label={country}>
+                {country}
+              </Option>
+            ))}
+          </Select>
         </Form.Item>
       </Form>
     </Modal>

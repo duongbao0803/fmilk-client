@@ -19,7 +19,7 @@ const EditPostModal: React.FC<EditModalProps> = (props) => {
   const [fileChange, setFileChange] = useState<string>("");
   const [isConfirmLoading, setIsConfirmLoading] = useState<boolean>(false);
   const { updatePostItem } = usePostService();
-  const { products } = useProductService();
+  const { products } = useProductService("", "");
   const [form] = Form.useForm();
   const { TextArea } = Input;
 
@@ -133,9 +133,13 @@ const EditPostModal: React.FC<EditModalProps> = (props) => {
             placeholder="Please select product"
             optionFilterProp="children"
           >
-            {products.map((product: ProductInfo, index: number) => (
-              <Option key={index} value={`${product._id}`} label={product.name}>
-                {`${product.name}`}
+            {products?.map((product: ProductInfo, index: number) => (
+              <Option
+                key={index}
+                value={`${product?._id}`}
+                label={product?.name}
+              >
+                {`${product?.name}`}
               </Option>
             ))}
           </Select>

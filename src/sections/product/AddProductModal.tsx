@@ -14,7 +14,6 @@ import useProductService from "@/services/productService";
 import UploadImageProduct from "./UploadImageProduct";
 import moment from "moment/moment";
 import useBrandService from "@/services/brandService";
-import { Countries } from "@/constant/constant";
 import { formatDate } from "@/util/validate";
 
 export interface AddModalProps {
@@ -26,7 +25,7 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
   const [fileChange, setFileChange] = useState<string>("");
   const { setIsOpen, isOpen } = props;
   const [isConfirmLoading, setIsConfirmLoading] = useState<boolean>(false);
-  const { addNewProductItem } = useProductService();
+  const { addNewProductItem } = useProductService("", "");
   const { brands } = useBrandService();
   const { Option } = Select;
   const { TextArea } = Input;
@@ -132,7 +131,55 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
         </Row>
 
         <Row gutter={16} className="relative mt-1">
-          <Col span={12}>
+          <Col span={8}>
+            <Form.Item
+              name="price"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input price",
+                },
+              ]}
+              colon={true}
+              label="Price"
+              labelCol={{ span: 24 }}
+              className="formItem"
+            >
+              <InputNumber
+                className="w-full"
+                type="number"
+                prefix={
+                  <PoundCircleOutlined className="site-form-item-icon mr-1" />
+                }
+                placeholder="Price"
+              />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item
+              name="quantity"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input quantity",
+                },
+              ]}
+              colon={true}
+              label="Quantity"
+              labelCol={{ span: 24 }}
+              className="formItem"
+            >
+              <InputNumber
+                type="number"
+                className="w-full"
+                prefix={
+                  <PoundCircleOutlined className="site-form-item-icon mr-1" />
+                }
+                placeholder="Quantity"
+              />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
             <Form.Item
               name="brand"
               rules={[
@@ -162,79 +209,6 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
                   ),
                 )}
               </Select>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="origin"
-              rules={[
-                {
-                  required: true,
-                  message: "Please select origin",
-                },
-              ]}
-              colon={true}
-              label="Origin"
-              labelCol={{ span: 24 }}
-              className="formItem"
-            >
-              <Select placeholder="Select brand">
-                {Countries?.map((country, index: number) => (
-                  <Option key={index} value={country} label={country}>
-                    {country}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16} className="relative mt-1">
-          <Col span={12}>
-            <Form.Item
-              name="price"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input price",
-                },
-              ]}
-              colon={true}
-              label="Price"
-              labelCol={{ span: 24 }}
-              className="formItem"
-            >
-              <InputNumber
-                className="w-full"
-                type="number"
-                prefix={
-                  <PoundCircleOutlined className="site-form-item-icon mr-1" />
-                }
-                placeholder="Price"
-              />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="quantity"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input quantity",
-                },
-              ]}
-              colon={true}
-              label="Quantity"
-              labelCol={{ span: 24 }}
-              className="formItem"
-            >
-              <InputNumber
-                type="number"
-                className="w-full"
-                prefix={
-                  <PoundCircleOutlined className="site-form-item-icon mr-1" />
-                }
-                placeholder="Quantity"
-              />
             </Form.Item>
           </Col>
         </Row>

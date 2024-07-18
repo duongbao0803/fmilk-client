@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Modal, Form, Input } from "antd";
+import { Modal, Form, Input, Select } from "antd";
 import { BarcodeOutlined } from "@ant-design/icons";
 import React from "react";
 import useBrandService from "../../services/brandService";
 import { DataType } from "./BrandList";
+import { Countries } from "@/constant/constant";
 
 export interface EditBrandModalProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,6 +16,7 @@ const EditBrandModal: React.FC<EditBrandModalProps> = (props) => {
   const { setIsOpen, isOpen, brandInfo } = props;
   const [isConfirmLoading, setIsConfirmLoading] = useState<boolean>(false);
   const [form] = Form.useForm();
+  const { Option } = Select;
   const { updateBrandItem } = useBrandService();
 
   useEffect(() => {
@@ -73,6 +75,27 @@ const EditBrandModal: React.FC<EditBrandModalProps> = (props) => {
             placeholder="Brand name"
             autoFocus
           />
+        </Form.Item>
+        <Form.Item
+          name="origin"
+          rules={[
+            {
+              required: true,
+              message: "Please select origin",
+            },
+          ]}
+          colon={true}
+          label="Origin"
+          labelCol={{ span: 24 }}
+          className="formItem"
+        >
+          <Select placeholder="Select brand">
+            {Countries?.map((country, index: number) => (
+              <Option key={index} value={country} label={country}>
+                {country}
+              </Option>
+            ))}
+          </Select>
         </Form.Item>
       </Form>
     </Modal>

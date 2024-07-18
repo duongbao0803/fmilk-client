@@ -56,6 +56,14 @@ const ProductDetail: React.FC = () => {
 
   const handleAddtoCart = useCallback(
     (product: ProductInfo) => {
+      if (infoUser?.role === Role.ADMIN || infoUser?.role === Role.STAFF) {
+        notification.warning({
+          message: "Thêm giỏ hàng thất bại",
+          description: "Bạn không có quyền mua hàng",
+          duration: 2,
+        });
+        return;
+      }
       addToCart(product);
       notification.success({
         message: "Thêm giỏ hàng thành công",
@@ -102,7 +110,7 @@ const ProductDetail: React.FC = () => {
               <div className="flex items-center gap-3">
                 <span className="text-[18px] font-bold">Xuất xứ:</span>
                 <span className="font-bold text-[#08cde9]">
-                  {product?.origin}
+                  {product?.brand?.origin}
                 </span>
               </div>
               <div>

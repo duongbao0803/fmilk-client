@@ -1,3 +1,4 @@
+import { BrandData } from "@/interfaces/interface";
 import axiosClient from "../config/axiosClient";
 
 const getAllBrand = (page: number) => {
@@ -13,12 +14,12 @@ const getDetailBrand = (brandId: string) => {
   return axiosClient.put(`/v1/brand/${brandId}`);
 };
 
-const editBrand = (brandId: string, brandName: string) => {
-  return axiosClient.put(`/v1/brand/${brandId}`, brandName);
+const editBrand = (brandId: string, formValues: BrandData) => {
+  return axiosClient.put(`/v1/brand/${brandId}`, formValues);
 };
 
-const addBrand = (brandName: string) => {
-  return axiosClient.post("/v1/brand/create", brandName);
+const addBrand = (formValues: BrandData) => {
+  return axiosClient.post("/v1/brand/create", formValues);
 };
 
 const removeBrand = (brandId: string) => {

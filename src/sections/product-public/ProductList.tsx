@@ -1,5 +1,5 @@
 import useCartStore from "@/hooks/useCartStore";
-import { ProductInfo } from "@/interfaces/interface";
+import { BrandData, ProductInfo } from "@/interfaces/interface";
 import useProductService from "@/services/productService";
 import { PriceFormat } from "@/util/validate";
 import { Input, notification, Select, Skeleton } from "antd";
@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 import { useDebounce } from "@uidotdev/usehooks";
 import LogoNotFound from "@/assets/images/logo/logo_not_found.png";
 import useBrandService from "@/services/brandService";
+import useAuth from "@/hooks/useAuth";
+import { Role } from "@/enums/enum";
 
 const ProductList: React.FC = () => {
   const [productName, setProductName] = useState<string>("");
@@ -20,12 +22,21 @@ const ProductList: React.FC = () => {
     origin,
   );
   const { brands } = useBrandService();
+  const { infoUser } = useAuth();
 
-  console.log("check products", products);
-  console.log("check origin", origin);
+  const origins: string[] = brands?.map((brand: BrandData) => brand?.origin);
+  const uniqueOrigin: string[] = [...new Set(origins)];
 
   const handleAddtoCart = useCallback(
     (product: ProductInfo) => {
+      if (infoUser?.role === Role.ADMIN || infoUser?.role === Role.STAFF) {
+        notification.warning({
+          message: "Thêm giỏ hàng thất bại",
+          description: "Bạn không có quyền mua hàng",
+          duration: 2,
+        });
+        return;
+      }
       addToCart(product);
       notification.success({
         message: "Thêm giỏ hàng thành công",
@@ -51,7 +62,7 @@ const ProductList: React.FC = () => {
 
   useEffect(() => {
     fetchProducts(1);
-  }, [fetchProducts, productName]);
+  }, [fetchProducts, productName, origin]);
 
   return (
     <>
@@ -82,11 +93,8 @@ const ProductList: React.FC = () => {
             className="w-[130px]"
           >
             <Option value="">Chọn loại</Option>
-            {products?.map((product: string, index: number) => (
-              <Option
-                key={index}
-                value={product?.origin}
-              >{`${product?.origin}`}</Option>
+            {uniqueOrigin?.map((origin: string, index: number) => (
+              <Option key={index} value={origin}>{`${origin}`}</Option>
             ))}
           </Select>
         </div>
@@ -96,7 +104,7 @@ const ProductList: React.FC = () => {
             data-aos="fade-right"
           >
             {products === undefined ? (
-              Array.from({ length: 8 }).map((_, index) => (
+              Array.from({ length: 8 })?.map((_, index) => (
                 <div
                   key={index}
                   className="rounded-lg border-[0.2px] border-[#e6e6e6] p-5"
@@ -105,7 +113,7 @@ const ProductList: React.FC = () => {
                 </div>
               ))
             ) : products.length > 0 ? (
-              products.map((product: ProductInfo, index: number) => (
+              products?.map((product: ProductInfo, index: number) => (
                 <div
                   key={product._id}
                   data-aos="fade-right"
@@ -135,7 +143,7 @@ const ProductList: React.FC = () => {
                         <p className="mb-2">
                           <span className="font-bold">Xuất xứ:</span>{" "}
                           <span className="font-bold text-red-500">
-                            {product?.origin}
+                            {product?.brand?.origin}
                           </span>
                         </p>
                         <p className="mb-2 text-xl font-bold">

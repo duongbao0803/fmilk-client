@@ -37,8 +37,8 @@ const items: MenuItem[] = [
   getItem("Thống kê", "1", <PieChartOutlined />, undefined, "/chart"),
   getItem("Người dùng", "2", <UserOutlined />, undefined, "/user"),
   getItem("Sản phẩm", "3", <ProductOutlined />, undefined, "/manageProduct"),
-  getItem("Bài viết", "8", <FileOutlined />, undefined, "/managePost"),
-  getItem("Thương hiệu", "9", <QrcodeOutlined />, undefined, "/brand"),
+  getItem("Bài viết", "4", <FileOutlined />, undefined, "/managePost"),
+  getItem("Thương hiệu", "5", <QrcodeOutlined />, undefined, "/brand"),
 ];
 
 const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
@@ -153,7 +153,7 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
               className="cursor-pointer font-semibold text-[#5099ff] hover:underline"
               onClick={handleLogout}
             >
-              Logout
+              Đăng xuất
             </div>
           </div>
         </div>

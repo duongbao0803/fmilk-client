@@ -64,7 +64,7 @@ const EditModal: React.FC<EditModalProps> = (props) => {
 
   return (
     <Modal
-      title={<p className="text-lg text-[red]">Edit user</p>}
+      title={<p className="text-lg text-[red]">Chỉnh sửa người dùng</p>}
       open={isOpen}
       onOk={handleOk}
       confirmLoading={isConfirmLoading}
@@ -76,20 +76,21 @@ const EditModal: React.FC<EditModalProps> = (props) => {
           rules={[
             {
               required: true,
-              message: "Please input name",
+              message: "Vui lòng nhập họ tên",
             },
             {
               min: 5,
-              message: "Name must be at least 5 characters",
+              message: "Họ tên phải có ít nhất 5 ký tự",
             },
           ]}
           colon={true}
-          label="Name"
+          label="Họ và tên"
           labelCol={{ span: 24 }}
+          className="formItem"
         >
           <Input
             prefix={<UserOutlined className="site-form-item-icon mr-1" />}
-            placeholder="Name"
+            placeholder="Họ và tên"
             autoFocus
           />
         </Form.Item>
@@ -101,23 +102,24 @@ const EditModal: React.FC<EditModalProps> = (props) => {
               rules={[
                 {
                   required: true,
-                  message: "Please input phone",
+                  message: "Vui lòng nhập số điện thoại",
                 },
                 {
                   pattern: /^\d{10}$/,
-                  message: "Phone must be exactly 10 digits",
+                  message: "Số điện thoại phải có 10 số",
                 },
               ]}
               colon={true}
-              label="Phone"
+              label="Số điện thoại"
               labelCol={{ span: 24 }}
-              className="absolute"
+              className="formItem absolute"
             >
               <Input
+                type="number"
                 prefix={
                   <PhoneOutlined className="site-form-item-icon mr-1 rotate-90" />
                 }
-                placeholder="Phone"
+                placeholder="Số điện thoại "
                 maxLength={10}
               />
             </Form.Item>
@@ -126,8 +128,9 @@ const EditModal: React.FC<EditModalProps> = (props) => {
             <Form.Item
               name="dob"
               colon={true}
-              label="Date of birth"
+              label="Ngày sinh"
               labelCol={{ span: 24 }}
+              className="formItem"
             >
               <DatePicker
                 picker="date"
@@ -143,16 +146,17 @@ const EditModal: React.FC<EditModalProps> = (props) => {
           rules={[
             {
               required: true,
-              message: "Please select location",
+              message: "Vui lòng nhập địa chỉ",
             },
           ]}
           colon={true}
-          label="Address"
+          label="Địa chỉ"
           labelCol={{ span: 24 }}
+          className="formItem"
         >
           <Input
             prefix={<BankOutlined className="site-form-item-icon mr-1" />}
-            placeholder="Address"
+            placeholder="Địa chỉ"
             maxLength={10}
           />
         </Form.Item>

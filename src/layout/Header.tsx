@@ -6,11 +6,14 @@ import { Avatar, CustomNav } from "@/components";
 import logo from "@/assets/images/logo/logo_fmilk_web.png";
 import useCartStore from "@/hooks/useCartStore";
 import useStateStore from "@/hooks/useStateStore";
+import useAuthService from "@/services/authService";
+import { Role } from "@/enums/enum";
 
 const Header: React.FC = React.memo(() => {
   const navigate = useNavigate();
   const cartCount = useCartStore((state) => state.cart);
   const setCartState = useStateStore((state) => state.setCartState);
+  const { infoUser } = useAuthService();
   const cartState = useStateStore((state) => state.cartState);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -32,53 +35,8 @@ const Header: React.FC = React.memo(() => {
     navigate("/cart");
   };
 
-  // const showNotification = () => {
-  //   setIsNotificationVisible(true);
-  // };
-
-  // const closeNotification = () => {
-  //   setIsNotificationVisible(false);
-  // };
-
   return (
     <>
-      {/* <div className="z-[999] mx-5 flex h-[60px] justify-center text-[#000000]">
-        <div
-          className="navbar flex w-[1100px] max-w-[1220px] flex-row flex-nowrap justify-between rounded-[40px] bg-[#f8f8f8] bg-opacity-75"
-          data-aos="fade-down"
-        >
-          <img
-            src="https://firebasestorage.googleapis.com/v0/b/swd392-d2c4e.appspot.com/o/FTravel%2FLogo_FTravel_3.png?alt=media&token=744b0241-f414-4139-affa-5c523c3bcbc2"
-            alt=""
-            className="my-auto ml-5 h-fit w-[40px] cursor-pointer object-cover"
-            onClick={handleLinkClick}
-          />
-          <div className="flex items-center gap-3 p-4 text-[18px] font-medium text-black">
-            <div
-              onClick={handleLinkClick}
-              className={`flex cursor-pointer items-center rounded-2xl px-4 py-[10px] text-[15px] transition-all duration-500 hover:bg-[orange] hover:text-[#fff] ${
-                selectedOption === "home" ? "bg-[orange] text-[#fff]" : ""
-              }`}
-            >
-              <HomeFilled />
-            </div>
-
-            <div
-              onClick={handleSelectedCart}
-              className={`dropdownHeader cursor-pointer rounded-3xl px-3 py-1 transition-all duration-500 hover:bg-[orange] hover:text-[#fff] ${
-                selectedOption === "cart" ? "bg-[orange] text-[#fff]" : ""
-              }`}
-            >
-              <Badge count={5}>
-                <ShoppingCartOutlined
-                  className={`text-2xl text-black hover:text-white ${selectedOption === "cart" ? "text-[#fff]" : ""}`}
-                />
-              </Badge>
-            </div>
-            <Avatar />
-          </div>
-        </div>
-      </div> */}
       <nav className="fixed z-[999] w-full border-gray-200 bg-white shadow-lg">
         <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
           <img
@@ -89,13 +47,18 @@ const Header: React.FC = React.memo(() => {
           />
           <div className="flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
             <div className="flex items-center justify-center gap-10">
-              <div onClick={handleSelectedCart}>
-                <Badge count={cartCount.length}>
-                  <ShoppingCartOutlined
-                    className={`cursor-pointer text-2xl  hover:text-[#08cde9] ${cartState ? "text-[#08cde9]" : "text-black"}`}
-                  />
-                </Badge>
-              </div>
+              {infoUser?.role === Role.ADMIN ||
+              infoUser?.role === Role.STAFF ? (
+                ""
+              ) : (
+                <div onClick={handleSelectedCart}>
+                  <Badge count={cartCount.length}>
+                    <ShoppingCartOutlined
+                      className={`cursor-pointer text-2xl  hover:text-[#08cde9] ${cartState ? "text-[#08cde9]" : "text-black"}`}
+                    />
+                  </Badge>
+                </div>
+              )}
               <div>
                 <Avatar />
               </div>
@@ -137,7 +100,6 @@ const Header: React.FC = React.memo(() => {
           </div>
         </div>
       </nav>
-      {/* <Notification visible={isNotificationVisible} onClose={closeNotification} /> */}
     </>
   );
 });

@@ -33,8 +33,6 @@ const EditPostModal: React.FC<EditModalProps> = React.memo((props) => {
     form.setFieldsValue({ image: fileChange });
   }, [fileChange, form]);
 
-  console.log("render");
-
   const handleOk = useCallback(async () => {
     try {
       const values = await form.validateFields();
@@ -68,7 +66,7 @@ const EditPostModal: React.FC<EditModalProps> = React.memo((props) => {
 
   return (
     <Modal
-      title={<p className="text-lg text-[red]">Edit post</p>}
+      title={<p className="text-lg text-[red]">Chỉnh sửa bài viết</p>}
       open={isOpen}
       onOk={handleOk}
       confirmLoading={isConfirmLoading}
@@ -80,21 +78,21 @@ const EditPostModal: React.FC<EditModalProps> = React.memo((props) => {
           rules={[
             {
               required: true,
-              message: "Please input title",
+              message: "Vui lòng nhập tiêu đề",
             },
             {
               min: 5,
-              message: "Title must be at least 5 characters",
+              message: "Tiêu đề phải có ít nhất 5 ký tự",
             },
           ]}
           colon={true}
-          label="Title"
+          label="Tiêu đề"
           labelCol={{ span: 24 }}
           className="formItem"
         >
           <Input
             prefix={<FormOutlined className="site-form-item-icon mr-1" />}
-            placeholder="Title"
+            placeholder="Tiêu đề"
             autoFocus
           />
         </Form.Item>
@@ -103,36 +101,36 @@ const EditPostModal: React.FC<EditModalProps> = React.memo((props) => {
           rules={[
             {
               required: true,
-              message: "Please input description",
+              message: "Vui lòng nhập mô tả",
             },
             {
               min: 5,
-              message: "Title must be at least 5 characters",
+              message: "Mô tả phải có ít nhất 5 ký tự",
             },
           ]}
           colon={true}
-          label="Description"
+          label="Mô tả"
           labelCol={{ span: 24 }}
           className="formItem"
         >
-          <TextArea placeholder="Description" />
+          <TextArea placeholder="Mô tả" />
         </Form.Item>
         <Form.Item
           name="product"
           rules={[
             {
               required: true,
-              message: "Please select product",
+              message: "Vui lòng chọn sản phẩm",
             },
           ]}
           colon={true}
-          label="Product"
+          label="Sản phẩm"
           labelCol={{ span: 24 }}
           className="formItem"
         >
           <Select
             showSearch
-            placeholder="Please select product"
+            placeholder="Chọn sản phẩm"
             optionFilterProp="children"
           >
             {products?.map((product: ProductInfo, index: number) => (
@@ -151,11 +149,11 @@ const EditPostModal: React.FC<EditModalProps> = React.memo((props) => {
           rules={[
             {
               required: true,
-              message: "Please select image",
+              message: "Vui lòng chọn hình ảnh",
             },
           ]}
           colon={true}
-          label="Image"
+          label="Hình ảnh"
           labelCol={{ span: 24 }}
           className="formItem"
         >

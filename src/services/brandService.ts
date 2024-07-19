@@ -55,8 +55,8 @@ const useBrandService = () => {
   const deleteBrandMutation = useMutation(deleteBrand, {
     onSuccess: () => {
       notification.success({
-        message: "Delete Successful",
-        description: "Delete brand successful",
+        message: "Xóa thành công",
+        description: "Xóa thương hiệu thành công",
         duration: 2,
       });
       queryClient.invalidateQueries("brands");
@@ -74,14 +74,14 @@ const useBrandService = () => {
     onSuccess: () => {
       notification.success({
         message: "Cập nhật thành công",
-        description: "Update brand successful",
+        description: "Cập nhật thương hiệu thành công",
         duration: 2,
       });
       queryClient.invalidateQueries("brands");
     },
     onError: (err: CustomError) => {
       notification.error({
-        message: "Update Failed",
+        message: "Cập nhật thất bại",
         description: `${err?.response?.data?.message}`,
         duration: 2,
       });
@@ -91,8 +91,8 @@ const useBrandService = () => {
   const addNewBrandMutation = useMutation(addNewBrand, {
     onSuccess: () => {
       notification.success({
-        message: "Add Successful",
-        description: "Add brand successful",
+        message: "Thêm thành công",
+        description: "Thêm thương hiệu thành công",
         duration: 2,
       });
       queryClient.invalidateQueries("brands");
@@ -100,7 +100,7 @@ const useBrandService = () => {
     onError: (err: CustomError) => {
       console.error("Error add", err);
       notification.error({
-        message: "Add Failed",
+        message: "Thêm thất bại",
         description: `${err?.response?.data?.message}`,
         duration: 2,
       });

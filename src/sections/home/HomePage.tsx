@@ -9,14 +9,16 @@ import { ProductInfo } from "@/interfaces/interface";
 import { PriceFormat } from "@/util/validate";
 import useCartStore from "@/hooks/useCartStore";
 import { Link, useNavigate } from "react-router-dom";
-import useAuth from "@/hooks/useAuth";
 import { Role } from "@/enums/enum";
+import useAuthService from "@/services/authService";
 
 const HomePage: React.FC = React.memo(() => {
   const navigate = useNavigate();
   const { products } = useProductService("", "");
-  const { infoUser } = useAuth();
+  const { infoUser } = useAuthService();
   const addToCart = useCartStore((state) => state.addToCart);
+
+  const productList = products?.slice(0, 4);
 
   const handleAddtoCart = useCallback(
     (product: ProductInfo) => {
@@ -65,10 +67,10 @@ const HomePage: React.FC = React.memo(() => {
             className="productList mb-10 grid grid-cols-1 gap-10 transition-all duration-700 ease-in-out sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
             data-aos="fade-right"
           >
-            {products?.length > 0
-              ? products.map((product: ProductInfo, index: number) => (
+            {productList?.length > 0
+              ? productList.map((product: ProductInfo, index: number) => (
                   <div
-                    key={product._id}
+                    key={product?._id}
                     data-aos="fade-right"
                     data-aos-delay={`${index * 150}`}
                     className="product-item cursor-pointer rounded-lg border-[0.5px] bg-white shadow-md transition-all duration-700 ease-in-out hover:shadow-lg"
@@ -80,13 +82,18 @@ const HomePage: React.FC = React.memo(() => {
                           alt={product?.name}
                           className="h-full w-full object-cover p-3 transition-all duration-300 ease-in-out group-hover:scale-110"
                         />
-                        <button className="absolute bottom-0 flex h-full w-full items-center justify-center bg-gray-800 bg-opacity-50 opacity-0 transition-all duration-300 ease-in-out group-hover:scale-110 group-hover:transform group-hover:opacity-100">
-                          <p className="text-md mx-5 border-2 p-2 font-semibold text-[#fff] hover:bg-[#fff] hover:text-black xl:text-lg">
-                            <button onClick={() => handleAddtoCart(product)}>
-                              + Thêm vào giỏ hàng
-                            </button>
-                          </p>
-                        </button>
+                        {infoUser?.role === Role.ADMIN ||
+                        infoUser?.role === Role.STAFF ? (
+                          ""
+                        ) : (
+                          <button className="absolute bottom-0 flex h-full w-full items-center justify-center bg-gray-800 bg-opacity-50 opacity-0 transition-all duration-300 ease-in-out group-hover:scale-110 group-hover:transform group-hover:opacity-100">
+                            <p className="text-md mx-5 border-2 p-2 font-semibold text-[#fff] hover:bg-[#fff] hover:text-black xl:text-lg">
+                              <button onClick={() => handleAddtoCart(product)}>
+                                + Thêm vào giỏ hàng
+                              </button>
+                            </p>
+                          </button>
+                        )}
                       </div>
                       <Link to={`/product/${product?._id}`}>
                         <div className="flex flex-col items-center p-4 text-center">
@@ -101,7 +108,7 @@ const HomePage: React.FC = React.memo(() => {
                           </p>
                           <p className="mb-2 text-xl font-bold ">
                             <span className="text-[#08cde9]">
-                              {PriceFormat.format(product.price ?? 0)}
+                              {PriceFormat.format(product?.price ?? 0)}
                             </span>
                           </p>
                         </div>

@@ -1,11 +1,15 @@
 import { Role } from "@/enums/enum";
-import useAuth from "@/hooks/useAuth";
 import useCartStore from "@/hooks/useCartStore";
 import { ProductInfo } from "@/interfaces/interface";
 import Footer from "@/layout/Footer";
 import Header from "@/layout/Header";
+import useAuthService from "@/services/authService";
 import useProductService from "@/services/productService";
-import { PriceFormat } from "@/util/validate";
+import {
+  convertToDDMMYYYY,
+  formatDateFromString,
+  PriceFormat,
+} from "@/util/validate";
 import {
   CarFilled,
   ClockCircleOutlined,
@@ -13,29 +17,27 @@ import {
   HomeFilled,
   RightOutlined,
 } from "@ant-design/icons";
-import {
-  Divider,
-  Form,
-  Image,
-  Input,
-  Modal,
-  notification,
-  Progress,
-  Rate,
-} from "antd";
+import { Divider, Image, notification, Progress, Rate } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import CommentModal from "./CommentModal";
+import LogoUser from "@/assets/images/logo/avatar_user.jpg";
+import LogoNotFound from "@/assets/images/logo/logo_not_found.png";
+import DropdownCommentFunc from "./DropdownCommentFunc";
 
 const ProductDetail: React.FC = () => {
   const { productId } = useParams();
-  const { getInfoProductDetail } = useProductService("", "");
+  const { getInfoProductDetail, productDetailData } = useProductService(
+    "",
+    "",
+    productId ?? "",
+  );
 
   const [product, setProduct] = useState<ProductInfo>();
   const [star, setStar] = useState<number>(5);
   const addToCart = useCartStore((state) => state.addToCart);
-  const { TextArea } = Input;
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { infoUser } = useAuth();
+  const { infoUser } = useAuthService();
 
   const formattedPrice =
     product?.price !== undefined ? PriceFormat.format(product.price) : "";
@@ -80,10 +82,7 @@ const ProductDetail: React.FC = () => {
     [addToCart],
   );
 
-  const handleStar = (values: number) => {
-    setStar(values);
-  };
-
+  console.log("check productDetailData", productDetailData);
   return (
     <>
       <Header />
@@ -104,7 +103,7 @@ const ProductDetail: React.FC = () => {
                 <span className="border-b-2 border-[#08cde9] text-[#2db4c6]">
                   {star}
                 </span>
-                <Rate allowHalf value={star} onChange={handleStar} />
+                <Rate allowHalf value={star} />
               </div>
               <div className="flex items-center gap-3">
                 <span className="text-[18px] font-bold">Xuất xứ:</span>
@@ -158,7 +157,7 @@ const ProductDetail: React.FC = () => {
               <div className="relative col-span-1 flex items-center justify-center">
                 <div className="flex flex-col items-center justify-center gap-2">
                   <p className="text-xl font-bold">4.0/5.0</p>
-                  <Rate allowHalf value={star} onChange={handleStar} />
+                  <Rate allowHalf value={star} />
                   <p className="">
                     <span className="font-bold">1</span> đánh giá
                   </p>
@@ -171,7 +170,6 @@ const ProductDetail: React.FC = () => {
                     <span>
                       5<Rate allowHalf count={1} value={1} className="mx-1" />
                     </span>
-
                     <Progress
                       percent={30}
                       size="small"
@@ -236,7 +234,7 @@ const ProductDetail: React.FC = () => {
               <div className="flex flex-col items-center justify-center gap-3">
                 <p>Bạn đánh giá sao về sản phẩm này ?</p>
                 <button
-                  className="rounded-md bg-[#08cde9] px-[30px] py-[10px] text-[#fff]"
+                  className="border-2 bg-[#08cde9] px-[30px] py-[10px] font-bold text-[white] transition-all duration-500 ease-in-out hover:rounded-2xl hover:border-[#08cde9] hover:bg-[white] hover:tracking-wide hover:text-[#08cde9]"
                   onClick={() => setIsOpen(true)}
                 >
                   Đánh giá ngay
@@ -244,101 +242,70 @@ const ProductDetail: React.FC = () => {
               </div>
             )}
             <Divider />
-            <div className="grid grid-cols-12">
-              <div className="col-span-1 h-[50px] w-[50px]  rounded-full object-cover">
-                <img
-                  className="rounded-full object-cover"
-                  src="https://yt3.googleusercontent.com/2rIW6m-ZDdTDITm0VpttLYxR9onL699oB1XBF-apHCjxfl88D7vA4jMTog499zSlQ_pBF8Y_WA=s900-c-k-c0x00ffffff-no-rj"
-                  alt="lỗi"
-                />
-              </div>
-              <div className="col-span-11 flex flex-col gap-3">
-                <div>
-                  <span className="mr-1 text-lg font-bold">Dương bảo</span>{" "}
-                  <span className="text-[13px] text-[#757575]">
-                    <ClockCircleOutlined />
-                    17/07/2024
-                  </span>
-                </div>
-                <Rate value={5} count={5} className="text-[16px]" />
-                <p className="text-[15px]">Sữa ngon sữa ngọt</p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <Modal
-              title={<p className="text-red text-lg">Đánh giá & nhận xét</p>}
-              open={isOpen}
-              onCancel={() => setIsOpen(false)}
-              footer={[
-                <button
-                  key="customButton"
-                  className="w-full rounded-md bg-[#08cde9] py-2 font-bold text-[#fff]"
-                >
-                  GỬI ĐÁNH GIÁ
-                </button>,
-              ]}
-            >
-              <Form name="normal_login" className="login-form">
-                <Form.Item
-                  name="rating"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input rating",
-                    },
-                  ]}
-                  colon={true}
-                  labelCol={{ span: 24 }}
-                  className="formItem"
-                >
-                  <div className="">
-                    <div className="flex gap-3">
+            {productDetailData ? (
+              productDetailData.comments.length > 0 ? (
+                productDetailData.comments.map((comment, index: number) => (
+                  <div className="grid grid-cols-12" key={index}>
+                    <div className="col-span-1 h-[50px] w-[50px] rounded-full object-cover">
                       <img
-                        src={product?.image}
-                        alt=""
-                        className="h-[100px] w-[100px]"
+                        className="rounded-full object-cover"
+                        src={LogoUser}
+                        alt="lỗi"
                       />
-                      <span className="pt-5 text-lg font-bold">
-                        {product?.name}
-                      </span>
                     </div>
-                    <div className="mt-7">
-                      <p className="mb-2 font-bold">Đánh giá chung</p>
+                    <div className="col-span-10 flex flex-col gap-3">
+                      <div>
+                        <span className="mr-1 text-lg font-bold">
+                          {comment?.author?.name}
+                        </span>{" "}
+                        <span className="text-[13px] text-[#757575]">
+                          <ClockCircleOutlined className="mr-1" />
+                          {convertToDDMMYYYY(comment?.createdAt)}
+                        </span>
+                      </div>
                       <Rate
+                        value={comment?.rating}
+                        className="text-[16px]"
                         allowHalf
-                        value={star}
-                        onChange={handleStar}
-                        className="text-center text-4xl"
+                        disabled
                       />
+                      <p className="text-[15px]">{comment?.content}</p>
+                    </div>
+                    <div className="col-span-1 text-right">
+                      {product && (
+                        <DropdownCommentFunc
+                          commentInfo={comment}
+                          commentId={comment?._id}
+                          product={product}
+                        />
+                      )}
                     </div>
                   </div>
-                </Form.Item>
-                <Form.Item
-                  name="content"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input content",
-                    },
-                    {
-                      min: 8,
-                      message: "Content must be at least 8 characters",
-                    },
-                  ]}
-                  colon={true}
-                  label="Nhận xét"
-                  labelCol={{ span: 24 }}
-                  className="formItem"
-                >
-                  <TextArea placeholder="Gửi nhận xét" rows={3} />
-                </Form.Item>
-              </Form>
-            </Modal>
+                ))
+              ) : (
+                <div className="col-span-full flex flex-col items-center justify-center py-10 text-center text-lg font-semibold text-gray-500">
+                  <img src={LogoNotFound} alt="not-found" className="h-20" />
+                  <span>Chưa có bình luận nào</span>
+                </div>
+              )
+            ) : (
+              <div className="col-span-full flex flex-col items-center justify-center py-10 text-center text-lg font-semibold text-gray-500">
+                <img src={LogoNotFound} alt="not-found" className="h-20" />
+                <span>Chưa có bình luận nào</span>
+              </div>
+            )}
           </div>
+          {product && (
+            <CommentModal
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              product={product}
+              star={star}
+              setStar={setStar}
+            />
+          )}
         </div>
       </div>
-
       <Footer />
     </>
   );

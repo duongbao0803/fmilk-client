@@ -73,7 +73,7 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
 
   return (
     <Modal
-      title={<p className="text-lg text-[red]">Add new product</p>}
+      title={<p className="text-lg text-[red]">Thêm sản phẩm</p>}
       open={isOpen}
       onOk={handleOk}
       confirmLoading={isConfirmLoading}
@@ -87,7 +87,7 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
               rules={[
                 {
                   required: true,
-                  message: "Please input name",
+                  message: "Vui lòng nhập tên sản phẩm",
                 },
                 {
                   min: 5,
@@ -95,13 +95,13 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
                 },
               ]}
               colon={true}
-              label="Name"
+              label="Tên sản phẩm"
               labelCol={{ span: 24 }}
               className="formItem"
             >
               <Input
                 prefix={<UserOutlined className="site-form-item-icon mr-1" />}
-                placeholder="Name"
+                placeholder="Tên sản phẩm"
                 autoFocus
               />
             </Form.Item>
@@ -112,11 +112,11 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
               rules={[
                 {
                   required: true,
-                  message: "Please select expireDate",
+                  message: "Vui lòng chọn ngày hết hạn",
                 },
               ]}
               colon={true}
-              label="Expire Date"
+              label="Ngày hết hạn"
               labelCol={{ span: 24 }}
               className="formItem"
             >
@@ -137,11 +137,11 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
               rules={[
                 {
                   required: true,
-                  message: "Please input price",
+                  message: "Vui lòng nhập giá",
                 },
               ]}
               colon={true}
-              label="Price"
+              label="Giá"
               labelCol={{ span: 24 }}
               className="formItem"
             >
@@ -151,7 +151,7 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
                 prefix={
                   <PoundCircleOutlined className="site-form-item-icon mr-1" />
                 }
-                placeholder="Price"
+                placeholder="Giá"
               />
             </Form.Item>
           </Col>
@@ -161,11 +161,11 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
               rules={[
                 {
                   required: true,
-                  message: "Please input quantity",
+                  message: "Vui lòng nhập số lượng",
                 },
               ]}
               colon={true}
-              label="Quantity"
+              label="Số lượng"
               labelCol={{ span: 24 }}
               className="formItem"
             >
@@ -175,7 +175,7 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
                 prefix={
                   <PoundCircleOutlined className="site-form-item-icon mr-1" />
                 }
-                placeholder="Quantity"
+                placeholder="Số lượng"
               />
             </Form.Item>
           </Col>
@@ -185,15 +185,15 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
               rules={[
                 {
                   required: true,
-                  message: "Please select brand",
+                  message: "Vui lòng chọn thương hiệu",
                 },
               ]}
               colon={true}
-              label="Brand"
+              label="Thương hiệu"
               labelCol={{ span: 24 }}
               className="formItem"
             >
-              <Select placeholder="Select brand">
+              <Select placeholder="Chọn thương hiệu">
                 {brands?.map(
                   (
                     brand: { _id: unknown; brandName: unknown },
@@ -217,14 +217,14 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
           rules={[
             {
               required: true,
-              message: "Please input description",
+              message: "Vui lòng nhập mô tả",
             },
           ]}
-          label="Description"
+          label="Mô tả"
           labelCol={{ span: 24 }}
           className="formItem"
         >
-          <TextArea placeholder="Description" />
+          <TextArea placeholder="Mô tả" />
         </Form.Item>
 
         <Form.Item
@@ -232,11 +232,11 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
           rules={[
             {
               required: true,
-              message: "Please select image",
+              message: "Vui lòng chọn hình ảnh",
             },
           ]}
           colon={true}
-          label="Image"
+          label="Hình ảnh"
           labelCol={{ span: 24 }}
           className="formItem"
         >

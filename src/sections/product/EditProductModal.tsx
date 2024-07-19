@@ -14,7 +14,6 @@ import { DataType } from "./ProductList";
 import useProductService from "@/services/productService";
 import UploadImageProduct from "./UploadImageProduct";
 import useBrandService from "@/services/brandService";
-import { Countries } from "@/constant/constant";
 import moment from "moment";
 import dayjs from "dayjs";
 import { formatDate } from "@/util/validate";
@@ -29,7 +28,7 @@ const EditProductModal: React.FC<EditModalProps> = (props) => {
   const { setIsOpen, isOpen, productInfo } = props;
   const [fileChange, setFileChange] = useState<string>("");
   const [isConfirmLoading, setIsConfirmLoading] = useState<boolean>(false);
-  const { updateProductItem } = useProductService();
+  const { updateProductItem } = useProductService("", "");
   const [form] = Form.useForm();
   const { brands } = useBrandService();
   const { Option } = Select;
@@ -88,7 +87,7 @@ const EditProductModal: React.FC<EditModalProps> = (props) => {
 
   return (
     <Modal
-      title={<p className="text-lg text-[red]">Edit product</p>}
+      title={<p className="text-lg text-[red]">Chỉnh sửa sản phẩm</p>}
       open={isOpen}
       onOk={handleOk}
       confirmLoading={isConfirmLoading}
@@ -102,21 +101,21 @@ const EditProductModal: React.FC<EditModalProps> = (props) => {
               rules={[
                 {
                   required: true,
-                  message: "Please input name",
+                  message: "Vui lòng nhập tên sản phẩm",
                 },
                 {
                   min: 5,
-                  message: "Name must be at least 5 characters",
+                  message: "Tên sản phẩm có ít nhất 5 ký tự",
                 },
               ]}
               colon={true}
-              label="Name"
+              label="Tên sản phẩm"
               labelCol={{ span: 24 }}
               className="formItem"
             >
               <Input
                 prefix={<UserOutlined className="site-form-item-icon mr-1" />}
-                placeholder="Name"
+                placeholder="Tên sản phẩm"
                 autoFocus
               />
             </Form.Item>
@@ -127,11 +126,11 @@ const EditProductModal: React.FC<EditModalProps> = (props) => {
               rules={[
                 {
                   required: true,
-                  message: "Please select expireDate",
+                  message: "Vui lòng chọn ngày hết hạn",
                 },
               ]}
               colon={true}
-              label="Expire Date"
+              label="Ngày hết hạn"
               labelCol={{ span: 24 }}
               className="formItem"
             >
@@ -140,6 +139,7 @@ const EditProductModal: React.FC<EditModalProps> = (props) => {
                 disabledDate={disabledDate}
                 format="YYYY-MM-DD"
                 className="w-full"
+                disabled
               />
             </Form.Item>
           </Col>
@@ -152,15 +152,15 @@ const EditProductModal: React.FC<EditModalProps> = (props) => {
               rules={[
                 {
                   required: true,
-                  message: "Please select brand",
+                  message: "Vui lòng chọn thương hiệu",
                 },
               ]}
               colon={true}
-              label="Brand"
+              label="Thương hiệu"
               labelCol={{ span: 24 }}
               className="formItem"
             >
-              <Select placeholder="Select brand">
+              <Select placeholder="Chọn thương hiệu">
                 {brands?.map(
                   (
                     brand: { _id: unknown; brandName: unknown },
@@ -178,29 +178,6 @@ const EditProductModal: React.FC<EditModalProps> = (props) => {
               </Select>
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item
-              name="origin"
-              rules={[
-                {
-                  required: true,
-                  message: "Please select origin",
-                },
-              ]}
-              colon={true}
-              label="Origin"
-              labelCol={{ span: 24 }}
-              className="formItem"
-            >
-              <Select placeholder="Select brand">
-                {Countries?.map((country, index: number) => (
-                  <Option key={index} value={country} label={country}>
-                    {country}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
         </Row>
         <Row gutter={16} className="relative mt-1">
           <Col span={12}>
@@ -209,11 +186,11 @@ const EditProductModal: React.FC<EditModalProps> = (props) => {
               rules={[
                 {
                   required: true,
-                  message: "Please input price",
+                  message: "Vui lòng chọn giá",
                 },
               ]}
               colon={true}
-              label="Price"
+              label="Giá"
               labelCol={{ span: 24 }}
               className="formItem"
             >
@@ -223,7 +200,7 @@ const EditProductModal: React.FC<EditModalProps> = (props) => {
                 prefix={
                   <PoundCircleOutlined className="site-form-item-icon mr-1" />
                 }
-                placeholder="Price"
+                placeholder="Giá"
               />
             </Form.Item>
           </Col>
@@ -233,11 +210,11 @@ const EditProductModal: React.FC<EditModalProps> = (props) => {
               rules={[
                 {
                   required: true,
-                  message: "Please input quantity",
+                  message: "Vui lòng chọn số lượng",
                 },
               ]}
               colon={true}
-              label="Quantity"
+              label="Số lượng"
               labelCol={{ span: 24 }}
               className="formItem"
             >
@@ -247,7 +224,7 @@ const EditProductModal: React.FC<EditModalProps> = (props) => {
                 prefix={
                   <PoundCircleOutlined className="site-form-item-icon mr-1" />
                 }
-                placeholder="Quantity"
+                placeholder="Số lượng"
               />
             </Form.Item>
           </Col>
@@ -257,14 +234,14 @@ const EditProductModal: React.FC<EditModalProps> = (props) => {
           rules={[
             {
               required: true,
-              message: "Please input description",
+              message: "Vui lòng nhập mô tả sản phẩm",
             },
           ]}
-          label="Description"
+          label="Mô tả"
           labelCol={{ span: 24 }}
           className="formItem"
         >
-          <TextArea placeholder="Description" />
+          <TextArea placeholder="Mô tả" />
         </Form.Item>
 
         <Form.Item
@@ -272,11 +249,11 @@ const EditProductModal: React.FC<EditModalProps> = (props) => {
           rules={[
             {
               required: true,
-              message: "Please select image",
+              message: "Vui lòng chọn hình ảnh",
             },
           ]}
           colon={true}
-          label="Image"
+          label="Hình ảnh"
           labelCol={{ span: 24 }}
           className="formItem"
         >

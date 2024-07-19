@@ -20,6 +20,7 @@ const ProductList: React.FC = () => {
   const { products, fetchProducts } = useProductService(
     debouncedProductName,
     origin,
+    "",
   );
   const { brands } = useBrandService();
   const { infoUser } = useAuth();

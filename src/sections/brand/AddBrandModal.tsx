@@ -43,7 +43,7 @@ const AddBrandModal: React.FC<AddModalProps> = React.memo((props) => {
 
   return (
     <Modal
-      title={<p className="text-lg font-bold text-[red] ">Add brand</p>}
+      title={<p className="text-lg font-bold text-[red] ">Thêm thương hiệu</p>}
       open={isOpen}
       onOk={handleOk}
       confirmLoading={isConfirmLoading}
@@ -55,17 +55,17 @@ const AddBrandModal: React.FC<AddModalProps> = React.memo((props) => {
           rules={[
             {
               required: true,
-              message: "Please input brand name",
+              message: "Vui lòng nhập tên thương hiệu",
             },
           ]}
           colon={true}
-          label="Brand name"
+          label="Thương hiệu"
           labelCol={{ span: 24 }}
           className="formItem"
         >
           <Input
             prefix={<BarcodeOutlined className="site-form-item-icon mr-1" />}
-            placeholder="Brand"
+            placeholder="Thương hiệu"
             className="p-2"
             autoFocus
           />
@@ -75,15 +75,15 @@ const AddBrandModal: React.FC<AddModalProps> = React.memo((props) => {
           rules={[
             {
               required: true,
-              message: "Please select origin",
+              message: "Vui lòng chọn nguồn gốc xuất xứ",
             },
           ]}
           colon={true}
-          label="Origin"
+          label="Xuất xứ"
           labelCol={{ span: 24 }}
           className="formItem"
         >
-          <Select placeholder="Select brand">
+          <Select placeholder="Chọn nguồn gốc">
             {Countries?.map((country, index: number) => (
               <Option key={index} value={country} label={country}>
                 {country}

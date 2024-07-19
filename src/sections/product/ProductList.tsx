@@ -36,23 +36,15 @@ const ProductList: React.FC = () => {
     setCurrentPage(pagination.current || 1);
   };
 
-  const getBrandNameById = (brandId: string) => {
-    console.log("check id", brandId);
-    const brand = brands?.find(
-      (brand: { _id: string }) => brand?._id === brandId,
-    );
-    return brand ? brand?.brandName : "N/A";
-  };
-
   const columns: TableProps<DataType>["columns"] = [
     {
-      title: "Name",
+      title: "Tên sản phẩm",
       dataIndex: "name",
       width: "15%",
       className: "first-column",
     },
     {
-      title: "Image",
+      title: "Hình ảnh",
       dataIndex: "image",
       width: "10%",
       render: (image) => (
@@ -64,36 +56,36 @@ const ProductList: React.FC = () => {
       ),
     },
     {
-      title: "Description",
+      title: "Mô tả",
       dataIndex: "description",
-      width: "25%",
+      width: "35%",
     },
     {
-      title: "Quantity",
+      title: "Số lượng",
       dataIndex: "quantity",
-      width: "2%",
+      width: "9%",
     },
     {
-      title: "Brand",
+      title: "Thương hiệu",
       dataIndex: "brand",
       width: "5%",
       render: (brand) => brand?.brandName || "N/A",
     },
     {
-      title: "Origin",
+      title: "Xuất xứ",
       dataIndex: "brand",
-      width: "13%",
+      width: "10%",
       render: (brand) => brand?.origin || "N/A",
     },
     {
-      title: "Price",
+      title: "Giá",
       dataIndex: "price",
-      width: "10%",
+      width: "7%",
     },
     {
-      title: "Status",
+      title: "Trạng thái",
       dataIndex: "status",
-      width: "10%",
+      width: "7%",
       render: (status) => {
         let color;
         switch (status) {
@@ -128,12 +120,12 @@ const ProductList: React.FC = () => {
       <div className="flex justify-between">
         <div className="flex gap-x-2">
           <Input
-            placeholder="Search by..."
+            placeholder="Tìm kiếm theo..."
             className="h-8 max-w-lg rounded-lg sm:mb-5 sm:w-[300px]"
           />
           <Button className="flex items-center" type="primary">
             <FilterOutlined className="align-middle" />
-            Sort
+            Lọc
           </Button>
         </div>
         <div className="flex gap-x-2">
@@ -143,7 +135,7 @@ const ProductList: React.FC = () => {
           <div>
             <Button type="primary" onClick={() => setIsOpen(true)}>
               <div className="flex justify-center">
-                <AppstoreAddOutlined className="mr-1 text-lg" /> Add Product
+                <AppstoreAddOutlined className="mr-1 text-lg" /> Thêm sản phẩm
               </div>
             </Button>
           </div>

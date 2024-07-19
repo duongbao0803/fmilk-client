@@ -174,3 +174,9 @@ export interface BrandData {
   brandName: string;
   origin: string;
 }
+
+export interface FeedBack {
+  _id: string;
+  rating: number;
+  content: string;
+}

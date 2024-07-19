@@ -89,7 +89,6 @@ const ProductDetail: React.FC = () => {
       <Header />
       <div className="min-h-screen bg-[#f5f5f5] px-10 pb-16 md:px-52">
         <div className="mb-5 pt-28">
-          <div></div>
           <Link to={"/"}>
             <HomeFilled className="text-xl text-[#08cde9]" />
           </Link>

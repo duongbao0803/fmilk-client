@@ -6,12 +6,14 @@ import {
   UserOutlined,
   FileOutlined,
   ProductOutlined,
+  QrcodeOutlined,
 } from "@ant-design/icons";
 import { LayoutProps, MenuItem, UserInfo } from "@/interfaces/interface";
 import useAuth from "@/hooks/useAuth";
 import { Role } from "@/enums/enum";
 import avatarAdmin from "@/assets/images/logo/avatar_admin.jpg";
 import avatarStaff from "@/assets/images/logo/avatar_staff.jpg";
+import useAuthService from "@/services/authService";
 
 const { Content, Sider, Footer } = Layout;
 
@@ -32,22 +34,15 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem("Chart", "1", <PieChartOutlined />, undefined, "/chart"),
-  getItem(
-    "User",
-    "2",
-    <UserOutlined />,
-    undefined,
-
-    "/user",
-  ),
-  getItem("Product", "3", <ProductOutlined />, undefined, "/manageProduct"),
-  getItem("Post", "8", <FileOutlined />, undefined, "/managePost"),
-  getItem("Brand", "9", <FileOutlined />, undefined, "/brand"),
+  getItem("Thống kê", "1", <PieChartOutlined />, undefined, "/chart"),
+  getItem("Người dùng", "2", <UserOutlined />, undefined, "/user"),
+  getItem("Sản phẩm", "3", <ProductOutlined />, undefined, "/manageProduct"),
+  getItem("Bài viết", "8", <FileOutlined />, undefined, "/managePost"),
+  getItem("Thương hiệu", "9", <QrcodeOutlined />, undefined, "/brand"),
 ];
 
 const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
-  const infoUser = useAuth((state) => state.infoUser);
+  const { infoUser } = useAuthService();
   const logout = useAuth((state) => state.logout);
 
   const navigate = useNavigate();
@@ -94,8 +89,8 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
 
   const handleLogout = () => {
     notification.success({
-      message: "Logout Successful",
-      description: "You have successfully logged out",
+      message: "Đăng xuất thành công",
+      description: "Bạn đã đăng xuất khỏi hệ thống thành công",
       duration: 2,
     });
     logout();

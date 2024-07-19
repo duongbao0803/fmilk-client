@@ -82,7 +82,7 @@ const useUserService = () => {
   const updateStatusMutation = useMutation(updateUserStatus, {
     onSuccess: () => {
       notification.success({
-        message: "Update Successful",
+        message: "Cập nhật thành công",
         description: "Update status successful",
         duration: 2,
       });
@@ -101,7 +101,7 @@ const useUserService = () => {
   const updateUserInfoMutation = useMutation(updateUserInfo, {
     onSuccess: () => {
       notification.success({
-        message: "Update Successful",
+        message: "Cập nhật thành công",
         description: "Update infomation successful",
         duration: 2,
       });

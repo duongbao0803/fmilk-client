@@ -1,6 +1,6 @@
 import React, { Suspense, lazy, useState } from "react";
 import { Navigate, Outlet, Route, Routes, useRoutes } from "react-router-dom";
-import { Loading, ScrollToTop } from "@/components";
+import { Error, Loading, ScrollToTop } from "@/components";
 import { Role } from "@/enums/enum";
 import DashboardLayout from "@/layout";
 import { useAnimation } from "@/hooks/useAnimation";
@@ -22,6 +22,9 @@ import PaymentFailure from "@/sections/payment/PaymentFailure";
 import PostDetail from "@/sections/post-public/PostDetail";
 import PostPublicPage from "@/pages/PostPublicPage";
 import PersonalPage from "@/pages/PersonalPage";
+import UserLayout from "@/layout/UserLayout";
+import useAuthService from "@/services/authService";
+import ChangePasswordPage from "@/pages/ChangePasswordPage";
 
 export const UserManagementPage = lazy(
   () => import("@/pages/UserManagementPage"),
@@ -47,12 +50,13 @@ const UserRoute: React.FC = () => {
 };
 
 const Router: React.FC = () => {
-  const infoUser = useAuth((state) => state.infoUser);
+  const { infoUser } = useAuthService();
+
   const isAuthenticated = useAuth((state) => state.isAuthenticated);
 
-  const { role } = infoUser as UserInfo;
   useAnimation();
-  const isAuthority = role === Role.ADMIN || role === Role.STAFF;
+  const isAuthority =
+    infoUser?.role === Role.ADMIN || infoUser?.role === Role.STAFF;
 
   const [isNotificationVisible, setIsNotificationVisible] =
     useState<boolean>(false);
@@ -121,8 +125,16 @@ const Router: React.FC = () => {
       element: isAuthenticated ? <Navigate to="/" /> : <AuthenPage />,
     },
     {
-      path: "/personal",
-      element: <PersonalPage />,
+      path: "/",
+      element: (
+        <UserLayout>
+          <Outlet />
+        </UserLayout>
+      ),
+      children: [
+        { path: "personal", element: <PersonalPage /> },
+        { path: "password", element: <ChangePasswordPage /> },
+      ],
     },
     {
       element: isAuthenticated ? (
@@ -163,10 +175,10 @@ const Router: React.FC = () => {
         },
       ],
     },
-    // {
-    //   element: <Error />,
-    //   path: "*",
-    // },
+    {
+      element: <Error />,
+      path: "*",
+    },
   ]);
 
   return (

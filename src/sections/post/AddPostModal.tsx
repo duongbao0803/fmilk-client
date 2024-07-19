@@ -128,8 +128,12 @@ const AddPostModal: React.FC<AddPostModalProps> = (props) => {
             optionFilterProp="children"
           >
             {products?.map((product: ProductInfo, index: number) => (
-              <Option key={index} value={`${product._id}`} label={product.name}>
-                {`${product.name}`}
+              <Option
+                key={index}
+                value={`${product?._id}`}
+                label={product?.name}
+              >
+                {`${product?.name}`}
               </Option>
             ))}
           </Select>

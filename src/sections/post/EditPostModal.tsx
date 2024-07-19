@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Modal, Form, Input, Select } from "antd";
 import { FormOutlined } from "@ant-design/icons";
 import { DataType } from "./PostList";
@@ -13,7 +13,7 @@ export interface EditModalProps {
   postInfo?: DataType;
 }
 
-const EditPostModal: React.FC<EditModalProps> = (props) => {
+const EditPostModal: React.FC<EditModalProps> = React.memo((props) => {
   const { setIsOpen, isOpen, postInfo } = props;
   const { Option } = Select;
   const [fileChange, setFileChange] = useState<string>("");
@@ -27,13 +27,15 @@ const EditPostModal: React.FC<EditModalProps> = (props) => {
     if (isOpen) {
       form.setFieldsValue(postInfo);
     }
-  }, [isOpen]);
+  }, [form, isOpen]);
 
   useEffect(() => {
     form.setFieldsValue({ image: fileChange });
   }, [fileChange, form]);
 
-  const handleOk = async () => {
+  console.log("render");
+
+  const handleOk = useCallback(async () => {
     try {
       const values = await form.validateFields();
       setIsConfirmLoading(true);
@@ -54,7 +56,7 @@ const EditPostModal: React.FC<EditModalProps> = (props) => {
     } catch (errorInfo) {
       console.error("Validation failed:", errorInfo);
     }
-  };
+  }, [form, postInfo, setIsOpen, updatePostItem]);
 
   const handleCancel = () => {
     setIsOpen(false);
@@ -116,7 +118,7 @@ const EditPostModal: React.FC<EditModalProps> = (props) => {
           <TextArea placeholder="Description" />
         </Form.Item>
         <Form.Item
-          name="productId"
+          name="product"
           rules={[
             {
               required: true,
@@ -165,6 +167,6 @@ const EditPostModal: React.FC<EditModalProps> = (props) => {
       </Form>
     </Modal>
   );
-};
+});
 
 export default EditPostModal;

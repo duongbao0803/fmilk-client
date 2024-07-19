@@ -82,7 +82,7 @@ const useProductService = (productName: string, origin: string) => {
   const updateProductInfoMutation = useMutation(updateProductInfo, {
     onSuccess: () => {
       notification.success({
-        message: "Update Successful",
+        message: "Cập nhật thành công",
         description: "Update infomation successful",
         duration: 2,
       });

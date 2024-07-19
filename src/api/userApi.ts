@@ -1,5 +1,9 @@
 import axiosClient from "@/config/axiosClient";
-import { AddNewUserProps, UserInfo } from "@/interfaces/interface";
+import {
+  AddNewUserProps,
+  ChangePasswordForm,
+  UserInfo,
+} from "@/interfaces/interface";
 
 const getAllUser = (page: number) => {
   return axiosClient.get(`/v1/user`, {
@@ -30,6 +34,14 @@ const removeUser = (userId: string) => {
   return axiosClient.delete(`/v1/user/${userId}`);
 };
 
+const updatePersonal = (formValues: UserInfo) => {
+  return axiosClient.put("/v1/user/personal-information", formValues);
+};
+
+const changePassword = (formValues: ChangePasswordForm) => {
+  return axiosClient.put("/v1/user/change-password", formValues);
+};
+
 export {
   getAllUser,
   removeUser,
@@ -37,4 +49,6 @@ export {
   editUserInfo,
   getDetailUser,
   addUser,
+  updatePersonal,
+  changePassword,
 };

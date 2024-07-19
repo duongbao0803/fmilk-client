@@ -73,7 +73,7 @@ const useBrandService = () => {
   const updateBrandInfoMutation = useMutation(updateBrandInfo, {
     onSuccess: () => {
       notification.success({
-        message: "Update Successful",
+        message: "Cập nhật thành công",
         description: "Update brand successful",
         duration: 2,
       });

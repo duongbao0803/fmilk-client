@@ -1,11 +1,3 @@
-export const validatePhoneNumber = (_: unknown, value: string) => {
-  const phoneNumberPattern = /^[0-9]{10}$/;
-  if (value && !phoneNumberPattern.test(value)) {
-    return Promise.reject(new Error("Phone number must be exactly 10 digits"));
-  }
-  return Promise.resolve();
-};
-
 export function formatDate(dateString: string | number | Date) {
   const date = new Date(dateString);
   if (isNaN(date.getTime())) {
@@ -39,3 +31,11 @@ export const PriceFormat = new Intl.NumberFormat("vi-VN", {
   style: "currency",
   currency: "VND",
 });
+
+export const validatePhoneNumber = (_: unknown, value: string) => {
+  const phoneNumberPattern = /^[0-9]{10}$/;
+  if (value && !phoneNumberPattern.test(value)) {
+    return Promise.reject(new Error("Số điện thoại phải có 10 số"));
+  }
+  return Promise.resolve();
+};

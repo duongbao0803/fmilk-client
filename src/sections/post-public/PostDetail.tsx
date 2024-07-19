@@ -1,37 +1,42 @@
 import { Role } from "@/enums/enum";
-import useAuth from "@/hooks/useAuth";
 import useCartStore from "@/hooks/useCartStore";
 import { PostInfo, ProductInfo } from "@/interfaces/interface";
 import Footer from "@/layout/Footer";
 import Header from "@/layout/Header";
+import useAuthService from "@/services/authService";
 import usePostService from "@/services/postService";
 import { PriceFormat } from "@/util/validate";
 import { HomeFilled, RightOutlined } from "@ant-design/icons";
 import { notification } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const PostDetail: React.FC = () => {
   const { postId } = useParams();
   const { getInfoPostDetail } = usePostService();
   const [post, setPost] = useState<PostInfo>();
   const addToCart = useCartStore((state) => state.addToCart);
-  const { infoUser } = useAuth();
+  const { infoUser } = useAuthService();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (postId) {
       const fetchData = async () => {
         try {
           const res = await getInfoPostDetail(postId);
-          console.log("check res", res);
-          setPost(res);
+          if (res) {
+            setPost(res);
+          } else {
+            navigate("/error", { replace: true });
+          }
         } catch (err) {
           console.error("Err fetching detail post", err);
+          navigate("/error", { replace: true });
         }
       };
       fetchData();
     }
-  }, [postId]);
+  }, [getInfoPostDetail, navigate, postId]);
 
   const handleAddtoCart = useCallback(
     (product: ProductInfo) => {
@@ -56,7 +61,7 @@ const PostDetail: React.FC = () => {
         duration: 2,
       });
     },
-    [addToCart],
+    [addToCart, infoUser?.role],
   );
 
   return (

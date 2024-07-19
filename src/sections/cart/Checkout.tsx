@@ -33,8 +33,6 @@ const Checkout: React.FC = () => {
     setValue(e.target.value);
   };
 
-  console.log("check user", infoUser);
-
   const TRANSFER_FEE = [
     { min: 2000000, fee: 0 },
     { min: 1500000, max: 2000000, fee: 20000 },

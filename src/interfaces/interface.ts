@@ -11,6 +11,11 @@ export interface UserInfo {
   _id?: string | undefined;
 }
 
+export interface ChangePasswordForm {
+  oldPassword: string;
+  newPassword: string;
+}
+
 export interface ProductInfo {
   _id: string;
   name?: string;
@@ -29,8 +34,7 @@ export interface AuthState {
   isAuthenticated: boolean;
   login: () => void;
   logout: () => void;
-  infoUser: UserInfo;
-  fetchUserInfo: () => void;
+  // fetchUserInfo: () => void;
 }
 
 export interface ScrollToTopProps {

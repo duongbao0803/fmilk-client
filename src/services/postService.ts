@@ -71,7 +71,7 @@ const usePostService = () => {
   const updatePostInfoMutation = useMutation(updatePostInfo, {
     onSuccess: () => {
       notification.success({
-        message: "Update Successful",
+        message: "Cập nhật thành công",
         description: "Update infomation successful",
         duration: 2,
       });

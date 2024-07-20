@@ -3,12 +3,12 @@ import failureIcon from "@/assets/images/failure-icon.png";
 import Footer from "@/layout/Footer";
 import Header from "@/layout/Header";
 import usePaymentResult from "@/hooks/usePaymentResult";
-import useAuth from "@/hooks/useAuth";
 import { formatDateFromString, PriceFormat } from "@/util/validate";
+import useAuthService from "@/services/authService";
 
 const PaymentFailure: React.FC = () => {
   const paymentResult = usePaymentResult((state) => state.paymentResult);
-  const { infoUser } = useAuth();
+  const { infoUser } = useAuthService();
 
   const formattedCurrency = PriceFormat.format(paymentResult?.vnp_Amount);
 

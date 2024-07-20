@@ -1,6 +1,6 @@
 import useStateStore from "@/hooks/useStateStore";
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export interface Tab {
@@ -15,7 +15,7 @@ const tabs: Tab[] = [
   { name: "Liên hệ", path: "/contact" },
 ];
 
-const CustomNav = () => {
+const CustomNav: React.FC = React.memo(() => {
   const [selected, setSelected] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
@@ -58,7 +58,7 @@ const CustomNav = () => {
       ))}
     </div>
   );
-};
+});
 
 export interface CustomNavProps {
   text: string;
@@ -82,7 +82,7 @@ const Nav: React.FC<CustomNavProps> = ({ text, selected, onClick }) => {
           layoutId="pill-tab"
           transition={{ type: "spring", duration: 0.5 }}
           className="absolute inset-0 z-0 h-full w-full rounded-md bg-[#08cde9]"
-        ></motion.span>
+        />
       )}
     </button>
   );

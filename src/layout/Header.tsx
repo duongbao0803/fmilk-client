@@ -15,9 +15,7 @@ const Header: React.FC = React.memo(() => {
   const setCartState = useStateStore((state) => state.setCartState);
   const { infoUser } = useAuthService();
   const cartState = useStateStore((state) => state.cartState);
-
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };

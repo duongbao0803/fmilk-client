@@ -4,11 +4,11 @@ import { formatDateFromString, PriceFormat } from "@/util/validate";
 import Header from "@/layout/Header";
 import Footer from "@/layout/Footer";
 import usePaymentResult from "@/hooks/usePaymentResult";
-import useAuth from "@/hooks/useAuth";
+import useAuthService from "@/services/authService";
 
 const PaymentSuccess: React.FC = () => {
   const paymentResult = usePaymentResult((state) => state.paymentResult);
-  const { infoUser } = useAuth();
+  const { infoUser } = useAuthService();
 
   const formattedCurrency = PriceFormat.format(paymentResult?.["vnp_Amount"]);
 

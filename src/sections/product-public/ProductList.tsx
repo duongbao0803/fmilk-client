@@ -8,8 +8,8 @@ import { Link } from "react-router-dom";
 import { useDebounce } from "@uidotdev/usehooks";
 import LogoNotFound from "@/assets/images/logo/logo_not_found.png";
 import useBrandService from "@/services/brandService";
-import useAuth from "@/hooks/useAuth";
 import { Role } from "@/enums/enum";
+import useAuthService from "@/services/authService";
 
 const ProductList: React.FC = () => {
   const [productName, setProductName] = useState<string>("");
@@ -23,7 +23,11 @@ const ProductList: React.FC = () => {
     "",
   );
   const { brands } = useBrandService();
-  const { infoUser } = useAuth();
+  const { infoUser } = useAuthService();
+
+  const productList = products?.filter(
+    (product: { quantity: number }) => product.quantity > 0,
+  );
 
   const origins: string[] = brands?.map((brand: BrandData) => brand?.origin);
   const uniqueOrigin: string[] = [...new Set(origins)];
@@ -104,7 +108,7 @@ const ProductList: React.FC = () => {
             className="productList mb-10 grid grid-cols-1 gap-10 transition-all duration-700 ease-in-out sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
             data-aos="fade-right"
           >
-            {products === undefined ? (
+            {productList === undefined ? (
               Array.from({ length: 8 })?.map((_, index) => (
                 <div
                   key={index}
@@ -113,8 +117,8 @@ const ProductList: React.FC = () => {
                   <Skeleton loading={true} active />
                 </div>
               ))
-            ) : products.length > 0 ? (
-              products?.map((product: ProductInfo, index: number) => (
+            ) : productList?.length > 0 ? (
+              productList?.map((product: ProductInfo, index: number) => (
                 <div
                   key={product._id}
                   data-aos="fade-right"

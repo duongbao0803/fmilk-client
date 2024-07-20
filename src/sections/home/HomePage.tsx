@@ -14,11 +14,13 @@ import useAuthService from "@/services/authService";
 
 const HomePage: React.FC = React.memo(() => {
   const navigate = useNavigate();
-  const { products } = useProductService("", "");
+  const { products } = useProductService("", "", "");
   const { infoUser } = useAuthService();
   const addToCart = useCartStore((state) => state.addToCart);
 
-  const productList = products?.slice(0, 4);
+  const productList = products
+    ?.filter((product: { quantity: number }) => product.quantity > 0)
+    .slice(0, 4);
 
   const handleAddtoCart = useCallback(
     (product: ProductInfo) => {

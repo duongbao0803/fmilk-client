@@ -23,14 +23,12 @@ export interface DataType {
 }
 
 const ProductList: React.FC = () => {
-  const { products, isFetching, totalCount } = useProductService("", "");
+  const { products, isFetching, totalCount } = useProductService("", "", "");
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const { brands } = useBrandService();
-
-  console.log("check brands", brands);
 
   const handleTableChange = (pagination: TablePaginationConfig) => {
     setCurrentPage(pagination.current || 1);

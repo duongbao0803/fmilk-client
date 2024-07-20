@@ -23,6 +23,7 @@ import UserLayout from "@/layout/UserLayout";
 import useAuthService from "@/services/authService";
 import ChangePasswordPage from "@/pages/ChangePasswordPage";
 import PostDetail from "@/sections/post-public/PostDetail";
+import OrderedPage from "@/pages/OrderedPage";
 
 export const UserManagementPage = lazy(
   () => import("@/pages/UserManagementPage"),
@@ -48,8 +49,6 @@ const Router: React.FC = () => {
   const isAuthority =
     infoUser?.role === Role.ADMIN || infoUser?.role === Role.STAFF;
   const isAdmin = infoUser?.role === Role.ADMIN;
-
-  console.log("check isAuthority", isAuthority);
 
   const [isNotificationVisible, setIsNotificationVisible] =
     useState<boolean>(false);
@@ -130,6 +129,15 @@ const Router: React.FC = () => {
           element:
             isAuthenticated && !isAuthority ? (
               <ChangePasswordPage />
+            ) : (
+              <Navigate to="/" replace />
+            ),
+        },
+        {
+          path: "ordered",
+          element:
+            isAuthenticated && !isAuthority ? (
+              <OrderedPage />
             ) : (
               <Navigate to="/" replace />
             ),

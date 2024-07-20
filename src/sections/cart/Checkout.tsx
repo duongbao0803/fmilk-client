@@ -42,10 +42,7 @@ const Checkout: React.FC = () => {
 
   const onChange = (e: RadioChangeEvent) => {
     setValue(e.target.value);
-    console.log("check value", value);
   };
-
-  console.log("check value1", value);
 
   const TRANSFER_FEE = [
     { min: 2000000, fee: 0 },
@@ -153,9 +150,7 @@ const Checkout: React.FC = () => {
         transferAddress: form.getFieldsValue(),
         paymentMethod: value,
       };
-      console.log("check form", formValues);
       const res = await createOrder(formValues);
-      console.log("check res", res);
       if (res && res.status === 200) {
         if (formValues?.paymentMethod === "VNPAY") {
           notification.success({

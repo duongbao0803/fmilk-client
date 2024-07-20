@@ -38,7 +38,6 @@ const CartPage: React.FC = () => {
   };
 
   const handleRemove = (record: CartItem) => {
-    console.log("check record", record);
     if (record.quantity === 1) {
       DeleteCartModal({
         removeCart,

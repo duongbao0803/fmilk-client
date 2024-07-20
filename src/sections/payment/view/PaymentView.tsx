@@ -13,24 +13,18 @@ const PaymentView: React.FC = () => {
   const setPaymentResult = usePaymentResult((state) => state.setPaymentResult);
 
   useEffect(() => {
-    console.log("location.search:", location.search);
-
     const queryParams = new URLSearchParams(location.search);
     const parsedData: Record<string, string> = {};
 
     queryParams.forEach((value, key) => {
       parsedData[key] = value;
     });
-    console.log("chjeck parse", parsedData);
 
     if (parsedData && parsedData?.vnp_ResponseCode === "00") {
-      console.log("check data 1", parsedData);
       setPaymentResult(parsedData);
       navigate("/payment/success");
       return;
     } else if (parsedData && parsedData?.vnp_ResponseCode === "24") {
-      console.log("check data 2", parsedData);
-
       setPaymentResult(parsedData);
       navigate("/payment/failure");
     } else {

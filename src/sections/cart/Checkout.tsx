@@ -10,7 +10,7 @@ import {
   TableProps,
 } from "antd";
 import { HomeFilled, RightOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { createOrder } from "@/api/orderApi";
 import { Role } from "@/enums/enum";
 import useCartStore from "@/hooks/useCartStore";
@@ -28,6 +28,7 @@ const Checkout: React.FC = () => {
   const [value, setValue] = useState<string>("");
   const [isConfirm, setIsConfirm] = useState<boolean>(false);
   const [form] = Form.useForm();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (infoUser) {
@@ -175,6 +176,7 @@ const Checkout: React.FC = () => {
               "Đơn hàng đã được tạo thành công! Chúng tôi sẽ liên hệ với bạn sớm. Xin cảm ơn",
             duration: 2,
           });
+          navigate("/");
           clearCart();
         }
       }
@@ -291,20 +293,24 @@ const Checkout: React.FC = () => {
                     Thông tin đơn hàng
                   </label>
                   <div className="mb-5 px-5 py-[22px]">
-                    <div className="mb-2 flex justify-between">
+                    <div className="mb-[11px] flex justify-between">
                       <span className="text-md">Tổng Giá Sản Phẩm</span>
                       <span className="text-md">
                         {" "}
                         {PriceFormat.format(itemsPrice ?? 0)}
                       </span>
                     </div>
-                    <div className="mb-2 flex justify-between">
+                    <div className="mb-[11px] flex justify-between">
                       <span className="text-md ">Phí Vận Chuyển</span>
                       {transferPrice === 0
                         ? "Miễn phí"
                         : `${PriceFormat.format(transferPrice)}`}
                     </div>
-                    <div className="mb-2 flex justify-between">
+                    <div className="mb-[11px] flex justify-between">
+                      <span className="text-md">Mã giảm giá</span>
+                      <span className="text-md">0</span>
+                    </div>
+                    <div className="mb-[11px] flex justify-between">
                       <span className="text-md">Phí VAT</span>
                       <span className="text-md">0</span>
                     </div>

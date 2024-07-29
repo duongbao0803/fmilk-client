@@ -37,9 +37,7 @@ const PaymentFailure: React.FC = () => {
                 <tbody>
                   <tr>
                     <th className="text-left">Khách hàng:</th>
-                    <td className="absolute right-[30px]">
-                      {infoUser?.username}
-                    </td>
+                    <td className="absolute right-[30px]">{infoUser?.name}</td>
                   </tr>
                   <tr>
                     <th className="text-left">Email:</th>

@@ -6,7 +6,7 @@ const LandingPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title> FMilk | Home </title>
+        <title> FMilk | Trang chủ </title>
       </Helmet>
       <HomePageView />
     </>

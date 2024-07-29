@@ -1,19 +1,27 @@
-import React, { Suspense, lazy, useState } from "react";
-import { Navigate, Outlet, Route, Routes, useRoutes } from "react-router-dom";
-import { Loading, ScrollToTop } from "@/components";
+import React, { Suspense, lazy } from "react";
+import { Navigate, Outlet, useRoutes } from "react-router-dom";
+import { Error, ForBidden, Loading, ScrollToTop } from "@/components";
 import { Role } from "@/enums/enum";
 import DashboardLayout from "@/layout";
 import { useAnimation } from "@/hooks/useAnimation";
 import useAuth from "@/hooks/useAuth";
 import AuthenPage from "@/pages/AuthenPage";
 import LandingPage from "@/pages/LandingPage";
-import { UserInfo } from "@/interfaces/interface";
-import CartPage from "@/sections/cart/CartPage";
 import Checkout from "@/sections/cart/Checkout";
-import Notification from "@/sections/notification/Notification";
-import Payment from "@/sections/cart/Payment";
-
-import PostMangementPage from "@/pages/PostMangementPage";
+import ProductPublicPage from "@/pages/ProductPublicPage";
+import ProductDetail from "@/sections/product-public/ProductDetail";
+import PaymentSuccess from "@/sections/payment/PaymentSuccess";
+import PaymentPage from "@/pages/PaymentPage";
+import PaymentFailure from "@/sections/payment/PaymentFailure";
+import PostPublicPage from "@/pages/PostPublicPage";
+import PersonalPage from "@/pages/PersonalPage";
+import UserLayout from "@/layout/UserLayout";
+import useAuthService from "@/services/authService";
+import ChangePasswordPage from "@/pages/ChangePasswordPage";
+import PostDetail from "@/sections/post-public/PostDetail";
+import OrderedPage from "@/pages/OrderedPage";
+import CartPage from "@/pages/CartPage";
+import MainLayout from "@/layout/MainLayout";
 
 export const UserManagementPage = lazy(
   () => import("@/pages/UserManagementPage"),
@@ -30,61 +38,85 @@ export const BrandManagementPage = lazy(
   () => import("@/pages/BrandManagementPage"),
 );
 
-const UserRoute: React.FC = () => {
-  return (
-    <Routes>
-      <Route path="/contact" />
-    </Routes>
-  );
-};
-
 const Router: React.FC = () => {
-  const infoUser = useAuth((state) => state.infoUser);
+  const { infoUser } = useAuthService();
+
   const isAuthenticated = useAuth((state) => state.isAuthenticated);
 
-  const { role } = infoUser as UserInfo;
   useAnimation();
-  const isAuthority = role === Role.ADMIN || role === Role.STAFF;
-
-  const [isNotificationVisible, setIsNotificationVisible] =
-    useState<boolean>(false);
-
-  const closeNotification = () => {
-    setIsNotificationVisible(false);
-  };
+  const isAuthority =
+    infoUser?.role === Role.ADMIN || infoUser?.role === Role.STAFF;
+  const isAdmin = infoUser?.role === Role.ADMIN;
 
   const routes = useRoutes([
-    {
-      path: "/",
-      element: <LandingPage />,
-    },
-
-    {
-      path: "/cart",
-      element: <CartPage />,
-    },
-    {
-      path: "/checkout",
-      element: <Checkout />,
-    },
-    {
-      path: "/payment",
-      element: <Payment />,
-    },
-    {
-      path: "/notification",
-      element: (
-        <Notification
-          visible={isNotificationVisible}
-          onClose={closeNotification}
-        />
-      ),
-    },
     {
       path: "/authen",
       element: isAuthenticated ? <Navigate to="/" /> : <AuthenPage />,
     },
     {
+      path: "/",
+      element: <MainLayout />,
+      children: [
+        { path: "/", element: <LandingPage /> },
+        {
+          path: "cart",
+          element: !isAuthority ? <CartPage /> : <Navigate to="/" replace />,
+        },
+        {
+          path: "checkout",
+          element: !isAuthority ? <Checkout /> : <Navigate to="/" replace />,
+        },
+        {
+          path: "payment",
+          element: !isAuthority ? <PaymentPage /> : <Navigate to="/" replace />,
+        },
+        { path: "product", element: <ProductPublicPage /> },
+        { path: "post", element: <PostPublicPage /> },
+        { path: "post/:postId", element: <PostDetail /> },
+        { path: "product/:productId", element: <ProductDetail /> },
+        { path: "payment/success", element: <PaymentSuccess /> },
+        { path: "payment/failure", element: <PaymentFailure /> },
+        {
+          path: "/",
+          element: (
+            <UserLayout>
+              <Outlet />
+            </UserLayout>
+          ),
+          children: [
+            {
+              path: "personal",
+              element:
+                isAuthenticated && !isAuthority ? (
+                  <PersonalPage />
+                ) : (
+                  <Navigate to="/" replace />
+                ),
+            },
+            {
+              path: "password",
+              element:
+                isAuthenticated && !isAuthority ? (
+                  <ChangePasswordPage />
+                ) : (
+                  <Navigate to="/" replace />
+                ),
+            },
+            {
+              path: "ordered",
+              element:
+                isAuthenticated && !isAuthority ? (
+                  <OrderedPage />
+                ) : (
+                  <Navigate to="/" replace />
+                ),
+            },
+          ],
+        },
+      ],
+    },
+    {
+      path: "/",
       element: isAuthenticated ? (
         isAuthority ? (
           <DashboardLayout>
@@ -95,49 +127,47 @@ const Router: React.FC = () => {
             </ScrollToTop>
           </DashboardLayout>
         ) : (
-          <UserRoute />
+          <Navigate to="/" />
         )
       ) : (
         <Navigate to="/authen" />
       ),
       children: [
         {
-          element: <UserManagementPage />,
-          path: "/user",
+          path: "user",
+          element: isAdmin ? <UserManagementPage /> : <ForBidden />,
         },
         {
-          element: <ProductManagementPage />,
-          path: "/product",
+          path: "manageProduct",
+          element: isAuthority ? (
+            <ProductManagementPage />
+          ) : (
+            <Navigate to="/" replace />
+          ),
         },
         {
-          element: <PostMangementPage />,
-          path: "/post",
+          path: "managePost",
+          element: isAuthority ? (
+            <PostManagementPage />
+          ) : (
+            <Navigate to="/" replace />
+          ),
         },
         {
-          path: "/brand",
-          element: <BrandManagementPage />,
+          path: "brand",
+          element: isAuthority ? (
+            <BrandManagementPage />
+          ) : (
+            <Navigate to="/" replace />
+          ),
         },
-        {
-          element: <ChartPage />,
-          path: "/chart",
-        },
+        { path: "chart", element: isAdmin ? <ChartPage /> : <ForBidden /> },
       ],
     },
-    // {
-    //   element: <Error />,
-    //   path: "*",
-    // },
+    { path: "/error", element: <Error /> },
   ]);
 
-  return (
-    <>
-      {routes}
-      <Notification
-        visible={isNotificationVisible}
-        onClose={closeNotification}
-      />
-    </>
-  );
+  return <>{routes}</>;
 };
 
 export default Router;

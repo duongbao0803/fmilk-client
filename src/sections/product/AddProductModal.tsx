@@ -14,7 +14,6 @@ import useProductService from "@/services/productService";
 import UploadImageProduct from "./UploadImageProduct";
 import moment from "moment/moment";
 import useBrandService from "@/services/brandService";
-import { Countries } from "@/constant/constant";
 import { formatDate } from "@/util/validate";
 
 export interface AddModalProps {
@@ -26,7 +25,7 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
   const [fileChange, setFileChange] = useState<string>("");
   const { setIsOpen, isOpen } = props;
   const [isConfirmLoading, setIsConfirmLoading] = useState<boolean>(false);
-  const { addNewProductItem } = useProductService();
+  const { addNewProductItem } = useProductService("", "", "");
   const { brands } = useBrandService();
   const { Option } = Select;
   const { TextArea } = Input;
@@ -74,7 +73,7 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
 
   return (
     <Modal
-      title={<p className="text-lg text-[red]">Add new product</p>}
+      title={<p className="text-lg text-[red]">Thêm sản phẩm</p>}
       open={isOpen}
       onOk={handleOk}
       confirmLoading={isConfirmLoading}
@@ -88,7 +87,7 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
               rules={[
                 {
                   required: true,
-                  message: "Please input name",
+                  message: "Vui lòng nhập tên sản phẩm",
                 },
                 {
                   min: 5,
@@ -96,13 +95,13 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
                 },
               ]}
               colon={true}
-              label="Name"
+              label="Tên sản phẩm"
               labelCol={{ span: 24 }}
               className="formItem"
             >
               <Input
                 prefix={<UserOutlined className="site-form-item-icon mr-1" />}
-                placeholder="Name"
+                placeholder="Tên sản phẩm"
                 autoFocus
               />
             </Form.Item>
@@ -113,11 +112,11 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
               rules={[
                 {
                   required: true,
-                  message: "Please select expireDate",
+                  message: "Vui lòng chọn ngày hết hạn",
                 },
               ]}
               colon={true}
-              label="Expire Date"
+              label="Ngày hết hạn"
               labelCol={{ span: 24 }}
               className="formItem"
             >
@@ -132,21 +131,69 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
         </Row>
 
         <Row gutter={16} className="relative mt-1">
-          <Col span={12}>
+          <Col span={8}>
+            <Form.Item
+              name="price"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng nhập giá",
+                },
+              ]}
+              colon={true}
+              label="Giá"
+              labelCol={{ span: 24 }}
+              className="formItem"
+            >
+              <InputNumber
+                className="w-full"
+                type="number"
+                prefix={
+                  <PoundCircleOutlined className="site-form-item-icon mr-1" />
+                }
+                placeholder="Giá"
+              />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item
+              name="quantity"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng nhập số lượng",
+                },
+              ]}
+              colon={true}
+              label="Số lượng"
+              labelCol={{ span: 24 }}
+              className="formItem"
+            >
+              <InputNumber
+                type="number"
+                className="w-full"
+                prefix={
+                  <PoundCircleOutlined className="site-form-item-icon mr-1" />
+                }
+                placeholder="Số lượng"
+              />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
             <Form.Item
               name="brand"
               rules={[
                 {
                   required: true,
-                  message: "Please select brand",
+                  message: "Vui lòng chọn thương hiệu",
                 },
               ]}
               colon={true}
-              label="Brand"
+              label="Thương hiệu"
               labelCol={{ span: 24 }}
               className="formItem"
             >
-              <Select placeholder="Select brand">
+              <Select placeholder="Chọn thương hiệu">
                 {brands?.map(
                   (
                     brand: { _id: unknown; brandName: unknown },
@@ -164,93 +211,20 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
               </Select>
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item
-              name="origin"
-              rules={[
-                {
-                  required: true,
-                  message: "Please select origin",
-                },
-              ]}
-              colon={true}
-              label="Origin"
-              labelCol={{ span: 24 }}
-              className="formItem"
-            >
-              <Select placeholder="Select brand">
-                {Countries?.map((country, index: number) => (
-                  <Option key={index} value={country} label={country}>
-                    {country}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16} className="relative mt-1">
-          <Col span={12}>
-            <Form.Item
-              name="price"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input price",
-                },
-              ]}
-              colon={true}
-              label="Price"
-              labelCol={{ span: 24 }}
-              className="formItem"
-            >
-              <InputNumber
-                className="w-full"
-                type="number"
-                prefix={
-                  <PoundCircleOutlined className="site-form-item-icon mr-1" />
-                }
-                placeholder="Price"
-              />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="quantity"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input quantity",
-                },
-              ]}
-              colon={true}
-              label="Quantity"
-              labelCol={{ span: 24 }}
-              className="formItem"
-            >
-              <InputNumber
-                type="number"
-                className="w-full"
-                prefix={
-                  <PoundCircleOutlined className="site-form-item-icon mr-1" />
-                }
-                placeholder="Quantity"
-              />
-            </Form.Item>
-          </Col>
         </Row>
         <Form.Item
           name="description"
           rules={[
             {
               required: true,
-              message: "Please input description",
+              message: "Vui lòng nhập mô tả",
             },
           ]}
-          label="Description"
+          label="Mô tả"
           labelCol={{ span: 24 }}
           className="formItem"
         >
-          <TextArea placeholder="Description" />
+          <TextArea placeholder="Mô tả" />
         </Form.Item>
 
         <Form.Item
@@ -258,11 +232,11 @@ const AddProductModal: React.FC<AddModalProps> = (props) => {
           rules={[
             {
               required: true,
-              message: "Please select image",
+              message: "Vui lòng chọn hình ảnh",
             },
           ]}
           colon={true}
-          label="Image"
+          label="Hình ảnh"
           labelCol={{ span: 24 }}
           className="formItem"
         >

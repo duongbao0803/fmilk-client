@@ -14,7 +14,8 @@ export interface AddPostModalProps {
 const AddPostModal: React.FC<AddPostModalProps> = (props) => {
   const { Option } = Select;
   const [fileChange, setFileChange] = useState<string>("");
-  const { products } = useProductService();
+  const { TextArea } = Input;
+  const { products } = useProductService("", "", "");
   const { setIsOpen, isOpen } = props;
   const [isConfirmLoading, setIsConfirmLoading] = useState<boolean>(false);
   const { addNewPostItem } = usePostService();
@@ -55,7 +56,7 @@ const AddPostModal: React.FC<AddPostModalProps> = (props) => {
 
   return (
     <Modal
-      title={<p className="text-lg text-[red]">Add new post</p>}
+      title={<p className="text-lg text-[red]">Thêm bài viết</p>}
       open={isOpen}
       onOk={handleOk}
       confirmLoading={isConfirmLoading}
@@ -67,21 +68,21 @@ const AddPostModal: React.FC<AddPostModalProps> = (props) => {
           rules={[
             {
               required: true,
-              message: "Please input title",
+              message: "Vui lòng nhập tiêu đề",
             },
             {
               min: 5,
-              message: "Title must be at least 5 characters",
+              message: "Tiêu đề phải có ít nhất 5 ký tự",
             },
           ]}
           colon={true}
-          label="Title"
+          label="Tiêu đề"
           labelCol={{ span: 24 }}
           className="formItem"
         >
           <Input
             prefix={<UserOutlined className="site-form-item-icon mr-1" />}
-            placeholder="Title"
+            placeholder="Tiêu đề"
             autoFocus
           />
         </Form.Item>
@@ -90,46 +91,46 @@ const AddPostModal: React.FC<AddPostModalProps> = (props) => {
           rules={[
             {
               required: true,
-              message: "Please input description",
+              message: "Vui lòng nhập mô tả",
             },
             {
               min: 5,
-              message: "Title must be at least 5 characters",
+              message: "Mô tả phải có ít nhất 5 ký tự",
             },
           ]}
           colon={true}
-          label="Description"
+          label="Mô tả"
           labelCol={{ span: 24 }}
           className="formItem"
         >
-          <Input
-            prefix={<UserOutlined className="site-form-item-icon mr-1" />}
-            placeholder="Description"
-            autoFocus
-          />
+          <TextArea placeholder="Mô tả" />
         </Form.Item>
 
         <Form.Item
-          name="productId"
+          name="product"
           rules={[
             {
               required: true,
-              message: "Please select product",
+              message: "Vui lòng chọn sản phẩm",
             },
           ]}
           colon={true}
-          label="Product"
+          label="Sản phẩm"
           labelCol={{ span: 24 }}
           className="formItem"
         >
           <Select
             showSearch
-            placeholder="Please select product"
+            placeholder="Chọn sản phẩm"
             optionFilterProp="children"
           >
-            {products.map((product: ProductInfo, index: number) => (
-              <Option key={index} value={`${product._id}`} label={product.name}>
-                {`${product.name}`}
+            {products?.map((product: ProductInfo, index: number) => (
+              <Option
+                key={index}
+                value={`${product?._id}`}
+                label={product?.name}
+              >
+                {`${product?.name}`}
               </Option>
             ))}
           </Select>
@@ -139,11 +140,11 @@ const AddPostModal: React.FC<AddPostModalProps> = (props) => {
           rules={[
             {
               required: true,
-              message: "Please select image",
+              message: "Vui lòng chọn hình ảnh",
             },
           ]}
           colon={true}
-          label="Image"
+          label="Hình ảnh"
           labelCol={{ span: 24 }}
           className="formItem"
         >

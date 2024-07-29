@@ -31,7 +31,7 @@ const DropdownFunctionUser: React.FC<DropdownFunctionProps> = (props) => {
               label: (
                 <Link rel="noopener noreferrer" to="#" onClick={openEditModal}>
                   <EditOutlined className="pr-2" />
-                  Edit User
+                  Chỉnh sửa người dùng
                 </Link>
               ),
             },
@@ -49,7 +49,7 @@ const DropdownFunctionUser: React.FC<DropdownFunctionProps> = (props) => {
                   }
                 >
                   <DeleteOutlined className="pr-2" />
-                  Delete User
+                  Xóa người dùng
                 </Link>
               ),
             },

@@ -9,12 +9,12 @@ const ChartView: React.FC = React.memo(() => {
     labels: SystemData.map((data) => data.year),
     datasets: [
       {
-        label: "Người đặt vé",
+        label: "Người đặt đơn",
         data: SystemData.map((data) => data.userGain),
         backgroundColor: ["green", "blue"],
       },
       {
-        label: "Người hủy vé",
+        label: "Người hủy đơn",
         data: SystemData.map((data) => data.userLost),
         backgroundColor: ["yellow", "orange"],
       },

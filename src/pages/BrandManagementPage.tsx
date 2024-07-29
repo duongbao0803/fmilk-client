@@ -5,7 +5,7 @@ const BrandManagementPage = () => {
   return (
     <>
       <Helmet>
-        <title> FMilk | Brand management </title>
+        <title> FMilk | Quản lý thương hiệu </title>
       </Helmet>
       <BrandManagementView />
     </>

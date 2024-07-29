@@ -13,7 +13,7 @@ export interface DropdownFunctionProps {
 
 const DropdownFunction: React.FC<DropdownFunctionProps> = (props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { deleteProductItem } = useProductService();
+  const { deleteProductItem } = useProductService("", "", "");
   const { productInfo } = props;
   const productId = productInfo?._id;
 
@@ -31,7 +31,7 @@ const DropdownFunction: React.FC<DropdownFunctionProps> = (props) => {
               label: (
                 <Link rel="noopener noreferrer" to="#" onClick={openEditModal}>
                   <EditOutlined className="pr-2" />
-                  Edit Product
+                  Chỉnh sửa sản phẩm
                 </Link>
               ),
             },
@@ -49,7 +49,7 @@ const DropdownFunction: React.FC<DropdownFunctionProps> = (props) => {
                   }
                 >
                   <DeleteOutlined className="pr-2" />
-                  Delete Product
+                  Xóa sản phẩm
                 </Link>
               ),
             },

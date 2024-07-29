@@ -6,7 +6,7 @@ const PostMangementPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title> FMilk | Post management </title>
+        <title> FMilk | Quản lý bài viết </title>
       </Helmet>
       <PostManagementView />
     </>

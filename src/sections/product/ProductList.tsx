@@ -6,7 +6,6 @@ import useProductService from "@/services/productService";
 import ExportButton from "./ExportProduct";
 import DropdownFunction from "./DropdownFunction";
 import AddProductModal from "./AddProductModal";
-import useBrandService from "@/services/brandService";
 import { Dayjs } from "dayjs";
 
 export interface DataType {
@@ -23,33 +22,25 @@ export interface DataType {
 }
 
 const ProductList: React.FC = () => {
-  const { products, isFetching } = useProductService();
+  const { products, isFetching, totalCount } = useProductService("", "", "");
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const { brands } = useBrandService();
 
   const handleTableChange = (pagination: TablePaginationConfig) => {
     setCurrentPage(pagination.current || 1);
   };
 
-  const getBrandNameById = (brandId: string) => {
-    const brand = brands?.find(
-      (brand: { _id: string }) => brand?._id === brandId,
-    );
-    return brand ? brand?.brandName : "N/A";
-  };
-
   const columns: TableProps<DataType>["columns"] = [
     {
-      title: "Name",
+      title: "Tên sản phẩm",
       dataIndex: "name",
       width: "15%",
       className: "first-column",
     },
     {
-      title: "Image",
+      title: "Hình ảnh",
       dataIndex: "image",
       width: "10%",
       render: (image) => (
@@ -61,35 +52,36 @@ const ProductList: React.FC = () => {
       ),
     },
     {
-      title: "Description",
+      title: "Mô tả",
       dataIndex: "description",
-      width: "25%",
+      width: "35%",
     },
     {
-      title: "Quantity",
+      title: "Số lượng",
       dataIndex: "quantity",
-      width: "2%",
+      width: "9%",
     },
     {
-      title: "Brand",
+      title: "Thương hiệu",
       dataIndex: "brand",
       width: "5%",
-      render: (brandId: string) => getBrandNameById(brandId),
+      render: (brand) => brand?.brandName || "N/A",
     },
     {
-      title: "Origin",
-      dataIndex: "origin",
-      width: "13%",
+      title: "Xuất xứ",
+      dataIndex: "brand",
+      width: "10%",
+      render: (brand) => brand?.origin || "N/A",
     },
     {
-      title: "Price",
+      title: "Giá",
       dataIndex: "price",
-      width: "10%",
+      width: "7%",
     },
     {
-      title: "Status",
+      title: "Trạng thái",
       dataIndex: "status",
-      width: "10%",
+      width: "7%",
       render: (status) => {
         let color;
         switch (status) {
@@ -124,12 +116,12 @@ const ProductList: React.FC = () => {
       <div className="flex justify-between">
         <div className="flex gap-x-2">
           <Input
-            placeholder="Search by..."
+            placeholder="Tìm kiếm theo..."
             className="h-8 max-w-lg rounded-lg sm:mb-5 sm:w-[300px]"
           />
           <Button className="flex items-center" type="primary">
             <FilterOutlined className="align-middle" />
-            Sort
+            Lọc
           </Button>
         </div>
         <div className="flex gap-x-2">
@@ -139,7 +131,7 @@ const ProductList: React.FC = () => {
           <div>
             <Button type="primary" onClick={() => setIsOpen(true)}>
               <div className="flex justify-center">
-                <AppstoreAddOutlined className="mr-1 text-lg" /> Add Product
+                <AppstoreAddOutlined className="mr-1 text-lg" /> Thêm sản phẩm
               </div>
             </Button>
           </div>
@@ -155,7 +147,7 @@ const ProductList: React.FC = () => {
         }))}
         pagination={{
           current: currentPage,
-          total: products.totalProducts || 0,
+          total: totalCount || 0,
           pageSize: 5,
         }}
         onChange={handleTableChange}

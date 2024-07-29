@@ -53,15 +53,15 @@ const usePostService = () => {
   const deletePostMutation = useMutation(deletePost, {
     onSuccess: () => {
       notification.success({
-        message: "Delete Successful",
-        description: "Delete post successful",
+        message: "Xóa thành công",
+        description: "Xóa bài viết thành công",
         duration: 2,
       });
       queryClient.invalidateQueries("posts");
     },
     onError: (err: CustomError) => {
       notification.error({
-        message: "Delete Failed",
+        message: "Xóa thất bại",
         description: `${err?.response?.data?.message}`,
         duration: 2,
       });
@@ -71,8 +71,8 @@ const usePostService = () => {
   const updatePostInfoMutation = useMutation(updatePostInfo, {
     onSuccess: () => {
       notification.success({
-        message: "Update Successful",
-        description: "Update infomation successful",
+        message: "Cập nhật thành công",
+        description: "Cập nhật thông tin bài viết thành công",
         duration: 2,
       });
       queryClient.invalidateQueries("posts");
@@ -80,7 +80,7 @@ const usePostService = () => {
     onError: (err: CustomError) => {
       console.error("Error update", err);
       notification.error({
-        message: "Update Failed",
+        message: "Cập nhật thất bại",
         description: `${err?.response?.data?.message}`,
         duration: 2,
       });
@@ -90,15 +90,15 @@ const usePostService = () => {
   const addNewPostMutation = useMutation(addNewPost, {
     onSuccess: () => {
       notification.success({
-        message: "Add Successful",
-        description: "Add post successful",
+        message: "Thêm thành công",
+        description: "Thêm bài viết thành công",
         duration: 2,
       });
       queryClient.invalidateQueries("posts");
     },
     onError: (err: CustomError) => {
       notification.error({
-        message: "Add Failed",
+        message: "Thêm thất bại",
         description: `${err?.response?.data?.message}`,
         duration: 2,
       });

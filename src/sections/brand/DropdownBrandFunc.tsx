@@ -31,7 +31,7 @@ const DropdownBrand: React.FC<DropdownBrandProps> = (props) => {
               label: (
                 <Link rel="noopener noreferrer" to="#" onClick={openEditModal}>
                   <EditOutlined className="pr-2" />
-                  Edit brand
+                  Chỉnh sửa thương hiệu
                 </Link>
               ),
             },
@@ -44,7 +44,7 @@ const DropdownBrand: React.FC<DropdownBrandProps> = (props) => {
                   onClick={() => DeleteBrandModel({ deleteBrandItem, brandId })}
                 >
                   <DeleteOutlined className="pr-2" />
-                  Delete brand
+                  Xóa thương hiệu
                 </Link>
               ),
             },

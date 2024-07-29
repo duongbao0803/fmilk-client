@@ -6,7 +6,6 @@ import useProductService from "@/services/productService";
 import ExportButton from "./ExportProduct";
 import DropdownFunction from "./DropdownFunction";
 import AddProductModal from "./AddProductModal";
-import useBrandService from "@/services/brandService";
 import { Dayjs } from "dayjs";
 
 export interface DataType {
@@ -28,7 +27,6 @@ const ProductList: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const { brands } = useBrandService();
 
   const handleTableChange = (pagination: TablePaginationConfig) => {
     setCurrentPage(pagination.current || 1);

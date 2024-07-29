@@ -19,7 +19,7 @@ const EditPostModal: React.FC<EditModalProps> = React.memo((props) => {
   const [fileChange, setFileChange] = useState<string>("");
   const [isConfirmLoading, setIsConfirmLoading] = useState<boolean>(false);
   const { updatePostItem } = usePostService();
-  const { products } = useProductService("", "");
+  const { products } = useProductService("", "", "");
   const [form] = Form.useForm();
   const { TextArea } = Input;
 

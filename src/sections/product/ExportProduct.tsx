@@ -7,7 +7,7 @@ import { ExportOutlined } from "@ant-design/icons";
 import useProductService from "@/services/productService";
 
 const ExportButton: React.FC = () => {
-  const { products } = useProductService();
+  const { products } = useProductService("", "", "");
   const exportToFile = () => {
     const jsonData = JSON.stringify(products, null, 2);
     const worksheet = XLSX.utils.json_to_sheet(JSON.parse(jsonData));

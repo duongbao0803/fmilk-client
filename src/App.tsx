@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import Router from "./routes/Sections";
 import useAuth from "./hooks/useAuth";
 import Cookies from "js-cookie";
-import { QueryClient, QueryClientProvider } from "react-query";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import customParseFormat from "dayjs/plugin/customParseFormat";
@@ -12,7 +11,6 @@ import weekOfYear from "dayjs/plugin/weekOfYear";
 import weekYear from "dayjs/plugin/weekYear";
 import { ScrollToTop } from "./components";
 import useAuthService from "./services/authService";
-import { getInfoUser } from "./api/authenApi";
 
 dayjs.extend(customParseFormat);
 dayjs.extend(advancedFormat);

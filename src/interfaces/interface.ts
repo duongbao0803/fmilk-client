@@ -209,3 +209,24 @@ export interface Order {
   transferPrice: number;
   totalPrice: number;
 }
+
+interface Address {
+  fullName?: string;
+  address?: string;
+  phone?: string;
+}
+
+export interface CreateOrderProduct {
+  productId: string;
+  amount: number;
+}
+
+export interface CreateOrder {
+  transferAddress: Address;
+  orderProducts: CreateOrderProduct[];
+  userId?: string;
+  paymentMethod: string;
+  itemsPrice: number;
+  transferPrice: number;
+  totalPrice: number;
+}

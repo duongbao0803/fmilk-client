@@ -1,6 +1,7 @@
 import axiosClient from "@/config/axiosClient";
+import { CreateOrder } from "@/interfaces/interface";
 
-const createOrder = (formValues) => {
+const createOrder = (formValues: CreateOrder) => {
   return axiosClient.post("/v1/order/create", formValues);
 };
 

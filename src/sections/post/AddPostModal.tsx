@@ -15,7 +15,7 @@ const AddPostModal: React.FC<AddPostModalProps> = (props) => {
   const { Option } = Select;
   const [fileChange, setFileChange] = useState<string>("");
   const { TextArea } = Input;
-  const { products } = useProductService("", "");
+  const { products } = useProductService("", "", "");
   const { setIsOpen, isOpen } = props;
   const [isConfirmLoading, setIsConfirmLoading] = useState<boolean>(false);
   const { addNewPostItem } = usePostService();

@@ -5,14 +5,11 @@ import { Link } from "react-router-dom";
 import DeleteCommentModal from "./DeleteCommentModal";
 import EditCommentModal from "./EditCommentModal";
 import useProductService from "@/services/productService";
-import { ProductInfo } from "@/interfaces/interface";
-// import useWatchService from "../../services/watchService";
-// import DeleteCommentModal from "./DeleteCommentModal";
-// import EditCommentModal from "./EditCommentModal";
+import { FeedBack, ProductInfo } from "@/interfaces/interface";
 
 export interface DropdownCommentProps {
   commentId: string;
-  commentInfo: object;
+  commentInfo: FeedBack;
   product: ProductInfo;
 }
 
@@ -74,7 +71,6 @@ const DropdownCommentFunc: React.FC<DropdownCommentProps> = React.memo(
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           commentInfo={commentInfo}
-          // productId={productId}
           product={product}
         />
       </>

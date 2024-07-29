@@ -6,7 +6,7 @@ const OrderedPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title> FMilk | Ordered </title>
+        <title> FMilk | Đơn hàng đã đặt </title>
       </Helmet>
       <OrderedView />
     </>

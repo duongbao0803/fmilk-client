@@ -35,6 +35,12 @@ const CustomNav: React.FC = React.memo(() => {
       setSelected(currentTab.name);
     } else if (location.pathname === "/cart") {
       setSelected("");
+    } else if (
+      location.pathname === "/personal" ||
+      location.pathname === "/password" ||
+      location.pathname === "/ordered"
+    ) {
+      setSelected("");
     }
   }, [location]);
 

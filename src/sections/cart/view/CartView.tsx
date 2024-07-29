@@ -1,6 +1,5 @@
-import Header from "@/layout/Header";
-import Footer from "@/layout/Footer";
 import React, { useState } from "react";
+
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Input, notification, Table, TableProps } from "antd";
 import {
@@ -11,10 +10,10 @@ import {
 } from "@ant-design/icons";
 import useCartStore from "@/hooks/useCartStore";
 import { PriceFormat } from "@/util/validate";
-import DeleteCartModal from "./DeleteCartModal";
+import DeleteCartModal from "../DeleteCartModal";
 import { CartItem } from "@/interfaces/interface";
 
-const CartPage: React.FC = () => {
+const CartView: React.FC = () => {
   const [discountCode, setDiscountCode] = useState<string>("");
   const { cart, addToCart, itemsPrice, removeCart } = useCartStore();
   const navigate = useNavigate();
@@ -131,7 +130,6 @@ const CartPage: React.FC = () => {
 
   return (
     <>
-      <Header />
       <div>
         <div className="h-[600px]">
           <div className="background4 relative top-[69.5px]">
@@ -227,9 +225,8 @@ const CartPage: React.FC = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 };
 
-export default CartPage;
+export default CartView;

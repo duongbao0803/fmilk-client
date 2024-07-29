@@ -1,7 +1,7 @@
-import { FeedBack, ProductInfo } from "@/interfaces/interface";
-import useProductService from "@/services/productService";
 import { Form, Input, Modal, Rate } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
+import { FeedBack, ProductInfo } from "@/interfaces/interface";
+import useProductService from "@/services/productService";
 
 interface EditCommentModalProps {
   isOpen: boolean;

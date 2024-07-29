@@ -6,7 +6,7 @@ const ProductManagementPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title> FMilk | Product management </title>
+        <title> FMilk | Quản lý sản phẩm </title>
       </Helmet>
       <ProductManagementView />
     </>

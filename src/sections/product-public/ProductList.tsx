@@ -132,13 +132,18 @@ const ProductList: React.FC = () => {
                         alt={product?.name}
                         className="h-full w-full object-cover p-3 transition-all duration-300 ease-in-out group-hover:scale-110"
                       />
-                      <button className="absolute bottom-0 flex h-full w-full items-center justify-center bg-gray-800 bg-opacity-50 opacity-0 transition-all duration-300 ease-in-out group-hover:scale-110 group-hover:transform group-hover:opacity-100">
-                        <p className="text-md mx-5 border-2 p-2 font-semibold text-[#fff] hover:bg-[#fff] hover:text-black xl:text-lg">
-                          <button onClick={() => handleAddtoCart(product)}>
-                            + Thêm vào giỏ hàng
-                          </button>
-                        </p>
-                      </button>
+                      {infoUser?.role === Role.ADMIN ||
+                      infoUser?.role === Role.STAFF ? (
+                        ""
+                      ) : (
+                        <button className="absolute bottom-0 flex h-full w-full items-center justify-center bg-gray-800 bg-opacity-50 opacity-0 transition-all duration-300 ease-in-out group-hover:scale-110 group-hover:transform group-hover:opacity-100">
+                          <p className="text-md mx-5 border-2 p-2 font-semibold text-[#fff] hover:bg-[#fff] hover:text-black xl:text-lg">
+                            <button onClick={() => handleAddtoCart(product)}>
+                              + Thêm vào giỏ hàng
+                            </button>
+                          </p>
+                        </button>
+                      )}
                     </div>
                     <Link to={`/product/${product?._id}`}>
                       <div className="flex flex-col items-center p-4 text-center">

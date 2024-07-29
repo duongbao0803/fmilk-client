@@ -6,7 +6,7 @@ const PersonalPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title> FMilk | Personal </title>
+        <title> FMilk | Thông tin cá nhân </title>
       </Helmet>
       <PersonalView />
     </>

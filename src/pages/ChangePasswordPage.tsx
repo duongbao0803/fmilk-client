@@ -6,7 +6,7 @@ const ChangePasswordPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title> FMilk | Change password </title>
+        <title> FMilk | Đổi mật khẩu </title>
       </Helmet>
       <ChangePasswordView />
     </>

@@ -1,13 +1,9 @@
+import React, { useEffect } from "react";
 import { Loading } from "@/components";
 import usePaymentResult from "@/hooks/usePaymentResult";
-import { PaymentData } from "@/interfaces/interface";
-import Footer from "@/layout/Footer";
-import Header from "@/layout/Header";
-import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const PaymentView: React.FC = () => {
-  const [paymentData, setPaymentData] = useState<PaymentData>({});
   const location = useLocation();
   const navigate = useNavigate();
   const setPaymentResult = usePaymentResult((state) => state.setPaymentResult);
@@ -36,13 +32,11 @@ const PaymentView: React.FC = () => {
 
   return (
     <>
-      <Header />
       <div className="min-h-screen">
         <div className="text-center">
           <Loading />
         </div>
       </div>
-      <Footer />
     </>
   );
 };

@@ -28,7 +28,7 @@ const EditProductModal: React.FC<EditModalProps> = (props) => {
   const { setIsOpen, isOpen, productInfo } = props;
   const [fileChange, setFileChange] = useState<string>("");
   const [isConfirmLoading, setIsConfirmLoading] = useState<boolean>(false);
-  const { updateProductItem } = useProductService("", "");
+  const { updateProductItem } = useProductService("", "", "");
   const [form] = Form.useForm();
   const { brands } = useBrandService();
   const { Option } = Select;

@@ -1,17 +1,14 @@
-import Footer from "@/layout/Footer";
-import Header from "@/layout/Header";
-import { ProductPublicView } from "@/sections/product-public/view";
+import React from "react";
 import { Helmet } from "react-helmet";
+import { ProductPublicView } from "@/sections/product-public/view";
 
-const ProductPublicPage = () => {
+const ProductPublicPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title> FMilk | Product management </title>
+        <title> FMilk | Sản phẩm </title>
       </Helmet>
-      <Header />
       <ProductPublicView />
-      <Footer />
     </>
   );
 };

@@ -13,7 +13,7 @@ export interface DropdownFunctionProps {
 
 const DropdownFunction: React.FC<DropdownFunctionProps> = (props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { deleteProductItem } = useProductService("", "");
+  const { deleteProductItem } = useProductService("", "", "");
   const { productInfo } = props;
   const productId = productInfo?._id;
 

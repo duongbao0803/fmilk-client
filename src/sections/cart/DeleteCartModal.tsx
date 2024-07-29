@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from "react";
 import { Modal } from "antd";
 import { CartItem } from "@/interfaces/interface";
@@ -11,9 +10,9 @@ const DeleteCartModal: React.FC<{
   confirm({
     title: "Xóa sản phẩm",
     content: `Bạn có chắc chắn muốn xóa ${record.name} khỏi giỏ hàng`,
-    okText: "Yes",
+    okText: "Đồng ý",
     okType: "danger",
-    cancelText: "No",
+    cancelText: "Không",
     onOk() {
       removeCart(record._id);
     },

@@ -1,15 +1,13 @@
+import React, { useCallback, useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { notification } from "antd";
+import { HomeFilled, RightOutlined } from "@ant-design/icons";
 import { Role } from "@/enums/enum";
 import useCartStore from "@/hooks/useCartStore";
 import { PostInfo, ProductInfo } from "@/interfaces/interface";
-import Footer from "@/layout/Footer";
-import Header from "@/layout/Header";
 import useAuthService from "@/services/authService";
 import usePostService from "@/services/postService";
 import { PriceFormat } from "@/util/validate";
-import { HomeFilled, RightOutlined } from "@ant-design/icons";
-import { notification } from "antd";
-import React, { useCallback, useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
 
 const PostDetail: React.FC = () => {
   const { postId } = useParams();
@@ -66,7 +64,6 @@ const PostDetail: React.FC = () => {
 
   return (
     <>
-      <Header />
       <div className="min-h-screen bg-[#f5f5f5] px-10 pb-16 md:px-52">
         <div className=" pt-28">
           <Link to={"/"}>
@@ -142,8 +139,6 @@ const PostDetail: React.FC = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
     </>
   );
 };

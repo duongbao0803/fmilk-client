@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
-import Footer from "./Footer";
-import Header from "./Header";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { notification } from "antd";
 import { HomeFilled, RightOutlined } from "@ant-design/icons";
 import useAuth from "@/hooks/useAuth";
 import avatarUser from "@/assets/images/logo/avatar_user.jpg";
-import { notification } from "antd";
 import useAuthService from "@/services/authService";
+import useCartStore from "@/hooks/useCartStore";
 
-const UserLayout: React.FC = React.memo(({ children }) => {
+interface UserLayoutProps {
+  children: React.ReactNode;
+}
+
+const UserLayout: React.FC<UserLayoutProps> = React.memo(({ children }) => {
   const { logout } = useAuth();
+  const clearCart = useCartStore((state) => state.clearCart);
   const { infoUser } = useAuthService();
   const [activeButton, setActiveButton] = useState<number>(1);
   const navigate = useNavigate();
@@ -42,12 +46,12 @@ const UserLayout: React.FC = React.memo(({ children }) => {
       duration: 2,
     });
     logout();
+    clearCart();
     navigate("/");
   };
 
   return (
     <>
-      <Header />
       <div className="min-h-screen bg-[#f2f6fa] pt-32">
         <div className="mx-16 lg:mx-44">
           <div className="mb-10">
@@ -121,8 +125,6 @@ const UserLayout: React.FC = React.memo(({ children }) => {
           </div>
         </div>
       </div>
-
-      <Footer />
     </>
   );
 });

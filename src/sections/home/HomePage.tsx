@@ -1,6 +1,4 @@
 import React, { useCallback } from "react";
-import Header from "@/layout/Header";
-import Footer from "@/layout/Footer";
 import { Carousel, notification, Skeleton } from "antd";
 import Intro from "./Intro";
 import Slider from "./Slider";
@@ -51,7 +49,6 @@ const HomePage: React.FC = React.memo(() => {
   return (
     <>
       <div className="min-h-screen">
-        <Header />
         <Carousel autoplay>
           <div className="background" />
           <div className="background2" />
@@ -131,7 +128,7 @@ const HomePage: React.FC = React.memo(() => {
         <div className="mb-24 flex justify-center" data-aos="fade-up">
           <button
             onClick={() => navigate("/product")}
-            className="w-[300px] border-2 bg-[#08cde9] py-3 font-bold text-[white] transition-all duration-500 ease-in-out hover:rounded-2xl hover:border-[#08cde9] hover:bg-[white] hover:tracking-widest hover:text-[#08cde9]"
+            className="w-[300px] border-2 border-transparent bg-[#08cde9] py-3 font-bold text-[white] transition-all duration-500 ease-in-out hover:rounded-2xl hover:border-[#08cde9] hover:bg-[white] hover:tracking-widest hover:text-[#08cde9]"
           >
             Xem thêm
           </button>
@@ -141,7 +138,6 @@ const HomePage: React.FC = React.memo(() => {
           <Slider />
         </div>
       </div>
-      <Footer />
     </>
   );
 });

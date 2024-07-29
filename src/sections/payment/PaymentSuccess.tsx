@@ -1,20 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import successIcon from "@/assets/images/success-icon.png";
 import { formatDateFromString, PriceFormat } from "@/util/validate";
-import Header from "@/layout/Header";
-import Footer from "@/layout/Footer";
 import usePaymentResult from "@/hooks/usePaymentResult";
 import useAuthService from "@/services/authService";
+import useCartStore from "@/hooks/useCartStore";
 
 const PaymentSuccess: React.FC = () => {
   const paymentResult = usePaymentResult((state) => state.paymentResult);
+  const clearCart = useCartStore((state) => state.clearCart);
+
   const { infoUser } = useAuthService();
 
-  const formattedCurrency = PriceFormat.format(paymentResult?.["vnp_Amount"]);
+  const formattedCurrency = PriceFormat.format(
+    paymentResult?.["vnp_Amount"] ?? 0,
+  );
+
+  useEffect(() => {
+    clearCart();
+  }, []);
 
   return (
     <>
-      <Header />
       <div className="bg-[#f5f5f5] pt-[70px]">
         <div className="mx-auto my-0 min-h-[100px] w-[573px] px-0 py-[50px]  ">
           <div className="border-1 relative border-2 border-[#5D9C59] bg-[#fff]">
@@ -134,7 +140,6 @@ const PaymentSuccess: React.FC = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 };

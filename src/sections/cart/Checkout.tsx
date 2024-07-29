@@ -11,23 +11,22 @@ import {
 } from "antd";
 import { HomeFilled, RightOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { createOrder } from "@/api/orderApi";
+import { Role } from "@/enums/enum";
 import useCartStore from "@/hooks/useCartStore";
 import { PriceFormat, validatePhoneNumber } from "@/util/validate";
-import { CartItem, CustomError } from "@/interfaces/interface";
+import { CartItem } from "@/interfaces/interface";
 import LogoVnpay from "@/assets/images/logo/logo_vnpay.png";
 import LogoCash from "@/assets/images/logo/logo_cash.png";
-import { createOrder } from "@/api/orderApi";
 import useAuthService from "@/services/authService";
-import Footer from "@/layout/Footer";
-import Header from "@/layout/Header";
-import { Role } from "@/enums/enum";
 
 const Checkout: React.FC = () => {
   const testPrice = localStorage.getItem("cart");
-  const parseJson = JSON.parse(testPrice);
-  const { cart, itemsPrice } = useCartStore();
+  const parseJson = testPrice ? JSON.parse(testPrice) : null;
+  const { cart, itemsPrice, clearCart } = useCartStore();
   const { infoUser } = useAuthService();
   const [value, setValue] = useState<string>("");
+  const [isConfirm, setIsConfirm] = useState<boolean>(false);
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -129,7 +128,7 @@ const Checkout: React.FC = () => {
     amount: product.quantity,
   }));
 
-  const [data, setData] = useState({
+  const [data] = useState({
     transferAddress: {
       fullName: infoUser?.username,
       address: infoUser?.address,
@@ -145,6 +144,13 @@ const Checkout: React.FC = () => {
 
   const handlePayment = async () => {
     try {
+      if (!isConfirm) {
+        notification.warning({
+          message: "Thanh toán thất bại",
+          description: "Vui lòng xác nhận đơn hàng trước khi thanh toán",
+          duration: 2,
+        });
+      }
       const formValues = {
         ...data,
         transferAddress: form.getFieldsValue(),
@@ -169,21 +175,24 @@ const Checkout: React.FC = () => {
               "Đơn hàng đã được tạo thành công! Chúng tôi sẽ liên hệ với bạn sớm. Xin cảm ơn",
             duration: 2,
           });
+          clearCart();
         }
       }
-    } catch (err: CustomError) {
-      notification.error({
-        message: "Tạo đơn hàng thất bại",
-        description: `${err.response.data.message}`,
-        duration: 2,
-      });
+    } catch (err: unknown) {
+      if (err && typeof err === "object" && "response" in err) {
+        const error = err as { response: { data: { message: string } } };
+        notification.error({
+          message: "Tạo đơn hàng thất bại",
+          description: error.response.data.message,
+          duration: 2,
+        });
+      }
       console.error("Err payment", err);
     }
   };
 
   return (
     <>
-      <Header />
       <div>
         <div className="h-[600px]">
           <div className="background4 relative top-[69.5px]">
@@ -353,7 +362,11 @@ const Checkout: React.FC = () => {
                       </div>
                     </Radio.Group>
                     <div className="mt-5 flex gap-2">
-                      <input type="checkbox" required />
+                      <input
+                        type="checkbox"
+                        required
+                        onChange={(e) => setIsConfirm(e.target.checked)}
+                      />
                       <p className="text-sm">
                         Vui lòng xác nhận lại đơn hàng trước khi thanh toán
                       </p>
@@ -372,7 +385,6 @@ const Checkout: React.FC = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 };

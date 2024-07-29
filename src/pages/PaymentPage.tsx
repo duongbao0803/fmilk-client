@@ -6,7 +6,7 @@ const PaymentPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title> FMilk | Payment </title>
+        <title> FMilk | Thanh toán </title>
       </Helmet>
       <PaymentView />
     </>

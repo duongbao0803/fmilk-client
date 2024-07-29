@@ -14,6 +14,9 @@ import { Role } from "@/enums/enum";
 import avatarAdmin from "@/assets/images/logo/avatar_admin.jpg";
 import avatarStaff from "@/assets/images/logo/avatar_staff.jpg";
 import useAuthService from "@/services/authService";
+import Logo from "@/assets/images/logo/logo_fmilk_web.png";
+import LogoFull from "@/assets/images/logo/logo_fmilk_preview_rev_1.png";
+import useCartStore from "@/hooks/useCartStore";
 
 const { Content, Sider, Footer } = Layout;
 
@@ -44,6 +47,7 @@ const items: MenuItem[] = [
 const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
   const { infoUser } = useAuthService();
   const logout = useAuth((state) => state.logout);
+  const clearCart = useCartStore((state) => state.clearCart);
 
   const navigate = useNavigate();
   const { username, role } = infoUser as UserInfo;
@@ -94,6 +98,7 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
       duration: 2,
     });
     logout();
+    clearCart();
     navigate("/");
   };
 
@@ -114,9 +119,11 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
         <div className=" flex justify-center">
           <Link to="/">
             <img
-              className="h-[120px] w-[200px] select-none object-cover"
-              src="https://firebasestorage.googleapis.com/v0/b/swd392-d2c4e.appspot.com/o/FMilk%2Flogo_fmilk.png?alt=media&token=2b0d6848-7bf9-459e-a28d-444dab95a287"
-              alt=""
+              className={`my-5 select-none object-cover ${
+                collapsed ? "max-h-[50px] w-[30px]" : "h-[50px] w-[150px]"
+              }`}
+              src={collapsed ? Logo : LogoFull}
+              alt="Logo"
             />
           </Link>
         </div>

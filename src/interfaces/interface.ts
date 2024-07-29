@@ -180,3 +180,32 @@ export interface FeedBack {
   rating: number;
   content: string;
 }
+
+export interface Comment {
+  author: {
+    _id: string;
+    name: string;
+  };
+  createdAt: string;
+  rating: number;
+  content: string;
+  _id: string;
+}
+
+export interface OrderProduct {
+  image: string;
+  name: string;
+  amount: number;
+  price: number;
+}
+
+export interface Order {
+  _id: string;
+  createdAt: string;
+  transactions: {
+    status: string;
+  }[];
+  orderProducts: OrderProduct[];
+  transferPrice: number;
+  totalPrice: number;
+}

@@ -1,11 +1,5 @@
-import { Role } from "@/enums/enum";
-import useCartStore from "@/hooks/useCartStore";
-import { ProductInfo } from "@/interfaces/interface";
-import Footer from "@/layout/Footer";
-import Header from "@/layout/Header";
-import useAuthService from "@/services/authService";
-import useProductService from "@/services/productService";
-import { convertToDDMMYYYY, PriceFormat } from "@/util/validate";
+import React, { useCallback, useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   CarFilled,
   ClockCircleOutlined,
@@ -14,8 +8,12 @@ import {
   RightOutlined,
 } from "@ant-design/icons";
 import { Divider, Image, notification, Progress, Rate } from "antd";
-import React, { useCallback, useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Role } from "@/enums/enum";
+import useCartStore from "@/hooks/useCartStore";
+import { Comment, ProductInfo } from "@/interfaces/interface";
+import useAuthService from "@/services/authService";
+import useProductService from "@/services/productService";
+import { convertToDDMMYYYY, PriceFormat } from "@/util/validate";
 import CommentModal from "./CommentModal";
 import LogoUser from "@/assets/images/logo/avatar_user.jpg";
 import LogoNotFound from "@/assets/images/logo/logo_not_found.png";
@@ -105,7 +103,6 @@ const ProductDetail: React.FC = () => {
 
   return (
     <>
-      <Header />
       <div className="min-h-screen bg-[#f5f5f5] px-10 pb-16 md:px-52">
         <div className="mb-5 pt-28">
           <Link to={"/"}>
@@ -233,46 +230,48 @@ const ProductDetail: React.FC = () => {
             <Divider />
             {productDetailData ? (
               productDetailData.comments.length > 0 ? (
-                productDetailData.comments.map((comment, index: number) => (
-                  <div className="mb-7 grid grid-cols-12" key={index}>
-                    <div className="col-span-1 h-[50px] w-[50px] rounded-full object-cover">
-                      <img
-                        className="rounded-full object-cover"
-                        src={LogoUser}
-                        alt="lỗi"
-                      />
-                    </div>
-                    <div className="col-span-10 flex flex-col gap-3">
-                      <div>
-                        <span className="mr-1 text-lg font-bold">
-                          {comment?.author?.name}
-                        </span>{" "}
-                        <span className="text-[13px] text-[#757575]">
-                          <ClockCircleOutlined className="mr-1" />
-                          {convertToDDMMYYYY(comment?.createdAt)}
-                        </span>
+                productDetailData.comments.map(
+                  (comment: Comment, index: number) => (
+                    <div className="mb-7 grid grid-cols-12" key={index}>
+                      <div className="col-span-1 h-[50px] w-[50px] rounded-full object-cover">
+                        <img
+                          className="rounded-full object-cover"
+                          src={LogoUser}
+                          alt="lỗi"
+                        />
                       </div>
-                      <Rate
-                        value={comment?.rating}
-                        className="text-[16px]"
-                        allowHalf
-                        disabled
-                      />
-                      <p className="text-[15px]">{comment?.content}</p>
+                      <div className="col-span-10 flex flex-col gap-3">
+                        <div>
+                          <span className="mr-1 text-lg font-bold">
+                            {comment?.author?.name}
+                          </span>{" "}
+                          <span className="text-[13px] text-[#757575]">
+                            <ClockCircleOutlined className="mr-1" />
+                            {convertToDDMMYYYY(comment?.createdAt)}
+                          </span>
+                        </div>
+                        <Rate
+                          value={comment?.rating}
+                          className="text-[16px]"
+                          allowHalf
+                          disabled
+                        />
+                        <p className="text-[15px]">{comment?.content}</p>
+                      </div>
+                      <div className="col-span-1 text-right">
+                        {infoUser &&
+                          infoUser?._id === comment?.author?._id &&
+                          product && (
+                            <DropdownCommentFunc
+                              commentInfo={comment}
+                              commentId={comment?._id}
+                              product={product}
+                            />
+                          )}
+                      </div>
                     </div>
-                    <div className="col-span-1 text-right">
-                      {infoUser &&
-                        infoUser?._id === comment?.author?._id &&
-                        product && (
-                          <DropdownCommentFunc
-                            commentInfo={comment}
-                            commentId={comment?._id}
-                            product={product}
-                          />
-                        )}
-                    </div>
-                  </div>
-                ))
+                  ),
+                )
               ) : (
                 <div className="col-span-full flex flex-col items-center justify-center py-10 text-center text-lg font-semibold text-gray-500">
                   <img src={LogoNotFound} alt="not-found" className="h-20" />
@@ -297,7 +296,6 @@ const ProductDetail: React.FC = () => {
           )}
         </div>
       </div>
-      <Footer />
     </>
   );
 };

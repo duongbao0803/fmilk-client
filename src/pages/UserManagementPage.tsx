@@ -6,7 +6,7 @@ const UserManagementPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title> FMilk | User management </title>
+        <title> FMilk | Quản lý người dùng </title>
       </Helmet>
       <UserManagementView />
     </>

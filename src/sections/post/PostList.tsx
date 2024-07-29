@@ -26,13 +26,19 @@ const PostList: React.FC = () => {
 
   const columns: TableProps<DataType>["columns"] = [
     {
-      title: "Title",
+      title: "STT",
+      dataIndex: "index",
+      key: "index",
+      render: (_, _record, index) => index + 1,
+    },
+    {
+      title: "Tiêu đề",
       dataIndex: "title",
       width: "30%",
       className: "first-column",
     },
     {
-      title: "Image",
+      title: "Hình ảnh",
       dataIndex: "image",
       width: "20%",
       render: (image) => (
@@ -44,7 +50,7 @@ const PostList: React.FC = () => {
       ),
     },
     {
-      title: "Description",
+      title: "Mô tả",
       dataIndex: "description",
       width: "50%",
     },
@@ -64,12 +70,12 @@ const PostList: React.FC = () => {
       <div className="flex justify-between">
         <div className="flex gap-x-2">
           <Input
-            placeholder="Search by..."
+            placeholder="Tìm kiếm theo..."
             className="h-8 max-w-lg rounded-lg sm:mb-5 sm:w-[300px]"
           />
           <Button className="flex items-center" type="primary">
             <FilterOutlined className="align-middle" />
-            Sort
+            Lọc
           </Button>
         </div>
         <div className="flex gap-x-2">
@@ -79,7 +85,7 @@ const PostList: React.FC = () => {
           <div>
             <Button type="primary" onClick={() => setIsOpen(true)}>
               <div className="flex justify-center">
-                <DiffOutlined className="mr-1 text-lg" /> Add post
+                <DiffOutlined className="mr-1 text-lg" /> Thêm bài viết
               </div>
             </Button>
           </div>

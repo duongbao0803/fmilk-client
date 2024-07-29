@@ -24,6 +24,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src", "src/sections/post-public/view/PostPublicView/.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

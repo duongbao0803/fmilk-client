@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Modal, Form, Input } from "antd";
+import { Modal, Form, Input, Select } from "antd";
 import { BarcodeOutlined } from "@ant-design/icons";
 import React from "react";
 import useBrandService from "../../services/brandService";
 import { DataType } from "./BrandList";
+import { Countries } from "@/constant/constant";
 
 export interface EditBrandModalProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,6 +16,7 @@ const EditBrandModal: React.FC<EditBrandModalProps> = (props) => {
   const { setIsOpen, isOpen, brandInfo } = props;
   const [isConfirmLoading, setIsConfirmLoading] = useState<boolean>(false);
   const [form] = Form.useForm();
+  const { Option } = Select;
   const { updateBrandItem } = useBrandService();
 
   useEffect(() => {
@@ -48,7 +50,7 @@ const EditBrandModal: React.FC<EditBrandModalProps> = (props) => {
 
   return (
     <Modal
-      title={<p className="text-lg text-[red]">Edit brand</p>}
+      title={<p className="text-lg text-[red]">Chỉnh sửa thương hiệu</p>}
       open={isOpen}
       onOk={handleOk}
       confirmLoading={isConfirmLoading}
@@ -60,19 +62,40 @@ const EditBrandModal: React.FC<EditBrandModalProps> = (props) => {
           rules={[
             {
               required: true,
-              message: "Please input brand name",
+              message: "Vui lòng nhập tên thương hiệu",
             },
           ]}
           colon={true}
-          label="Brand name"
+          label="Thương hiệu"
           labelCol={{ span: 24 }}
           className="formItem"
         >
           <Input
             prefix={<BarcodeOutlined className="site-form-item-icon mr-1" />}
-            placeholder="Brand name"
+            placeholder="Thương hiệu"
             autoFocus
           />
+        </Form.Item>
+        <Form.Item
+          name="origin"
+          rules={[
+            {
+              required: true,
+              message: "Vui lòng chọn nguồn gốc xuất xứ",
+            },
+          ]}
+          colon={true}
+          label="Xuất xứ"
+          labelCol={{ span: 24 }}
+          className="formItem"
+        >
+          <Select placeholder="Chọn nguồn gốc">
+            {Countries?.map((country, index: number) => (
+              <Option key={index} value={country} label={country}>
+                {country}
+              </Option>
+            ))}
+          </Select>
         </Form.Item>
       </Form>
     </Modal>

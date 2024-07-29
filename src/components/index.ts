@@ -3,4 +3,4 @@ export { default as Avatar } from "./Avatar";
 export { default as Loading } from "./Loading";
 export { default as Error } from "./Error";
 export { default as ForBidden } from "./ForBidden";
-export { default as ChipTabs } from "./ChipTabs";
+export { default as CustomNav } from "./CustomNav";

@@ -31,7 +31,7 @@ const DropdownPostFunction: React.FC<DropdownPostProps> = (props) => {
               label: (
                 <Link rel="noopener noreferrer" to="#" onClick={openEditModal}>
                   <EditOutlined className="pr-2" />
-                  Edit Post
+                  Chỉnh sửa bài viết
                 </Link>
               ),
             },
@@ -49,7 +49,7 @@ const DropdownPostFunction: React.FC<DropdownPostProps> = (props) => {
                   }
                 >
                   <DeleteOutlined className="pr-2" />
-                  Delete Post
+                  Xóa bài viết
                 </Link>
               ),
             },

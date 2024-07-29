@@ -7,11 +7,11 @@ const DeleteBrandModel: React.FC<{
 }> = ({ deleteBrandItem, brandId }) => {
   const confirm = Modal.confirm;
   confirm({
-    title: "Delete brand",
-    content: `Do you want to delete this brand. This brand cannot restore`,
-    okText: "Yes",
+    title: "Xóa thương hiệu",
+    content: `Bạn có chắc chắn xóa thương hiệu này. Hành động này không thể khôi phục`,
+    okText: "Đồng ý",
     okType: "danger",
-    cancelText: "No",
+    cancelText: "Không",
     onOk() {
       deleteBrandItem(brandId);
     },

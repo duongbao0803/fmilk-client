@@ -5,6 +5,7 @@ import AddBrandModal from "./AddBrandModal";
 import DropdownBrandFunc from "./DropdownBrandFunc";
 import useBrandService from "@/services/brandService";
 import { formatDate } from "@/util/validate";
+import { BarcodeOutlined } from "@ant-design/icons";
 
 export interface DataType {
   _id: string;
@@ -23,24 +24,28 @@ const BrandList: React.FC = () => {
 
   const columns: TableProps<DataType>["columns"] = [
     {
-      title: "Index",
+      title: "STT",
       dataIndex: "index",
       key: "index",
       render: (_, _record, index) => index + 1,
     },
     {
-      title: "Brand Name",
+      title: "Tên thương hiệu",
       dataIndex: "brandName",
-      width: "50%",
+      width: "25%",
     },
-
     {
-      title: "Create date",
+      title: "Xuất xứ",
+      dataIndex: "origin",
+      width: "25%",
+    },
+    {
+      title: "Ngày tạo",
       dataIndex: "createdAt",
       width: "25%",
     },
     {
-      title: "Update date",
+      title: "Ngày cập nhật",
       dataIndex: "updatedAt",
       width: "25%",
     },
@@ -62,7 +67,10 @@ const BrandList: React.FC = () => {
         <div className="flex gap-x-2">
           <div>
             <Button type="primary" onClick={() => setIsOpen(true)}>
-              <div className="flex justify-center">+ Add brand</div>
+              <div className="flex justify-center">
+                <BarcodeOutlined className="mr-1" />
+                Thêm thương hiệu
+              </div>
             </Button>
           </div>
         </div>

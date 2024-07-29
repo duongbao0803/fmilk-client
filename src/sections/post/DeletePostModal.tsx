@@ -7,11 +7,11 @@ const DeletePostModal: React.FC<{
 }> = ({ deletePostItem, postId }) => {
   const confirm = Modal.confirm;
   confirm({
-    title: "Delete Post",
-    content: `Do you really want to delete? This post cannot be restored.`,
-    okText: "Yes",
+    title: "Xóa bài viết",
+    content: `Bạn có chắc chắn xóa bài viết này. Hành động này không thể khôi phục`,
+    okText: "Đồng ý",
     okType: "danger",
-    cancelText: "No",
+    cancelText: "Không",
     onOk() {
       deletePostItem(postId);
     },

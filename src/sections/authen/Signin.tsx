@@ -18,6 +18,7 @@ import { login } from "@/api/authenApi";
 import { SigninValues } from "@/interfaces/interface";
 import { encryptData } from "@/util/cryptoUtils";
 import { useDecryptCredentials } from "@/hooks/useDecryptCredentials";
+import { Link } from "react-router-dom";
 
 const Signin: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -61,8 +62,8 @@ const Signin: React.FC = () => {
       const res = await login(formValues);
       if (res && res.status === 200) {
         notification.success({
-          message: "Login Successful",
-          description: "You have successfully logged in.",
+          message: "Đăng nhập thành công",
+          description: "Bạn đăng nhập vào hệ thống thành công",
           duration: 2,
         });
         const jwtAccessToken = res.data.accessToken;
@@ -81,7 +82,7 @@ const Signin: React.FC = () => {
       }
     } catch (err: any) {
       notification.error({
-        message: "Login Failed",
+        message: "Đăng nhập thất bại",
         description: `${err.response.data.message}`,
         duration: 2,
       });
@@ -101,9 +102,19 @@ const Signin: React.FC = () => {
         <>
           <div className="">
             <div data-aos="fade-down">
-              <h1 className=" mb-5 text-4xl font-bold text-[#1677ff]">
-                Welcome Back
+              <h1 className="text-center text-3xl font-bold text-[#1677ff]">
+                CHÀO MỪNG TRỞ LẠI
               </h1>
+              <p className="mx-12 my-4 text-center text-sm text-[#a3a1a1]">
+                Trải nghiệm sữa chất lượng được đơn giản hóa với{" "}
+                <Link
+                  to={"/"}
+                  className="cursor-pointer font-bold text-[#08cde9]"
+                >
+                  FMilk
+                </Link>
+                . Bắt đầu ngay.
+              </p>
             </div>
             <Form
               name="normal_login"
@@ -116,26 +127,26 @@ const Signin: React.FC = () => {
                   rules={[
                     {
                       required: true,
-                      message: "Please input your Username!",
+                      message: "Vui lòng nhập tên đăng nhập",
                     },
                     {
                       min: 8,
-                      message: "Username must be at least 8 characters",
+                      message: "Tên đăng nhập phải có ít nhất 8 ký tự",
                     },
                     {
                       max: 30,
-                      message: "Must not exceed 30 characters",
+                      message: "Tên đăng nhập không được vượt quá 30 ký tự",
                     },
                   ]}
                   colon={true}
-                  label="Username"
+                  label="Tên đăng nhập"
                   labelCol={{ span: 24 }}
                   className="formItem"
                   initialValue={username}
                 >
                   <Input
                     prefix={<UserOutlined className="site-form-item-icon" />}
-                    placeholder="Username"
+                    placeholder="Tên đăng nhập"
                     className="p-2"
                     autoFocus
                   />
@@ -148,14 +159,14 @@ const Signin: React.FC = () => {
                   rules={[
                     {
                       required: true,
-                      message: "Please input your Password!",
+                      message: "Vui lòng nhập mật khẩu",
                     },
                     {
                       min: 8,
-                      message: "Password must be at least 8 characters",
+                      message: "Mật khẩu phải có ít nhất 8 ký tự",
                     },
                   ]}
-                  label="Password"
+                  label="Mật khẩu"
                   labelCol={{ span: 24 }}
                   className="formItem"
                   initialValue={password}
@@ -164,7 +175,7 @@ const Signin: React.FC = () => {
                     prefix={<LockOutlined className="site-form-item-icon" />}
                     className="p-2"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Password"
+                    placeholder="Mật khẩu"
                     suffix={
                       <>
                         {showPassword ? (
@@ -180,14 +191,14 @@ const Signin: React.FC = () => {
               <div data-aos="fade-left">
                 <Form.Item name="remember" valuePropName="checked" noStyle>
                   <Checkbox onChange={(e) => setRememberMe(e.target.checked)}>
-                    Remember me
+                    Ghi nhớ
                   </Checkbox>
                   <a
                     href="#"
                     className="login-form-forgot float-right font-semibold text-[#3094ff] hover:underline"
                     onClick={() => setIsShowForgotPassword(true)}
                   >
-                    Forgot password?
+                    Quên mật khẩu?
                   </a>
                 </Form.Item>
               </div>
@@ -203,7 +214,7 @@ const Signin: React.FC = () => {
                         indicator={<LoadingOutlined className="text-[#fff]" />}
                       />
                     ) : (
-                      "Sign In"
+                      "Đăng nhập"
                     )}
                   </Button>
                 </div>
@@ -212,7 +223,7 @@ const Signin: React.FC = () => {
             <div data-aos="flip-up">
               <div className="mt-4 flex items-center justify-center text-center">
                 <div className="mr-2 h-[1px] w-full bg-[#e6e8eb]"></div>
-                <span className="text-[#999999]">OR</span>
+                <span className="text-[#999999]">HOẶC</span>
                 <div className="ml-2 h-[1px] w-full bg-[#e6e8eb]"></div>
               </div>
             </div>
@@ -229,20 +240,20 @@ const Signin: React.FC = () => {
                       alt=""
                       className="mr-2"
                     />
-                    Continue with Google
+                    Đăng nhập với Google
                   </div>
                 </Button>
               </div>
             </div>
             <div data-aos="fade-up">
               <div className="mt-2 text-center text-sm">
-                <span>You don't have account? </span>
+                <span>Bạn chưa có tài khoản? </span>
                 <a
                   href="#"
                   className="font-semibold text-[#3094ff] hover:underline"
                   onClick={() => setIsShowRegister(true)}
                 >
-                  Sign Up
+                  Đăng ký
                 </a>
               </div>
             </div>

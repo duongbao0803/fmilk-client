@@ -7,6 +7,7 @@ import {
   EyeOutlined,
   MailOutlined,
   AuditOutlined,
+  PhoneOutlined,
 } from "@ant-design/icons";
 import { Button, Col, Form, Input, Row, notification } from "antd";
 import "aos/dist/aos.css";
@@ -34,7 +35,7 @@ const Signup: React.FC<SignupProps> = ({
   const validatePassword = (_: unknown, value: string) => {
     const password = form.getFieldValue("password");
     if (value && password && value !== password) {
-      return Promise.reject("Passwords do not match");
+      return Promise.reject("Mật khẩu xác nhận không trùng khớp");
     }
     return Promise.resolve();
   };
@@ -59,15 +60,15 @@ const Signup: React.FC<SignupProps> = ({
       const res = await signUp(formValues);
       if (res && res.status === 200) {
         notification.success({
-          message: "Signup Successful",
-          description: "You have successfully signed up.",
+          message: "Đăng ký thành công",
+          description: "Bạn đã đăng ký tài khoản thành công",
           duration: 2,
         });
         setIsShowRegister(false);
       }
     } catch (err: any) {
       notification.error({
-        message: "Signup Failed",
+        message: "Đăng ký thất bại",
         description: `${err.response.data.message}`,
         duration: 2,
       });
@@ -93,11 +94,11 @@ const Signup: React.FC<SignupProps> = ({
                     rules={[
                       {
                         required: true,
-                        message: "Please input your username",
+                        message: "Vui lòng nhập tên đăng nhập",
                       },
                       {
                         min: 8,
-                        message: "Must be at least 8 characters",
+                        message: "Tên đăng nhập phải có ít nhất 8 ký tự",
                       },
                       {
                         max: 30,
@@ -105,21 +106,21 @@ const Signup: React.FC<SignupProps> = ({
                       },
                       {
                         pattern: /^[^\s]+$/,
-                        message: "Username cannot contain spaces",
+                        message: "Tên đăng nhập không được chứa khoảng trắng",
                       },
                       {
                         pattern: /^[a-z0-9]+$/,
-                        message: "Username cannot contain special characters",
+                        message: "Tên đăng nhập không được chứa ký tự đặc biệt",
                       },
                     ]}
                     colon={true}
-                    label="Username"
+                    label="Tên đăng nhập"
                     labelCol={{ span: 24 }}
                     className="formItem"
                   >
                     <Input
                       prefix={<UserOutlined className="site-form-item-icon" />}
-                      placeholder="Username"
+                      placeholder="Tên đăng nhập"
                       className="p-2"
                       autoFocus
                     />
@@ -133,23 +134,22 @@ const Signup: React.FC<SignupProps> = ({
                     rules={[
                       {
                         required: true,
-                        message: "Please input your name",
+                        message: "Vui lòng nhập tên",
                       },
                       {
                         min: 8,
-                        message: "Must be at least 8 characters",
+                        message: "Tên phải có ít nhất 8 ký tự",
                       },
                     ]}
                     colon={true}
-                    label="Name"
+                    label="Họ và tên"
                     labelCol={{ span: 24 }}
                     className="formItem"
                   >
                     <Input
                       prefix={<AuditOutlined className="site-form-item-icon" />}
-                      placeholder="Name"
+                      placeholder="Họ và tên"
                       className="p-2"
-                      autoFocus
                     />
                   </Form.Item>
                 </div>
@@ -164,11 +164,11 @@ const Signup: React.FC<SignupProps> = ({
                     rules={[
                       {
                         required: true,
-                        message: "Please input email",
+                        message: "Vui lòng nhập email",
                       },
                       {
                         type: "email",
-                        message: "Please enter a valid email address",
+                        message: "Vui lòng nhập đúng định dạng",
                       },
                     ]}
                     label="Email"
@@ -191,18 +191,22 @@ const Signup: React.FC<SignupProps> = ({
                     rules={[
                       {
                         required: true,
-                        message: "Please input your phone",
+                        message: "Vui lòng nhập số điện thoại",
                       },
                       { validator: validatePhoneNumber },
                     ]}
-                    label="Phone"
+                    label="Số điện thoại"
                     labelCol={{ span: 24 }}
                     className="formItem"
                   >
                     <Input
-                      prefix={<LockOutlined className="site-form-item-icon" />}
-                      placeholder="Phone number"
+                      type="number"
+                      prefix={
+                        <PhoneOutlined className="site-form-item-icon rotate-90" />
+                      }
+                      placeholder="Số điện thoại"
                       className="p-2"
+                      maxLength={10}
                     />
                   </Form.Item>
                 </div>
@@ -215,16 +219,16 @@ const Signup: React.FC<SignupProps> = ({
                 rules={[
                   {
                     required: true,
-                    message: "Please input your address",
+                    message: "Vui lòng nhập địa chỉ",
                   },
                 ]}
-                label="Address"
+                label="Địa chỉ"
                 labelCol={{ span: 24 }}
                 className="formItem"
               >
                 <Input
                   prefix={<LockOutlined className="site-form-item-icon" />}
-                  placeholder="Address"
+                  placeholder="Địa chỉ"
                   className="p-2"
                 />
               </Form.Item>
@@ -236,23 +240,23 @@ const Signup: React.FC<SignupProps> = ({
                 rules={[
                   {
                     required: true,
-                    message: "Please input your password",
+                    message: "Vui lòng nhập mật khẩu",
                   },
                   {
                     min: 8,
-                    message: "Password must be at least 8 characters",
+                    message: "Mật khẩu phải có ít nhất 8 ký tự",
                   },
                 ]}
                 className="formItem"
                 colon={true}
-                label="Password"
+                label="Mật khẩu"
                 labelCol={{ span: 24 }}
               >
                 <Input
                   prefix={<LockOutlined className="site-form-item-icon" />}
                   className="p-2"
                   type={showPassword ? "text" : "password"}
-                  placeholder="Password"
+                  placeholder="Mật khẩu"
                   suffix={
                     <>
                       {showPassword ? (
@@ -272,7 +276,7 @@ const Signup: React.FC<SignupProps> = ({
                 rules={[
                   {
                     required: true,
-                    message: "Please input your confirm password",
+                    message: "Vui lòng xác nhận mật khẩu",
                   },
                   {
                     validator: validatePassword,
@@ -280,14 +284,14 @@ const Signup: React.FC<SignupProps> = ({
                 ]}
                 className="formItem"
                 colon={true}
-                label="Confirm password"
+                label="Xác nhận mật khẩu"
                 labelCol={{ span: 24 }}
               >
                 <Input
                   prefix={<LockOutlined className="site-form-item-icon" />}
                   className="p-2"
                   type={showConfirmPassword ? "text" : "password"}
-                  placeholder="Confirm Password"
+                  placeholder="Xác nhận mật khẩu"
                   suffix={
                     <>
                       {showConfirmPassword ? (

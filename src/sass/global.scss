@@ -108,7 +108,7 @@
   background-image: url("../assets/images/banner/banner_4.png");
   background-repeat: no-repeat;
   background-size: cover;
-  min-height: 101vh;
+  min-height: 100vh;
   width: 100%;
 }
 
@@ -116,28 +116,33 @@
   background-image: url("../assets/images/banner/banner_1.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  min-height: 101vh;
-  width: 100%;
-}
-
-.background3 {
-  background-image: url("https://stemplus.vn/wp-content/uploads/2019/08/N%E1%BB%81n-ph%E1%BA%A7n-ch%C6%B0%C6%A1ng-tr%C3%ACnh-01.png");
-  background-repeat: repeat-x;
-  background-size: contain;
-  min-height: 835px;
+  min-height: 100vh;
   width: 100%;
 }
 
 .background4 {
-  background-image: url("https://stemplus.vn/wp-content/uploads/2019/08/N%E1%BB%81n-footer.png");
-  background-repeat: repeat-x;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.3)),
+    url("../assets/images/banner/milk_banner.jpg");
+  background-repeat: no-repeat;
   background-size: cover;
-  min-height: 400px;
+  background-position: center;
+  height: 500px;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.not-found-message {
+  display: block;
+}
+
+.not-found-message.hidden {
+  display: none;
 }
 
 .cssbuttons-io-button {
-  background: #198ab6;
+  background: #08cde9;
   color: white;
   font-family: inherit;
   padding: 0.35em;
@@ -286,6 +291,10 @@
 
 .ant-tooltip :where(.css-dev-only-do-not-override-1okl62o).ant-tooltip {
   display: none !important;
+}
+
+.ant-table-cell {
+  border-bottom: none !important;
 }
 
 //responsive

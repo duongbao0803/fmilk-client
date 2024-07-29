@@ -1,17 +1,27 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { notification } from "antd";
-import { addBrand, editBrand, getAllBrand, removeBrand } from "@/api/brandApi";
-import { CustomError } from "../interfaces/interface";
+import {
+  addBrand,
+  editBrand,
+  getAllBrand,
+  getDetailBrand,
+  removeBrand,
+} from "@/api/brandApi";
+import { BrandData, CustomError } from "../interfaces/interface";
 
 const useBrandService = () => {
   const queryClient = useQueryClient();
 
   const fetchBrands = async (page: number) => {
     const res = await getAllBrand(page);
-    console.log("check res", res);
     const totalBrands = res.data.totalbrands || 0;
     const brands = res.data.brands;
     return { totalBrands, brands };
+  };
+
+  const getInfoBrandDetail = async (brandId: string) => {
+    const res = await getDetailBrand(brandId);
+    return res.data.brandInfo;
   };
 
   const deleteBrand = async (brandId: string) => {
@@ -19,18 +29,18 @@ const useBrandService = () => {
     return brandId;
   };
 
-  const addNewBrand = async (brandName: string) => {
-    await addBrand(brandName);
+  const addNewBrand = async (formValues: BrandData) => {
+    await addBrand(formValues);
   };
 
   const updateBrandInfo = async ({
     brandId,
-    brandName,
+    formValues,
   }: {
     brandId: string;
-    brandName: string;
+    formValues: BrandData;
   }) => {
-    await editBrand(brandId, brandName);
+    await editBrand(brandId, formValues);
   };
 
   const { data: brandData, isLoading: isFetching } = useQuery(
@@ -45,8 +55,8 @@ const useBrandService = () => {
   const deleteBrandMutation = useMutation(deleteBrand, {
     onSuccess: () => {
       notification.success({
-        message: "Delete Successful",
-        description: "Delete brand successful",
+        message: "Xóa thành công",
+        description: "Xóa thương hiệu thành công",
         duration: 2,
       });
       queryClient.invalidateQueries("brands");
@@ -63,15 +73,15 @@ const useBrandService = () => {
   const updateBrandInfoMutation = useMutation(updateBrandInfo, {
     onSuccess: () => {
       notification.success({
-        message: "Update Successful",
-        description: "Update brand successful",
+        message: "Cập nhật thành công",
+        description: "Cập nhật thương hiệu thành công",
         duration: 2,
       });
       queryClient.invalidateQueries("brands");
     },
     onError: (err: CustomError) => {
       notification.error({
-        message: "Update Failed",
+        message: "Cập nhật thất bại",
         description: `${err?.response?.data?.message}`,
         duration: 2,
       });
@@ -81,8 +91,8 @@ const useBrandService = () => {
   const addNewBrandMutation = useMutation(addNewBrand, {
     onSuccess: () => {
       notification.success({
-        message: "Add Successful",
-        description: "Add brand successful",
+        message: "Thêm thành công",
+        description: "Thêm thương hiệu thành công",
         duration: 2,
       });
       queryClient.invalidateQueries("brands");
@@ -90,7 +100,7 @@ const useBrandService = () => {
     onError: (err: CustomError) => {
       console.error("Error add", err);
       notification.error({
-        message: "Add Failed",
+        message: "Thêm thất bại",
         description: `${err?.response?.data?.message}`,
         duration: 2,
       });
@@ -101,12 +111,12 @@ const useBrandService = () => {
     await deleteBrandMutation.mutateAsync(brandId);
   };
 
-  const updateBrandItem = async (brandId: string, brandName: string) => {
-    await updateBrandInfoMutation.mutateAsync({ brandId, brandName });
+  const updateBrandItem = async (brandId: string, formValues: BrandData) => {
+    await updateBrandInfoMutation.mutateAsync({ brandId, formValues });
   };
 
-  const addNewBrandItem = async (brandName: string) => {
-    await addNewBrandMutation.mutateAsync(brandName);
+  const addNewBrandItem = async (formValues: BrandData) => {
+    await addNewBrandMutation.mutateAsync(formValues);
   };
 
   const totalCount = brandData?.totalBrands;
@@ -119,6 +129,7 @@ const useBrandService = () => {
     addNewBrandItem,
     updateBrandItem,
     isFetching,
+    getInfoBrandDetail,
   };
 };
 

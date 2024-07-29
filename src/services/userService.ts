@@ -64,15 +64,15 @@ const useUserService = () => {
   const deleteUserMutation = useMutation(deleteUser, {
     onSuccess: () => {
       notification.success({
-        message: "Delete Successful",
-        description: "Delete user successful",
+        message: "Xóa thành công",
+        description: "Xóa người dùng thành công",
         duration: 2,
       });
       queryClient.invalidateQueries("users");
     },
     onError: (err: CustomError) => {
       notification.error({
-        message: "Delete Failed",
+        message: "Xóa thất bại",
         description: `${err?.response?.data?.message}`,
         duration: 2,
       });
@@ -82,8 +82,8 @@ const useUserService = () => {
   const updateStatusMutation = useMutation(updateUserStatus, {
     onSuccess: () => {
       notification.success({
-        message: "Update Successful",
-        description: "Update status successful",
+        message: "Cập nhật thành công",
+        description: "Cập nhật trạng thái thành công",
         duration: 2,
       });
       queryClient.invalidateQueries("users");
@@ -91,7 +91,7 @@ const useUserService = () => {
     onError: (err: CustomError) => {
       console.error("Error update", err);
       notification.error({
-        message: "Update Failed",
+        message: "Cập nhật thất bại",
         description: `${err?.response?.data?.message}`,
         duration: 2,
       });
@@ -101,8 +101,8 @@ const useUserService = () => {
   const updateUserInfoMutation = useMutation(updateUserInfo, {
     onSuccess: () => {
       notification.success({
-        message: "Update Successful",
-        description: "Update infomation successful",
+        message: "Cập nhật thành công",
+        description: "Cập nhật thông tin người dùng thành công",
         duration: 2,
       });
       queryClient.invalidateQueries("users");
@@ -110,7 +110,7 @@ const useUserService = () => {
     onError: (err: CustomError) => {
       console.error("Error update", err);
       notification.error({
-        message: "Update Failed",
+        message: "Cập nhật thất bại",
         description: `${err?.response?.data?.message}`,
         duration: 2,
       });
@@ -120,8 +120,8 @@ const useUserService = () => {
   const addNewUserMutation = useMutation(addNewUser, {
     onSuccess: () => {
       notification.success({
-        message: "Add Successful",
-        description: "Add user successful",
+        message: "Thêm thành công",
+        description: "Thêm người dùng thành công",
         duration: 2,
       });
       queryClient.invalidateQueries("users");
@@ -129,7 +129,7 @@ const useUserService = () => {
     onError: (err: CustomError) => {
       console.error("Error add", err);
       notification.error({
-        message: "Add Failed",
+        message: "Thêm thất bại",
         description: `${err?.response?.data?.message}`,
         duration: 2,
       });

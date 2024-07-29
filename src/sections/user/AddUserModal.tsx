@@ -27,7 +27,7 @@ const AddModal: React.FC<AddModalProps> = (props) => {
   const validatePassword = (_: unknown, value: string) => {
     const password = form.getFieldValue("password");
     if (value && password && value !== password) {
-      return Promise.reject("Passwords do not match");
+      return Promise.reject("Mật khẩu không trùng khớp");
     }
     return Promise.resolve();
   };
@@ -80,33 +80,33 @@ const AddModal: React.FC<AddModalProps> = (props) => {
               rules={[
                 {
                   required: true,
-                  message: "Please input username",
+                  message: "Vui lòng nhập tên đăng nhập",
                 },
                 {
                   min: 8,
-                  message: "Must be at least 8 characters",
+                  message: "Phải có ít nhất 8 ký tự",
                 },
                 {
                   max: 30,
-                  message: "Must not exceed 30 characters",
+                  message: "Không được vượt quá 30 ký tự",
                 },
                 {
                   pattern: /^[^\s]+$/,
-                  message: "Username cannot contain spaces",
+                  message: "Không được chứa khoảng trắng",
                 },
                 {
                   pattern: /^[a-z0-9]+$/,
-                  message: "Username cannot contain special characters",
+                  message: "Không chứa các ký tự đặc biệt",
                 },
               ]}
               colon={true}
-              label="Username"
+              label="Tên đăng nhập"
               labelCol={{ span: 24 }}
               className="formItem"
             >
               <Input
                 prefix={<UserOutlined className="site-form-item-icon mr-1" />}
-                placeholder="Username"
+                placeholder="Tên đăng nhập"
                 autoFocus
               />
             </Form.Item>
@@ -117,22 +117,21 @@ const AddModal: React.FC<AddModalProps> = (props) => {
               rules={[
                 {
                   required: true,
-                  message: "Please input name",
+                  message: "Vui lòng nhập tên",
                 },
                 {
                   min: 8,
-                  message: "Must be at least 8 characters",
+                  message: "Phải có ít nhất 8 ký tự",
                 },
               ]}
               colon={true}
-              label="Name"
+              label="Họ và tên"
               labelCol={{ span: 24 }}
               className="formItem"
             >
               <Input
                 prefix={<AuditOutlined className="site-form-item-icon mr-1" />}
-                placeholder="Name"
-                autoFocus
+                placeholder="Họ và tên"
               />
             </Form.Item>
           </Col>
@@ -144,12 +143,12 @@ const AddModal: React.FC<AddModalProps> = (props) => {
               rules={[
                 {
                   required: true,
-                  message: "Please input phone",
+                  message: "Vui lòng nhập số điện thoại",
                 },
                 { validator: validatePhoneNumber },
               ]}
               colon={true}
-              label="Phone"
+              label="Số điện thoại"
               labelCol={{ span: 24 }}
               className="formItem"
             >
@@ -157,7 +156,7 @@ const AddModal: React.FC<AddModalProps> = (props) => {
                 prefix={
                   <PhoneOutlined className="site-form-item-icon mr-1 rotate-90" />
                 }
-                placeholder="Phone"
+                placeholder="Số điện thoại"
                 maxLength={10}
               />
             </Form.Item>
@@ -168,11 +167,11 @@ const AddModal: React.FC<AddModalProps> = (props) => {
               rules={[
                 {
                   required: true,
-                  message: "Please input role",
+                  message: "Vui lòng chọn vai trò",
                 },
               ]}
               colon={true}
-              label="Role"
+              label="Vai trò"
               labelCol={{ span: 24 }}
               className="formItem w-full"
             >
@@ -187,11 +186,11 @@ const AddModal: React.FC<AddModalProps> = (props) => {
               rules={[
                 {
                   required: true,
-                  message: "Please input email",
+                  message: "Vui lòng nhập email",
                 },
                 {
                   type: "email",
-                  message: "Please enter a valid email address",
+                  message: "Nhập đúng định dạng email",
                 },
               ]}
               colon={true}
@@ -201,8 +200,7 @@ const AddModal: React.FC<AddModalProps> = (props) => {
             >
               <Input
                 prefix={<MailOutlined className="site-form-item-icon mr-1" />}
-                placeholder="url"
-                autoFocus
+                placeholder="Email"
               />
             </Form.Item>
           </Col>
@@ -212,18 +210,17 @@ const AddModal: React.FC<AddModalProps> = (props) => {
               rules={[
                 {
                   required: true,
-                  message: "Please input address",
+                  message: "Vui lòng nhập địa chỉ",
                 },
               ]}
               colon={true}
-              label="Address"
+              label="Địa chỉ"
               labelCol={{ span: 24 }}
               className="formItem"
             >
               <Input
                 prefix={<BankOutlined className="site-form-item-icon mr-1" />}
-                placeholder="url"
-                autoFocus
+                placeholder="Địa chỉ"
               />
             </Form.Item>
           </Col>
@@ -233,15 +230,15 @@ const AddModal: React.FC<AddModalProps> = (props) => {
           rules={[
             {
               required: true,
-              message: "Please input your password",
+              message: "Vui lòng nhập mật khẩu",
             },
             {
               min: 8,
-              message: "Password must be at least 8 characters",
+              message: "Mật khẩu phải ít nhất 8 ký tự",
             },
           ]}
           colon={true}
-          label="Password"
+          label="Mật khẩu"
           labelCol={{ span: 24 }}
           className="formItem"
         >
@@ -249,7 +246,7 @@ const AddModal: React.FC<AddModalProps> = (props) => {
             prefix={<LockOutlined className="site-form-item-icon mr-1" />}
             autoFocus
             type={showPassword ? "text" : "password"}
-            placeholder="Password"
+            placeholder="Mật khẩu"
             suffix={
               <>
                 {showPassword ? (
@@ -266,20 +263,20 @@ const AddModal: React.FC<AddModalProps> = (props) => {
           rules={[
             {
               required: true,
-              message: "Please input your confirm password",
+              message: "Vui lòng xác nhận mật khẩu",
             },
             {
               validator: validatePassword,
             },
           ]}
           colon={true}
-          label="Confirm password"
+          label="Xác nhận mật khẩu"
           labelCol={{ span: 24 }}
           className="formItem"
         >
           <Input
             prefix={<LockOutlined className="site-form-item-icon mr-1" />}
-            placeholder="Confirm password"
+            placeholder="Xác nhận mật khẩu"
             type={showConfirmPassword ? "text" : "password"}
             suffix={
               <>

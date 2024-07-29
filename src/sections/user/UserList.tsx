@@ -9,6 +9,8 @@ import ExportButton from "./ExportUser";
 import DropdownFunctionUser from "./DropdownFunctionUser";
 
 export interface DataType {
+  image: string | undefined;
+  quantity: number;
   _id: string;
   key: string;
   name: string;
@@ -37,7 +39,7 @@ const UserList: React.FC = () => {
 
   const columns: TableProps<DataType>["columns"] = [
     {
-      title: "Name",
+      title: "Tên",
       dataIndex: "name",
       width: "20%",
       className: "first-column",
@@ -48,22 +50,22 @@ const UserList: React.FC = () => {
       width: "20%",
     },
     {
-      title: "Date of birth",
+      title: "Ngày sinh",
       dataIndex: "dob",
       width: "15%",
     },
     {
-      title: "Phone",
+      title: "Số điện thoại",
       dataIndex: "phone",
       width: "10%",
     },
     {
-      title: "Address",
+      title: "Địa chỉ",
       dataIndex: "address",
       width: "15%",
     },
     {
-      title: "Role",
+      title: "Vai trò",
       dataIndex: "role",
       width: "10%",
       filters: [
@@ -97,7 +99,7 @@ const UserList: React.FC = () => {
       },
     },
     {
-      title: "Status",
+      title: "Trạng thái",
       dataIndex: "status",
       width: "10%",
       render: (_, record) => (
@@ -128,12 +130,12 @@ const UserList: React.FC = () => {
       <div className="flex justify-between">
         <div className="flex gap-x-2">
           <Input
-            placeholder="Search by..."
+            placeholder="Tìm kiếm theo..."
             className="h-8 max-w-lg rounded-lg sm:mb-5 sm:w-[300px]"
           />
           <Button className="flex items-center" type="primary">
             <FilterOutlined className="align-middle" />
-            Sort
+            Lọc
           </Button>
         </div>
         <div className="flex gap-x-2">
@@ -143,7 +145,7 @@ const UserList: React.FC = () => {
           <div>
             <Button type="primary" onClick={() => setIsShow(true)}>
               <div className="flex justify-center">
-                <UserAddOutlined className="mr-1 text-lg" /> Add User
+                <UserAddOutlined className="mr-1 text-lg" /> Thêm người dùng
               </div>
             </Button>
           </div>

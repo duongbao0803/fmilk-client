@@ -1,7 +1,7 @@
-import useStateStore from "@/hooks/useStateStore";
-import { motion } from "framer-motion";
 import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { useLocation, useNavigate } from "react-router-dom";
+import useStateStore from "@/hooks/useStateStore";
 
 export interface Tab {
   name: string;
@@ -12,44 +12,41 @@ const tabs: Tab[] = [
   { name: "Trang chủ", path: "/" },
   { name: "Sản phẩm", path: "/product" },
   { name: "Bài viết", path: "/post" },
-  { name: "Liên hệ", path: "/contact" },
+  { name: "Liên hệ", path: "https://www.facebook.com/duongbao0803" },
 ];
 
 const CustomNav: React.FC = React.memo(() => {
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState<string>("");
   const location = useLocation();
   const navigate = useNavigate();
   const setCartState = useStateStore((state) => state.setCartState);
 
   useEffect(() => {
-    const currentTab = tabs.find((tab) => {
-      if (tab.path === "/product") {
-        return location.pathname.startsWith(tab.path);
-      } else if (tab.path === "/post") {
-        return location.pathname.startsWith(tab.path);
-      }
-      return location.pathname === tab.path;
-    });
+    const currentTab = tabs.find(
+      (tab) =>
+        tab.path.startsWith(location.pathname) ||
+        tab.path === location.pathname,
+    );
 
-    if (currentTab) {
+    if (currentTab && currentTab.name !== "Liên hệ") {
       setSelected(currentTab.name);
-    } else if (location.pathname === "/cart") {
-      setSelected("");
-    } else if (
-      location.pathname === "/personal" ||
-      location.pathname === "/password" ||
-      location.pathname === "/ordered"
-    ) {
+    } else {
       setSelected("");
     }
   }, [location]);
 
   const handleTabClick = (tab: Tab) => {
     setCartState(false);
-    setSelected(tab.name);
-    setTimeout(() => {
-      navigate(tab.path);
-    }, 250);
+
+    if (tab.name !== "Liên hệ") {
+      setSelected(tab.name);
+    }
+
+    if (tab.path.startsWith("http")) {
+      window.open(tab.path, "_blank");
+    } else {
+      setTimeout(() => navigate(tab.path), 250);
+    }
   };
 
   return (

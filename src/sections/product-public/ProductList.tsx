@@ -152,12 +152,12 @@ const ProductList: React.FC = () => {
                         </h3>
                         <p className="mb-2">
                           <span className="font-bold">Xuất xứ:</span>{" "}
-                          <span className="font-bold text-red-500">
+                          <span className="font-bold text-[#08cde9]">
                             {product?.brand?.origin}
                           </span>
                         </p>
                         <p className="mb-2 text-xl font-bold">
-                          <span className="text-red-500">
+                          <span className="text-[#08cde9]">
                             {PriceFormat.format(product?.price ?? 0)}
                           </span>
                         </p>

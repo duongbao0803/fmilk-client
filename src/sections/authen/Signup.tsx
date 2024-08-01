@@ -82,7 +82,7 @@ const Signup: React.FC<SignupProps> = ({
         <>
           <div data-aos="fade-down">
             <h1 className=" mb-5 text-center text-4xl font-bold text-[#1677ff]">
-              SIGN UP
+              ĐĂNG KÝ
             </h1>
           </div>
           <Form name="normal_login" form={form} onFinish={onFinish}>
@@ -311,19 +311,19 @@ const Signup: React.FC<SignupProps> = ({
                   htmlType="submit"
                   className="login-form-button mx-auto mt-2 block h-11 w-full text-lg tracking-wider"
                 >
-                  Sign Up
+                  Đăng ký
                 </Button>
               </Form.Item>
             </div>
           </Form>
           <div className="text-center text-sm">
-            You already have an account? {""}
+            Bạn đã có tài khoản? {""}
             <a
               href="#"
               className="font-semibold text-[#3094ff] hover:underline"
               onClick={() => setIsShowRegister(false)}
             >
-              Sign In
+              Đăng Nhập
             </a>
           </div>
         </>

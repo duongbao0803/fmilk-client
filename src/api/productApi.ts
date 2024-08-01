@@ -6,7 +6,7 @@ const getAllProduct = (page: number, productName: string, origin: string) => {
     params: {
       page: page,
       pageSize: 20,
-      productName: productName,
+      name: productName,
       origin: origin,
     },
   });
